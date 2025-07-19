@@ -21,7 +21,7 @@ export default function Sidebar() {
     <aside className="fixed left-6 top-6 bottom-6 w-64 md:w-[96px] lg:w-64 bg-white border border-gray-200 rounded-xl flex flex-col shadow-sm">
       {/* Profile Section */}
       <div className="p-6 md:p-4 lg:p-6 border-b border-gray-200 md:border-b-0 lg:border-b">
-        <div className="flex items-center gap-3 mb-4 md:justify-center md:mb-0 lg:justify-start lg:mb-4">
+        <div className="flex items-center gap-3 md:justify-center md:mb-0 lg:justify-start">
           <div className="w-12 h-12 md:w-10 md:h-10 lg:w-12 lg:h-12 rounded-full bg-gray-200 overflow-hidden">
             <Image
               src="/images/avatar.jpg"

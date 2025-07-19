@@ -1,7 +1,6 @@
 import HeroSection from "@/components/home/HeroSection";
 import AboutPreview from "@/components/home/AboutPreview";
 import ProjectsPreview from "@/components/home/ProjectsPreview";
-import SkillsStack from "@/components/home/SkillsStack";
 import CTASection from "@/components/home/CTASection";
 import PageFooter from "@/components/layout/PageFooter";
 
@@ -13,7 +12,6 @@ export default function Home() {
           <HeroSection />
           <AboutPreview />
           <ProjectsPreview />
-          <SkillsStack />
           <CTASection />
         </div>
       </div>

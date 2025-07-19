@@ -18,13 +18,13 @@ export default function ProjectsPreview() {
   ];
 
   return (
-    <section className="py-16">
-      <div className="mb-16">
-        <h2 className="text-5xl font-bold text-gray-900 mb-6">Projects</h2>
+    <section className="py-12">
+      <div className="mb-12">
+        <h2 className="text-4xl font-bold text-gray-900">Selected Projects</h2>
       </div>
       
       {/* Projects Grid - EXACT SAME AS PROJECTS PAGE */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-20">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
         {featuredProjects.map((project) => (
           <Link 
             key={project.id} 

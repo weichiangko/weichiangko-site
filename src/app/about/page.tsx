@@ -1,5 +1,4 @@
 import { Metadata } from "next";
-import Link from "next/link";
 import PageFooter from "@/components/layout/PageFooter";
 import CTASection from "@/components/home/CTASection";
 
@@ -15,16 +14,40 @@ export default function AboutPage() {
         <div className="max-w-6xl mx-auto px-6 py-12">
           {/* Header */}
           <div className="mb-12">
-            <h1 className="text-5xl font-bold text-gray-900 mb-6">About Me</h1>
-            <p className="text-gray-600 leading-relaxed text-lg max-w-4xl">
-              My journey has been shaped by a strong academic foundation, industry-recognized certifications, and hands-on 
-              experience with companies like Google and Adobe. I&apos;m dedicated to designing solutions that blend creativity, 
-              functionality, and user-centric thinking.
-            </p>
+            <h1 className="text-5xl font-bold text-gray-900 mb-8">About Me</h1>
           </div>
 
-          {/* Main Grid - 2x2 Layout */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16">
+          {/* Main About Section - Home Section Style */}
+          <section className="py-12">
+            <div className="mb-16">
+              {/* Description - Full Width */}
+              <p className="text-gray-900 leading-relaxed text-lg mb-12">
+                Ben Ko is a Software Designer at Google with 3+ years of experience in UX design, 
+                winner of Red Dot Award 2024.
+              </p>
+              
+              {/* Stats Flex - Horizontal Layout */}
+              <div className="flex flex-col md:flex-row md:gap-16 gap-8">
+                <div>
+                  <h3 className="text-4xl font-bold text-gray-900 mb-2">3+ Years</h3>
+                  <p className="text-gray-600 text-lg">of Experience</p>
+                </div>
+                <div>
+                  <h3 className="text-4xl font-bold text-gray-900 mb-2">15+</h3>
+                  <p className="text-gray-600 text-lg">Projects Delivered</p>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* Detailed Information Section */}
+          <section className="py-12">
+            <div className="mb-12">
+              <h2 className="text-4xl font-bold text-gray-900">Detailed Background</h2>
+            </div>
+            
+            {/* Main Grid - 2x2 Layout */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16">
             {/* Academic Education */}
             <div className="bg-white rounded-xl p-8 shadow-sm">
               <div className="flex items-start gap-4 mb-8">
@@ -163,11 +186,16 @@ export default function AboutPage() {
                 </li>
               </ul>
             </div>
-          </div>
+            </div>
+          </section>
 
-          {/* Tech Stack */}
-          <div className="bg-white rounded-xl p-12 shadow-sm mb-16">
-            <h2 className="text-3xl font-bold text-gray-900 mb-12">Stack</h2>
+          {/* Tech Stack Section */}
+          <section className="py-12">
+            <div className="mb-12">
+              <h2 className="text-4xl font-bold text-gray-900">Tech Stack</h2>
+            </div>
+            
+            <div className="bg-white rounded-xl p-8 shadow-sm mb-16">
             <div className="grid grid-cols-3 gap-12">
               <div className="flex items-center gap-6">
                 <div className="w-16 h-16 bg-orange-100 rounded-xl flex items-center justify-center">
@@ -216,12 +244,8 @@ export default function AboutPage() {
                 <span className="text-xl font-medium text-gray-900">CSS3</span>
               </div>
             </div>
-            <div className="flex justify-end mt-12">
-              <button className="text-gray-500 hover:text-gray-700 text-sm transition-colors">
-                View Full Stack
-              </button>
             </div>
-          </div>
+          </section>
 
           <CTASection />
         </div>

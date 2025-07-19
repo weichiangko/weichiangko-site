@@ -20,7 +20,7 @@ export default function ProjectDetail({ project }: ProjectDetailProps) {
       <div className="flex-1">
         <div className="max-w-6xl mx-auto px-6">
           {/* Hero Section */}
-          <section className="py-12">
+          <section className="py-8">
             {/* Back to Projects */}
             <Link
               href="/projects"
@@ -88,7 +88,7 @@ export default function ProjectDetail({ project }: ProjectDetailProps) {
           </section>
 
           {/* Project Content */}
-          <section className="py-16">
+          <section className="py-8">
             <div className="bg-white rounded-xl p-8 shadow-sm">
               <div className="space-y-12">
                 {/* My Approach */}
@@ -180,12 +180,12 @@ export default function ProjectDetail({ project }: ProjectDetailProps) {
           </section>
 
           {/* Other Projects Section */}
-          <section className="py-16">
-            <div className="mb-16">
-              <h2 className="text-5xl font-bold text-gray-900 mb-6">Other Projects</h2>
+          <section className="py-8">
+            <div className="mb-8">
+              <h2 className="text-3xl font-bold text-gray-900">Other Projects</h2>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
               {otherProjects.map((otherProject) => (
                 <Link
                   key={otherProject.id}
