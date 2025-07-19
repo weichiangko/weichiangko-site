@@ -16,7 +16,7 @@ export default function PointSphere() {
   const autoRotationRef = useRef(0);
 
   // Create point sphere geometry with varied sizes and grayscales
-  const createPointSphere = useCallback(() => {
+  const createPointSphere = () => {
     // Responsive radius - larger for desktop, smaller for mobile
     const radius = window.innerWidth < 768 ? 250 : 400; // Mobile: 250, Desktop: 400 units
     const particleCount = window.innerWidth < 768 ? 800 : 1500; // Mobile responsive
@@ -38,14 +38,14 @@ export default function PointSphere() {
       positions[i3 + 1] = radius * Math.sin(phi) * Math.sin(theta);
       positions[i3 + 2] = radius * Math.cos(phi);
       
-      // Varied grayscale colors (different shades of gray)
-      const grayValue = 0.2 + Math.random() * 0.4; // Range: 0.2 to 0.6
+      // Varied grayscale colors (extremely light and subtle)  
+      const grayValue = 0.01 + Math.random() * 0.05; // Range: 0.01 to 0.06
       colors[i3] = grayValue;     // R
       colors[i3 + 1] = grayValue; // G
       colors[i3 + 2] = grayValue; // B
       
-      // Varied sizes (2 to 6 pixels)
-      sizes[i] = 2 + Math.random() * 4;
+      // Varied sizes (1.5 to 3.5 pixels)
+      sizes[i] = 1.5 + Math.random() * 2;
     }
     
     const geometry = new THREE.BufferGeometry();
@@ -54,7 +54,7 @@ export default function PointSphere() {
     geometry.setAttribute('size', new THREE.BufferAttribute(sizes, 1));
     
     return geometry;
-  }, []);
+  };
 
   // Mouse move handler for interactive rotation
   const handleMouseMove = useCallback((event: MouseEvent) => {
@@ -86,6 +86,9 @@ export default function PointSphere() {
 
   useEffect(() => {
     if (!containerRef.current) return;
+    
+    // Force fresh creation with timestamp
+    console.log('Creating PointSphere with new colors:', Date.now());
 
     // Scene setup
     const scene = new THREE.Scene();
@@ -150,8 +153,8 @@ export default function PointSphere() {
             discard;
           }
           
-          // Smooth circular falloff for round dots
-          float alpha = 1.0 - smoothstep(0.6, 1.0, r);
+          // Smooth circular falloff for round dots with controlled transparency
+          float alpha = (1.0 - smoothstep(0.6, 1.0, r)) * 0.5; // Max 50% opacity
           gl_FragColor = vec4(vColor, alpha);
         }
       `,
@@ -240,7 +243,7 @@ export default function PointSphere() {
       geometry.dispose();
       material.dispose();
     };
-  }, [createPointSphere, handleMouseMove]);
+  }, [handleMouseMove]);
 
   return (
     <div 
