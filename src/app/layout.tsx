@@ -14,7 +14,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Ben Ko - UX/UI Designer & Frontend Developer",
+  title: "Ben Ko - Software Designer",
   description: "Passionate designer bridging creativity and development to solve real problems with user-first thinking.",
 };
 
@@ -30,7 +30,7 @@ export default function RootLayout({
       >
         <div className="flex min-h-screen bg-gray-50">
           <ResponsiveSidebar />
-          <main className="flex-1 md:ml-[120px] lg:ml-80 ml-0 md:mr-6">
+          <main className="flex-1 md:ml-[120px] lg:ml-80 ml-0 md:mr-6 pt-24 md:pt-6">
             {children}
           </main>
         </div>

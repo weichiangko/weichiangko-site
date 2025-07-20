@@ -13,8 +13,8 @@ const PointSphere = dynamic(() => import("@/components/animations/PointSphere"),
 export default function HeroSection() {
   return (
     <section className="relative min-h-screen overflow-hidden">
-      {/* Top Right Contact Button */}
-      <div className="absolute top-6 right-6 z-20 flex items-center gap-4">
+      {/* Top Right Contact Button - Desktop */}
+      <div className="absolute top-6 right-6 z-20 hidden md:flex items-center gap-4">
         <div className="flex items-center gap-2 text-sm text-gray-600">
           <div className="w-2 h-2 bg-green-500 rounded-full"></div>
           Available for Projects
@@ -27,8 +27,9 @@ export default function HeroSection() {
         </Link>
       </div>
 
+
       {/* 3D Sphere Background */}
-      <div className="absolute inset-0 flex items-center justify-center z-0">
+      <div className="absolute inset-0 flex items-center justify-center z-0 md:translate-y-0 -translate-y-8">
         <div className="w-full h-full max-w-[700px] max-h-[700px] relative">
           <Suspense fallback={<div className="w-full h-full" />}>
             <PointSphere />

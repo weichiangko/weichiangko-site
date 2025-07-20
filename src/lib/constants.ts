@@ -1,6 +1,6 @@
 export const PERSONAL_INFO = {
   name: "Ben Ko",
-  title: "UX/UI Designer",
+  title: "Software Designer",
   subtitle: "Software Designer",
   email: "designerko1215@gmail.com",
   linkedin: "https://www.linkedin.com/in/weichiangko/",
