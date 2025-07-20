@@ -8,22 +8,21 @@ export default function AboutPreview() {
       </div>
 
       {/* Main About Section - New Design */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-12">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
         {/* Left Column - Description & Stats Card */}
         <div className="bg-white rounded-xl p-8 shadow-sm">
           <p className="text-gray-900 leading-relaxed text-lg mb-8">
-            Ben Ko is a Software Designer at Google with 3+ years of experience in UX design, 
-            winner of Red Dot Award 2024.
+            Currently a Sr. UI Engineer at MiTAC with 10+ years of UX/UI design, Web and App Development. also winner of iF Award 2024.
           </p>
           
           {/* Stats Grid */}
           <div className="space-y-8">
             <div>
-              <h3 className="text-4xl font-bold text-gray-900 mb-2">3+ Years</h3>
-              <p className="text-gray-600 text-lg">of Experience</p>
+              <h3 className="text-3xl font-bold text-gray-900 mb-2">10+</h3>
+              <p className="text-gray-600 text-lg">Years of Experience</p>
             </div>
             <div>
-              <h3 className="text-4xl font-bold text-gray-900 mb-2">15+</h3>
+              <h3 className="text-3xl font-bold text-gray-900 mb-2">15+</h3>
               <p className="text-gray-600 text-lg">Projects Delivered</p>
             </div>
           </div>
@@ -42,7 +41,7 @@ export default function AboutPreview() {
               <h3 className="text-xl font-semibold text-gray-900">Current Work</h3>
             </div>
             <div>
-              <p className="text-gray-900 font-medium mb-2">Google</p>
+              <p className="text-gray-900 font-medium mb-2">MiTAC Corporation</p>
               <p className="text-gray-500 text-sm">Jan 2022 – Present</p>
             </div>
           </div>
