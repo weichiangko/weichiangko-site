@@ -1,19 +1,18 @@
-import { Metadata } from "next";
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
+import { useState } from "react";
 import PageFooter from "@/components/layout/PageFooter";
 import CTASection from "@/components/home/CTASection";
-
-export const metadata: Metadata = {
-  title: "Projects - Ben Ko",
-  description: "Explore Ben Ko's portfolio of UX/UI design and web development projects showcasing innovative solutions.",
-};
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 const projects = [
   {
     id: "omnifood",
     title: "Omnifood: Revolutionizing Personalized Meal Delivery",
-    category: "Web Development",
+    category: "Development",
     image: "/images/projects/omnifood.jpg",
     description: "A comprehensive meal delivery platform with AI-powered personalization"
   },
@@ -34,17 +33,91 @@ const projects = [
   {
     id: "travel-planning",
     title: "Simplifying Travel Planning with Smart, User-Focused Solutions",
-    category: "Web Development", 
+    category: "Development", 
     image: "/images/projects/travel-planning.jpg",
     description: "Smart travel planning application with collaborative features"
+  },
+  {
+    id: "fintech-app",
+    title: "FinTech Mobile App: Seamless Financial Management",
+    category: "UX/UI Design",
+    image: "/images/projects/fintech-app.jpg",
+    description: "Intuitive mobile banking application with advanced security features"
+  },
+  {
+    id: "ecommerce-platform",
+    title: "E-commerce Platform: Next-Gen Shopping Experience",
+    category: "Development",
+    image: "/images/projects/ecommerce-platform.jpg",
+    description: "Full-stack e-commerce solution with AI-powered recommendations"
+  },
+  {
+    id: "google-ux",
+    title: "Google Search Interface Enhancement",
+    category: "Experience",
+    image: "/images/projects/google-ux.jpg",
+    description: "Led UX improvements for Google Search, focusing on accessibility and performance"
+  },
+  {
+    id: "adobe-dashboard",
+    title: "Adobe Creative Cloud Dashboard Redesign",
+    category: "Experience",
+    image: "/images/projects/adobe-dashboard.jpg",
+    description: "Redesigned Creative Cloud dashboard for improved user workflow and efficiency"
+  },
+  {
+    id: "hubspot-seo",
+    title: "HubSpot SEO Tool Enhancement",
+    category: "Experience",
+    image: "/images/projects/hubspot-seo.jpg",
+    description: "Enhanced SEO analysis tools with improved data visualization and insights"
   }
 ];
 
+const ProjectCard = ({ project }: { project: typeof projects[0] }) => (
+  <Link 
+    key={project.id} 
+    href={`/projects/${project.id}`}
+    className="group block bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300"
+  >
+    <div className="aspect-[4/3] bg-gray-100 overflow-hidden">
+      <Image
+        src={project.image}
+        alt={project.title}
+        width={600}
+        height={450}
+        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+      />
+    </div>
+    <div className="p-8">
+      <h3 className="text-xl font-semibold text-gray-900 mb-3 group-hover:text-gray-600 transition-colors">
+        {project.title}
+      </h3>
+      <p className="text-sm font-medium text-gray-500">
+        {project.category}
+      </p>
+    </div>
+  </Link>
+);
+
 export default function ProjectsPage() {
+  const categories = ["All", "Design", "Development", "Experience"];
+  const [activeCategory, setActiveCategory] = useState("All");
+  
+  const getFilteredProjects = (category: string) => {
+    if (category === "All") {
+      return projects;
+    }
+    if (category === "Design") {
+      return projects.filter(project => project.category === "UX/UI Design");
+    }
+    return projects.filter(project => project.category === category);
+  };
+
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col">
       <div className="flex-1">
-        <div className="max-w-6xl mx-auto px-6 py-12">
+        <div className="max-w-6xl mx-auto px-8 py-12">
           {/* Header */}
           <div className="mb-16">
             <h1 className="text-5xl font-bold text-gray-900 mb-8">Projects</h1>
@@ -55,32 +128,37 @@ export default function ProjectsPage() {
             </p>
           </div>
 
+          {/* Mobile Select (sm以下) */}
+          <div className="block sm:hidden mb-12">
+            <Select value={activeCategory} onValueChange={setActiveCategory}>
+              <SelectTrigger className="w-full">
+                <SelectValue placeholder="選擇分類" />
+              </SelectTrigger>
+              <SelectContent>
+                {categories.map((category) => (
+                  <SelectItem key={category} value={category}>
+                    {category}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+
+          {/* Desktop Tabs (sm以上) */}
+          <Tabs value={activeCategory} onValueChange={setActiveCategory} className="hidden sm:block mb-10">
+            <TabsList className="inline-flex w-fit mb-8">
+              {categories.map((category) => (
+                <TabsTrigger key={category} value={category} className="text-sm font-medium px-6">
+                  {category}
+                </TabsTrigger>
+              ))}
+            </TabsList>
+          </Tabs>
+
           {/* Projects Grid */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-20">
-            {projects.map((project) => (
-              <Link 
-                key={project.id} 
-                href={`/projects/${project.id}`}
-                className="group block bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300"
-              >
-                <div className="aspect-[4/3] bg-gray-100 overflow-hidden">
-                  <Image
-                    src={project.image}
-                    alt={project.title}
-                    width={600}
-                    height={450}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                  />
-                </div>
-                <div className="p-8">
-                  <h3 className="text-xl font-semibold text-gray-900 mb-3 group-hover:text-gray-600 transition-colors">
-                    {project.title}
-                  </h3>
-                  <p className="text-sm font-medium text-gray-500">
-                    {project.category}
-                  </p>
-                </div>
-              </Link>
+            {getFilteredProjects(activeCategory).map((project) => (
+              <ProjectCard key={project.id} project={project} />
             ))}
           </div>
 

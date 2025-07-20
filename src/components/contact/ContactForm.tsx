@@ -62,7 +62,7 @@ export default function ContactForm() {
       {/* Header */}
       <div className="mb-12">
         <div className="flex items-center justify-between mb-6">
-          <h1 className="text-4xl font-bold text-gray-900">Let's Connect!</h1>
+          <h1 className="text-4xl font-bold text-gray-900">Let&apos;s Connect!</h1>
           <div className="flex items-center gap-2 text-sm">
             <div className="w-2 h-2 bg-green-500 rounded-full"></div>
             <span className="text-gray-600">Available for Projects</span>

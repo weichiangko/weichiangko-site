@@ -1,5 +1,3 @@
-import Link from "next/link";
-
 export default function PageFooter() {
   return (
     <footer className="border-t border-gray-200 mt-auto">
