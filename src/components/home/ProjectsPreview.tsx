@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { AnimatedButton } from "@/components/ui/animated-button";
 
 export default function ProjectsPreview() {
   const featuredProjects = [
@@ -49,14 +50,13 @@ export default function ProjectsPreview() {
         ))}
       </div>
 
-      {/* View All Projects Link */}
+      {/* View All Projects Button */}
       <div className="text-right">
-        <Link 
-          href="/projects"
-          className="text-gray-500 hover:text-gray-700 text-sm transition-colors"
-        >
-          View All Projects
-        </Link>
+        <AnimatedButton>
+          <Link href="/projects">
+            View All Projects
+          </Link>
+        </AnimatedButton>
       </div>
     </section>
   );

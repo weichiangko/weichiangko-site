@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { AnimatedButton } from "@/components/ui/animated-button";
 
 export default function AboutPreview() {
   return (
@@ -64,14 +65,13 @@ export default function AboutPreview() {
         </div>
       </div>
 
-      {/* View Full Experience Link */}
+      {/* View Full Experience Button */}
       <div className="text-right">
-        <Link 
-          href="/about"
-          className="text-gray-500 hover:text-gray-700 text-sm transition-colors"
-        >
-          View Full Experience
-        </Link>
+        <AnimatedButton>
+          <Link href="/about">
+            View Full Experience
+          </Link>
+        </AnimatedButton>
       </div>
     </section>
   );

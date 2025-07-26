@@ -1,12 +1,11 @@
 "use client";
 
-import Image from "next/image";
-import Link from "next/link";
 import { useState } from "react";
 import PageFooter from "@/components/layout/PageFooter";
 import CTASection from "@/components/home/CTASection";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import ProjectCard from "@/components/projects/ProjectCard";
 
 const projects = [
   {
@@ -74,31 +73,6 @@ const projects = [
   }
 ];
 
-const ProjectCard = ({ project }: { project: typeof projects[0] }) => (
-  <Link 
-    key={project.id} 
-    href={`/projects/${project.id}`}
-    className="group block bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300"
-  >
-    <div className="aspect-[4/3] bg-gray-100 overflow-hidden">
-      <Image
-        src={project.image}
-        alt={project.title}
-        width={600}
-        height={450}
-        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-      />
-    </div>
-    <div className="p-8">
-      <h3 className="text-xl font-semibold text-gray-900 mb-3 group-hover:text-gray-600 transition-colors">
-        {project.title}
-      </h3>
-      <p className="text-sm font-medium text-gray-500">
-        {project.category}
-      </p>
-    </div>
-  </Link>
-);
 
 export default function ProjectsPage() {
   const categories = ["All", "Design", "Development", "Experience"];
@@ -158,7 +132,7 @@ export default function ProjectsPage() {
           {/* Projects Grid */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-20">
             {getFilteredProjects(activeCategory).map((project) => (
-              <ProjectCard key={project.id} project={project} />
+              <ProjectCard key={project.id} project={project} variant="simple" />
             ))}
           </div>
 

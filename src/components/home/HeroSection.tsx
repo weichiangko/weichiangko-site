@@ -42,13 +42,12 @@ export default function HeroSection() {
         <div className="text-center max-w-2xl mx-auto px-6">
           {/* Main Heading */}
           <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-6">
-            Hey, I&apos;m Ben!
+            I&apos;m Ben! A Designer
           </h1>
           
           {/* Description */}
           <p className="text-lg md:text-xl text-gray-600 leading-relaxed max-w-xl mx-auto">
-            I&apos;m Ben Ko, a passionate Creative Designer with multiple hats as you will see below. I focus on creating intuitive, 
-            user-friendly, and visually engaging digital experiences that solve real problems and deliver measurable results.
+            Bridging pixels and logic to turn problems into products.
           </p>
         </div>
       </div>

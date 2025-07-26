@@ -4,6 +4,8 @@ import Link from "next/link";
 import { ProjectDetail as ProjectDetailType, PROJECT_DETAILS } from "@/lib/projects";
 import PageFooter from "@/components/layout/PageFooter";
 import CTASection from "@/components/home/CTASection";
+import ProjectCard from "@/components/projects/ProjectCard";
+import { AnimatedButton } from "@/components/ui/animated-button";
 
 interface ProjectDetailProps {
   project: ProjectDetailType;
@@ -187,45 +189,20 @@ export default function ProjectDetail({ project }: ProjectDetailProps) {
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
               {otherProjects.map((otherProject) => (
-                <Link
+                <ProjectCard
                   key={otherProject.id}
-                  href={`/projects/${otherProject.slug}`}
-                  className="group cursor-pointer"
-                >
-                  <div className="bg-white rounded-xl p-6 shadow-sm group-hover:shadow-md transition-shadow">
-                    <div className="rounded-lg overflow-hidden mb-4 bg-gray-100">
-                      <Image
-                        src={otherProject.image}
-                        alt={otherProject.title}
-                        width={500}
-                        height={300}
-                        className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
-                      />
-                    </div>
-                    <h3 className="text-xl font-semibold text-gray-900 group-hover:text-gray-700 transition-colors mb-2">
-                      {otherProject.title}
-                    </h3>
-                    <p className="text-gray-600 text-sm mb-4">
-                      {otherProject.description}
-                    </p>
-                    <div className="flex items-center gap-4 text-xs text-gray-500">
-                      <span className="px-2 py-1 bg-gray-100 rounded-full">
-                        {otherProject.category}
-                      </span>
-                      <span>{otherProject.completionDate}</span>
-                    </div>
-                  </div>
-                </Link>
+                  project={otherProject}
+                  variant="simple"
+                />
               ))}
             </div>
 
             <div className="text-right">
-              <Link
-                href="/projects"
-                className="text-gray-500 hover:text-gray-700 text-sm transition-colors"
-              >
-                View All Projects
-              </Link>
+              <AnimatedButton>
+                <Link href="/projects">
+                  View All Projects
+                </Link>
+              </AnimatedButton>
             </div>
           </section>
 

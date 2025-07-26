@@ -44,7 +44,7 @@ export default function Sidebar() {
         <ul className="space-y-2 md:space-y-3 lg:space-y-2">
           {NAVIGATION.map((item) => {
             const Icon = iconMap[item.icon as keyof typeof iconMap];
-            const isActive = pathname === item.href;
+            const isActive = pathname === item.href || (item.href === '/projects' && pathname.startsWith('/projects/'));
             
             return (
               <li key={item.name}>
