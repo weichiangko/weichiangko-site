@@ -20,7 +20,7 @@ export default function ProjectDetail({ project }: ProjectDetailProps) {
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col">
       <div className="flex-1">
-        <div className="max-w-6xl mx-auto px-6">
+        <div className="max-w-5xl mx-auto px-6">
           {/* Hero Section */}
           <section className="py-8">
             {/* Back to Projects */}
@@ -43,7 +43,7 @@ export default function ProjectDetail({ project }: ProjectDetailProps) {
                 src={project.image}
                 alt={project.title}
                 width={1200}
-                height={600}
+                height={675}
                 className="w-full h-auto object-cover"
                 priority
               />
