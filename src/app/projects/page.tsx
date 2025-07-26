@@ -94,7 +94,7 @@ export default function ProjectsPage() {
         <div className="max-w-5xl mx-auto px-8 py-12">
           {/* Header */}
           <div className="mb-16">
-            <h1 className="text-5xl font-bold text-gray-900 mb-8">Projects</h1>
+            <h1 className="text-5xl font-bold text-gray-900 my-8">Projects</h1>
             <p className="text-lg text-gray-600 leading-relaxed max-w-4xl">
               My projects reflect my commitment to solving complex challenges through design. Whether it&apos;s building a travel 
               platform or enhancing a real estate website, each project is a blend of innovation, strategy, and user-first design 

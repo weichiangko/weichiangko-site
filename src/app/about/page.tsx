@@ -14,7 +14,7 @@ export default function AboutPage() {
       <div className="flex-1">
         <div className="max-w-5xl mx-auto px-8 py-12">
           {/* Header */}
-          <div className="mb-8">
+          <div className="my-8">
             <h1 className="text-5xl font-bold text-gray-900">About Me</h1>
           </div>
 

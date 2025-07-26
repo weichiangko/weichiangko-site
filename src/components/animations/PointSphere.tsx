@@ -18,12 +18,13 @@ export default function PointSphere() {
   // Create point sphere geometry with varied sizes and grayscales
   const createPointSphere = () => {
     // Responsive radius - larger for desktop, smaller for mobile
-    const radius = window.innerWidth < 768 ? 250 : 400; // Mobile: 250, Desktop: 400 units
+    const radius = window.innerWidth < 768 ? 190 : 400; // Mobile: 190, Desktop: 400 units
     const particleCount = window.innerWidth < 768 ? 800 : 1500; // Mobile responsive
     
     const positions = new Float32Array(particleCount * 3);
     const colors = new Float32Array(particleCount * 3);
     const sizes = new Float32Array(particleCount);
+    const distanceFromCenter = new Float32Array(particleCount);
     
     // Generate points on sphere surface with varied properties
     for (let i = 0; i < particleCount; i++) {
@@ -44,16 +45,20 @@ export default function PointSphere() {
       colors[i3 + 1] = grayValue; // G
       colors[i3 + 2] = grayValue; // B
       
-      // Varied sizes - adjusted for mobile/desktop consistency
-      const baseSize = window.innerWidth < 768 ? 0.9 : 1.5; // Mobile: smaller base size
-      const sizeRange = window.innerWidth < 768 ? 1.2 : 2; // Mobile: smaller range
+      // Varied sizes - consistent across all devices
+      const baseSize = 1.5; // Same base size for all devices
+      const sizeRange = 2; // Same size range for all devices
       sizes[i] = baseSize + Math.random() * sizeRange;
+      
+      // All particles are on surface
+      distanceFromCenter[i] = 1.0;
     }
     
     const geometry = new THREE.BufferGeometry();
     geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
     geometry.setAttribute('customColor', new THREE.BufferAttribute(colors, 3));
     geometry.setAttribute('size', new THREE.BufferAttribute(sizes, 1));
+    geometry.setAttribute('distanceRatio', new THREE.BufferAttribute(distanceFromCenter, 1));
     
     return geometry;
   };
@@ -104,7 +109,7 @@ export default function PointSphere() {
       1000
     );
     // Responsive camera position based on screen size (moved closer to enlarge sphere)
-    camera.position.z = window.innerWidth < 768 ? 500 : 800; // Mobile: 500, Desktop: 800
+    camera.position.z = window.innerWidth < 768 ? 450 : 800; // Mobile: 450, Desktop: 800
     cameraRef.current = camera;
 
     // Renderer setup
@@ -127,24 +132,31 @@ export default function PointSphere() {
     const material = new THREE.ShaderMaterial({
       uniforms: {
         time: { value: 0 },
-        pixelRatio: { value: window.devicePixelRatio }
+        pixelRatio: { value: 1.0 }, // Fixed to 1.0 for consistent sizing across devices
+        isMobile: { value: window.innerWidth < 768 ? 1.0 : 0.0 }
       },
       vertexShader: `
         attribute float size;
         attribute vec3 customColor;
+        attribute float distanceRatio;
         varying vec3 vColor;
+        varying float vDistanceRatio;
         uniform float time;
         uniform float pixelRatio;
+        uniform float isMobile;
         
         void main() {
           vColor = customColor;
+          vDistanceRatio = distanceRatio;
           vec4 mvPosition = modelViewMatrix * vec4(position, 1.0);
-          gl_PointSize = size * pixelRatio * (300.0 / -mvPosition.z);
+          gl_PointSize = size * 1.275; // Reduced by 15% for smaller particles
           gl_Position = projectionMatrix * mvPosition;
         }
       `,
       fragmentShader: `
         varying vec3 vColor;
+        varying float vDistanceRatio;
+        uniform float isMobile;
         
         void main() {
           float r = 0.0;
@@ -155,9 +167,19 @@ export default function PointSphere() {
             discard;
           }
           
-          // Smooth circular falloff for round dots with controlled transparency
-          float alpha = (1.0 - smoothstep(0.6, 1.0, r)) * 0.5; // Max 50% opacity
-          gl_FragColor = vec4(vColor, alpha);
+          // Base transparency
+          float baseAlpha = (1.0 - smoothstep(0.6, 1.0, r)) * 0.3; // Max 30% opacity
+          
+          // Mobile-specific transparency reduction for inner particles
+          float finalAlpha = baseAlpha;
+          if (isMobile > 0.5 && vDistanceRatio < 0.8) {
+            // Gradual transparency reduction from 80% radius to center
+            float fadeRatio = vDistanceRatio / 0.8; // 0-1 scale within the fade zone
+            float transparencyMultiplier = 0.5 + 0.5 * fadeRatio; // 50% at center, 100% at 80% radius
+            finalAlpha *= transparencyMultiplier;
+          }
+          
+          gl_FragColor = vec4(vColor, finalAlpha);
         }
       `,
       transparent: true,

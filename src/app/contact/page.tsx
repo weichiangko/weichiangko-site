@@ -14,7 +14,7 @@ export default function ContactPage() {
         <div className="max-w-5xl mx-auto px-8 py-12">
           {/* Header */}
           <div className="mb-16">
-            <h1 className="text-5xl font-bold text-gray-900 mb-6">Let&apos;s Connect!</h1>
+            <h1 className="text-5xl font-bold text-gray-900 my-8">Let&apos;s Connect!</h1>
             <p className="text-lg text-gray-600 leading-relaxed max-w-4xl">
               Whether it&apos;s brainstorming a new project, discussing design optimizations, or just sharing creative insights, I&apos;m always 
               excited to collaborate. Reach out to me and let&apos;s craft something exceptional — together!

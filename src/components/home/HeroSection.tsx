@@ -3,6 +3,7 @@
 import { Suspense } from "react";
 import dynamic from "next/dynamic";
 import Link from "next/link";
+import { ChevronDown } from "lucide-react";
 
 // Dynamically import PointSphere to avoid SSR issues
 const PointSphere = dynamic(() => import("@/components/animations/PointSphere"), {
@@ -38,11 +39,11 @@ export default function HeroSection() {
       </div>
       
       {/* Hero Content */}
-      <div className="relative z-10 flex items-center justify-center min-h-screen">
+      <div className="relative z-10 flex items-center justify-center min-h-screen md:translate-y-0 -translate-y-8">
         <div className="text-center max-w-2xl mx-auto px-6">
           {/* Main Heading */}
           <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-            I&apos;m Ben! A Designer
+            I&apos;m Ben! <br className="md:hidden" />A Designer
           </h1>
           
           {/* Description */}
@@ -50,6 +51,14 @@ export default function HeroSection() {
             Bridging pixels and logic to turn problems into products.
           </p>
         </div>
+      </div>
+
+      {/* Bouncing Arrow Down - Scroll Indicator */}
+      <div className="absolute bottom-16 md:bottom-8 left-1/2 transform -translate-x-1/2 z-20">
+        <ChevronDown 
+          className="w-6 h-6 md:w-7 md:h-7 animate-bounce text-gray-600" 
+          strokeWidth={2}
+        />
       </div>
     </section>
   );
