@@ -30,7 +30,7 @@ export default function RootLayout({
       >
         <div className="flex min-h-screen bg-gray-50">
           <ResponsiveSidebar />
-          <main className="flex-1 md:ml-[120px] lg:ml-72 ml-0 pt-24 md:pt-6">
+          <main className="flex-1 md:ml-[120px] lg:ml-72 ml-0 pt-12 md:pt-6">
             {children}
           </main>
         </div>

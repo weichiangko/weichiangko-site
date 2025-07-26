@@ -44,8 +44,10 @@ export default function PointSphere() {
       colors[i3 + 1] = grayValue; // G
       colors[i3 + 2] = grayValue; // B
       
-      // Varied sizes (1.5 to 3.5 pixels)
-      sizes[i] = 1.5 + Math.random() * 2;
+      // Varied sizes - adjusted for mobile/desktop consistency
+      const baseSize = window.innerWidth < 768 ? 0.9 : 1.5; // Mobile: smaller base size
+      const sizeRange = window.innerWidth < 768 ? 1.2 : 2; // Mobile: smaller range
+      sizes[i] = baseSize + Math.random() * sizeRange;
     }
     
     const geometry = new THREE.BufferGeometry();
@@ -102,7 +104,7 @@ export default function PointSphere() {
       1000
     );
     // Responsive camera position based on screen size (moved closer to enlarge sphere)
-    camera.position.z = window.innerWidth < 768 ? 500 : 700; // Mobile: 500, Desktop: 700
+    camera.position.z = window.innerWidth < 768 ? 500 : 800; // Mobile: 500, Desktop: 800
     cameraRef.current = camera;
 
     // Renderer setup
