@@ -4,6 +4,7 @@ import { Suspense } from "react";
 import dynamic from "next/dynamic";
 import Link from "next/link";
 import { ChevronDown } from "lucide-react";
+import RotatingText from "@/components/animations/RotatingText";
 
 // Dynamically import PointSphere to avoid SSR issues
 const PointSphere = dynamic(() => import("@/components/animations/PointSphere"), {
@@ -12,6 +13,8 @@ const PointSphere = dynamic(() => import("@/components/animations/PointSphere"),
 });
 
 export default function HeroSection() {
+  const rotatingWords = ["designer", "developer", "creator", "shuttler", "gearhead"];
+  
   return (
     <section className="relative min-h-screen overflow-hidden">
       {/* Top Right Contact Button - Desktop */}
@@ -42,8 +45,12 @@ export default function HeroSection() {
       <div className="relative z-10 flex items-center justify-center min-h-screen md:translate-y-0 -translate-y-8">
         <div className="text-center max-w-2xl mx-auto px-6">
           {/* Main Heading */}
-          <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-            I&apos;m Ben! <br className="md:hidden" />A Designer
+          <h1 className="text-4xl md:text-5xl font-bold text-gray-600 mb-6">
+            I&apos;m a{" "}
+            <RotatingText 
+              words={rotatingWords} 
+              className="text-gray-900" 
+            />
           </h1>
           
           {/* Description */}
