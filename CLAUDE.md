@@ -75,7 +75,7 @@ src/
 │   ├── animations/ (PointSphere, RotatingText)
 │   └── common/
 ├── lib/
-│   ├── projects/ (natours.ts, nexter.ts, omnifood.ts, index.ts)
+│   ├── projects/ (natours.ts, nexter.ts, mionext.ts, index.ts)
 │   ├── constants.ts
 │   ├── emailjs.ts
 │   └── utils.ts
@@ -97,7 +97,7 @@ src/
 ## Mock Data
 
 ### Projects
-- Omnifood: Revolutionizing Personalized Meal Delivery (Web Development)
+- Mionext: Revolutionizing Personalized Meal Delivery (Web Development)
 - Natours: Elevating Adventure Travel Through Innovative Web Solutions (UX/UI Design)
 - Nexter: Redefining Real Estate with Cutting-Edge Web Design (UX/UI Design)
 - Travel Planning Platform (Side Project)

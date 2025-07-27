@@ -6,29 +6,18 @@ import CTASection from "@/components/home/CTASection";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import ProjectCard from "@/components/projects/ProjectCard";
+import { PROJECT_DETAILS } from "@/lib/projects";
 
 const projects = [
-  {
-    id: "omnifood",
-    title: "Omnifood: Revolutionizing Personalized Meal Delivery",
-    category: "Development",
-    image: "/images/projects/omnifood.jpg",
-    description: "A comprehensive meal delivery platform with AI-powered personalization"
-  },
-  {
-    id: "natours", 
-    title: "Elevating Adventure Travel Through Innovative Web Solutions",
-    category: "UX/UI Design",
-    image: "/images/projects/natours.jpg",
-    description: "Adventure travel booking platform with immersive user experience"
-  },
-  {
-    id: "nexter",
-    title: "Nexter: Redefining Real Estate with Cutting-Edge Web Design", 
-    category: "UX/UI Design",
-    image: "/images/projects/nexter.jpg",
-    description: "Modern real estate platform with advanced search and visualization"
-  },
+  // Detailed projects from PROJECT_DETAILS
+  ...Object.values(PROJECT_DETAILS).map(project => ({
+    id: project.id,
+    title: project.title,
+    category: project.category === "Web Development" ? "Development" : project.category,
+    image: project.image,
+    description: project.description
+  })),
+  // Additional showcase projects
   {
     id: "travel-planning",
     title: "Simplifying Travel Planning with Smart, User-Focused Solutions",

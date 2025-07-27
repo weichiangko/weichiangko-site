@@ -16,13 +16,13 @@ export const NAVIGATION = [
 
 export const PROJECTS = [
   {
-    id: "omnifood",
-    title: "Omnifood: Revolutionizing Personalized Meal Delivery",
+    id: "mionext",
+    title: "Mionext: Revolutionizing Personalized Meal Delivery",
     category: "Web Development",
-    client: "Omnifood",
+    client: "Mionext",
     description: "A comprehensive meal delivery platform with AI-powered personalization",
-    image: "/images/projects/omnifood.jpg",
-    slug: "omnifood",
+    image: "/images/projects/mionext.jpg",
+    slug: "mionext",
   },
   {
     id: "natours",

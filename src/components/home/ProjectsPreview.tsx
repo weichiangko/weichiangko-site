@@ -5,11 +5,11 @@ import ProjectCard from "@/components/projects/ProjectCard";
 export default function ProjectsPreview() {
   const featuredProjects = [
     {
-      id: "omnifood",
-      title: "Omnifood: Revolutionizing Personalized Meal Delivery",
+      id: "mionext",
+      title: "Mionext: Revolutionizing Personalized Meal Delivery",
       category: "Web Development",
-      image: "/images/projects/omnifood.jpg",
-      href: "/projects/omnifood",
+      image: "/images/projects/mionext.jpg",
+      href: "/projects/mionext",
     },
     {
       id: "natours",

@@ -18,26 +18,127 @@ interface ProjectDetailProps {
 // MDX components for styling
 const components = {
   ProjectImage,
+  // Headings - 標題層次
+  h1: ({ children }: { children: React.ReactNode }) => (
+    <h1 className="text-4xl font-bold text-gray-900 mb-6 mt-8">
+      {children}
+    </h1>
+  ),
   h2: ({ children }: { children: React.ReactNode }) => (
-    <h2 className="text-2xl font-semibold text-gray-900 mb-4">
+    <h2 className="text-2xl font-semibold text-gray-900 mb-4 mt-6">
       {children}
     </h2>
   ),
+  h3: ({ children }: { children: React.ReactNode }) => (
+    <h3 className="text-xl font-semibold text-gray-900 mb-3 mt-5">
+      {children}
+    </h3>
+  ),
+  h4: ({ children }: { children: React.ReactNode }) => (
+    <h4 className="text-lg font-medium text-gray-900 mb-2 mt-4">
+      {children}
+    </h4>
+  ),
+  h5: ({ children }: { children: React.ReactNode }) => (
+    <h5 className="text-base font-medium text-gray-900 mb-2 mt-3">
+      {children}
+    </h5>
+  ),
+  h6: ({ children }: { children: React.ReactNode }) => (
+    <h6 className="text-sm font-medium text-gray-900 mb-2 mt-3">
+      {children}
+    </h6>
+  ),
+  // Paragraphs and text
   p: ({ children }: { children: React.ReactNode }) => (
-    <p className="text-gray-700 leading-relaxed">
+    <p className="text-gray-700 leading-relaxed mb-4">
       {children}
     </p>
   ),
+  // Lists
   ul: ({ children }: { children: React.ReactNode }) => (
-    <ul className="space-y-3">
+    <ul className="space-y-3 mb-4">
       {children}
     </ul>
+  ),
+  ol: ({ children }: { children: React.ReactNode }) => (
+    <ol className="space-y-3 mb-4 list-decimal list-inside">
+      {children}
+    </ol>
   ),
   li: ({ children }: { children: React.ReactNode }) => (
     <li className="flex items-start gap-3">
       <div className="w-2 h-2 bg-gray-900 rounded-full mt-2 flex-shrink-0" />
       <span className="text-gray-700">{children}</span>
     </li>
+  ),
+  // Emphasis and strong
+  em: ({ children }: { children: React.ReactNode }) => (
+    <em className="italic text-gray-700">{children}</em>
+  ),
+  strong: ({ children }: { children: React.ReactNode }) => (
+    <strong className="font-semibold text-gray-900">{children}</strong>
+  ),
+  // Code
+  code: ({ children }: { children: React.ReactNode }) => (
+    <code className="bg-gray-100 text-gray-800 px-2 py-1 rounded text-sm font-mono">
+      {children}
+    </code>
+  ),
+  pre: ({ children }: { children: React.ReactNode }) => (
+    <pre className="bg-gray-100 p-4 rounded-lg overflow-x-auto mb-4">
+      <code className="text-sm font-mono text-gray-800">{children}</code>
+    </pre>
+  ),
+  // Blockquotes
+  blockquote: ({ children }: { children: React.ReactNode }) => (
+    <blockquote className="border-l-4 border-gray-300 pl-4 py-2 mb-4 italic text-gray-600 bg-gray-50 rounded-r">
+      {children}
+    </blockquote>
+  ),
+  // Horizontal rule
+  hr: () => <hr className="border-gray-200 my-8" />,
+  // Links
+  a: ({ children, href }: { children: React.ReactNode; href?: string }) => (
+    <a 
+      href={href} 
+      className="text-blue-600 hover:text-blue-800 underline transition-colors"
+      target={href?.startsWith('http') ? '_blank' : undefined}
+      rel={href?.startsWith('http') ? 'noopener noreferrer' : undefined}
+    >
+      {children}
+    </a>
+  ),
+  // Tables
+  table: ({ children }: { children: React.ReactNode }) => (
+    <div className="overflow-x-auto mb-4">
+      <table className="min-w-full border border-gray-200 rounded-lg">
+        {children}
+      </table>
+    </div>
+  ),
+  thead: ({ children }: { children: React.ReactNode }) => (
+    <thead className="bg-gray-50">
+      {children}
+    </thead>
+  ),
+  tbody: ({ children }: { children: React.ReactNode }) => (
+    <tbody className="divide-y divide-gray-200">
+      {children}
+    </tbody>
+  ),
+  tr: ({ children }: { children: React.ReactNode }) => (
+    <tr>{children}</tr>
+  ),
+  th: ({ children }: { children: React.ReactNode }) => (
+    <th className="px-4 py-3 text-left text-sm font-semibold text-gray-900">
+      {children}
+    </th>
+  ),
+  td: ({ children }: { children: React.ReactNode }) => (
+    <td className="px-4 py-3 text-sm text-gray-700">
+      {children}
+    </td>
   ),
 };
 
@@ -70,7 +171,7 @@ export default async function ProjectDetail({ project }: ProjectDetailProps) {
             {/* Back to Projects */}
             <Link
               href="/projects"
-              className="inline-flex items-center gap-2 text-sm text-gray-600 hover:text-gray-900 mb-8 transition-colors"
+              className="inline-flex items-center gap-2 text-sm text-gray-600 hover:text-gray-900 mt-6 mb-8 transition-colors"
             >
               <ArrowLeft className="w-4 h-4" />
               Back to Projects
