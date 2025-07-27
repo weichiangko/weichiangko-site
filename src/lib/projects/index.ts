@@ -13,17 +13,9 @@ export interface ProjectDetail {
   slug: string;
   timeline: string;
   role: string;
+  company: string;
   award?: string;
-  overview: {
-    myApproach: string;
-    visionAndInnovation: string;
-    identifyingChallenges: string;
-    resolvingComplexProblems: string;
-    userCentricDesign: string;
-    detailedPagesAndFeatures: string[];
-    accessibilityAndOptimization: string;
-    conclusion: string;
-  };
+  contentFile: string;
   images: string[];
 }
 
