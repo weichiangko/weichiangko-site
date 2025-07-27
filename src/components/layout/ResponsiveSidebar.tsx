@@ -106,10 +106,10 @@ export default function ResponsiveSidebar() {
               exit={{ 
                 scale: 0.85,
                 opacity: 0,
-                transition: { duration: 0.7, ease: "easeOut" }
+                transition: { duration: 0.15, ease: "easeOut" }
               }}
               transition={{ 
-                duration: 0.25, 
+                duration: 0.15, 
                 ease: "easeOut"
               }}
               className="absolute bg-white"

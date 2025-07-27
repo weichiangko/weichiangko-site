@@ -21,16 +21,16 @@ This is Ben Ko's portfolio website built with Next.js 15. The site showcases his
 
 ## Tech Stack
 
-- **Framework**: Next.js 15 with App Router
+- **Framework**: Next.js 15.3.4 with App Router
 - **Language**: TypeScript with strict mode
+- **Runtime**: React 19
 - **Styling**: Tailwind CSS v4 with shadcn/ui components
-- **Fonts**: Geist Sans and Geist Mono
 - **UI Components**: shadcn/ui with "new-york" style preset
 - **Icons**: Lucide React
-- **3D Graphics**: Three.js for hero section animation
-- **Animation**: Framer Motion for page transitions and interactions
-- **Email Service**: EmailJS for contact form functionality
-- **Mock Images**: Unsplash API for project placeholders
+- **3D Graphics**: Three.js v0.178.0 for hero section animation
+- **Animation**: Framer Motion v12.23.3 and GSAP v3.13.0
+- **Email Service**: EmailJS v4.4.1 for contact form functionality
+- **Utilities**: clsx, tailwind-merge, class-variance-authority
 
 ## Site Structure
 
@@ -58,23 +58,41 @@ This is Ben Ko's portfolio website built with Next.js 15. The site showcases his
 ```
 src/
 ├── app/ (Next.js App Router pages)
+│   ├── about/page.tsx
+│   ├── contact/page.tsx
+│   ├── projects/
+│   │   ├── [slug]/page.tsx
+│   │   └── page.tsx
+│   ├── layout.tsx
+│   ├── page.tsx
+│   └── globals.css
 ├── components/
-│   ├── ui/ (shadcn/ui components)
-│   ├── layout/ (Header, Footer, Sidebar)
-│   ├── home/ (HeroSection, AboutPreview, ProjectsPreview, SkillsStack)
-│   ├── projects/ (ProjectCard, ProjectFilter, ProjectGrid)
+│   ├── ui/ (Timeline, animated-button, button, select, tabs)
+│   ├── layout/ (Footer, PageFooter, ResponsiveSidebar, Sidebar)
+│   ├── home/ (AboutPreview, CTASection, HeroSection, ProjectsPreview)
+│   ├── projects/ (ProjectCard, ProjectDetail)
 │   ├── contact/ (ContactForm)
-│   └── animations/ (PointSphere, PageTransition)
-├── lib/ (utils, emailjs, constants)
-└── public/ (images, icons, resume.pdf)
+│   ├── animations/ (PointSphere, RotatingText)
+│   └── common/
+├── lib/
+│   ├── projects/ (natours.ts, nexter.ts, omnifood.ts, index.ts)
+│   ├── constants.ts
+│   ├── emailjs.ts
+│   └── utils.ts
+└── public/
+    ├── images/
+    │   ├── avatar.jpg
+    │   └── projects/
+    └── icons/ (file.svg, globe.svg, next.svg, vercel.svg, window.svg)
 ```
 
 ### 4. Key Features
 - **Project Filtering**: Segmented controller with categories (UX/UI Design, Web Development, Side Project)
-- **Contact Form**: EmailJS integration with validation
+- **Contact Form**: EmailJS v4.4.1 integration with validation
 - **Responsive Design**: Mobile-first approach (320px+, 768px+, 1024px+)
-- **Animations**: Framer Motion page transitions and interactions
-- **Image Management**: Unsplash integration with Next.js Image optimization
+- **Animations**: Framer Motion v12.23.3 page transitions and GSAP v3.13.0 animations
+- **3D Graphics**: Three.js v0.178.0 point sphere animation with RotatingText component
+- **Modern UI**: shadcn/ui components with Tailwind CSS v4
 
 ## Mock Data
 
@@ -95,7 +113,6 @@ src/
 NEXT_PUBLIC_EMAILJS_SERVICE_ID=your_service_id
 NEXT_PUBLIC_EMAILJS_TEMPLATE_ID=your_template_id
 NEXT_PUBLIC_EMAILJS_PUBLIC_KEY=your_public_key
-NEXT_PUBLIC_UNSPLASH_ACCESS_KEY=your_unsplash_key
 ```
 
 ## Performance & Accessibility

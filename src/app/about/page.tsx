@@ -1,7 +1,9 @@
 import { Metadata } from "next";
+import Image from "next/image";
 import PageFooter from "@/components/layout/PageFooter";
 import CTASection from "@/components/home/CTASection";
 import Timeline from "@/components/ui/Timeline";
+import TechStack from "@/components/ui/TechStack";
 
 export const metadata: Metadata = {
   title: "About - Ben Ko",
@@ -37,6 +39,44 @@ export default function AboutPage() {
               </div>
             </div>
           </section>
+          
+          {/* Experience Section */}
+          <section className="py-12">
+            <div className="mb-12">
+              <h2 className="text-4xl font-bold text-gray-900">Experience</h2>
+            </div>
+            
+            <div className="bg-white rounded-xl p-8 shadow-sm">
+              <Timeline 
+                items={[
+                  {
+                    title: "MiTAC International Corp.",
+                    subtitle: "Senior UI Engineer",
+                    date: "March 2021 - Present",
+                    logo: <Image src="/images/logos/mitac.png" alt="MiTAC" width={32} height={32} className="object-contain" />
+                  },
+                  {
+                    title: "AndroVideo Inc.",
+                    subtitle: "Senior Web Designer",
+                    date: "August 2019 - March 2021",
+                    logo: <Image src="/images/logos/androvideo.png" alt="AndroVideo" width={32} height={32} className="object-contain" />
+                  },
+                  {
+                    title: "HTC Corporation",
+                    subtitle: "Interaction Designer",
+                    date: "May 2019 - August 2019",
+                    logo: <Image src="/images/logos/htc.png" alt="HTC" width={32} height={32} className="object-contain" />
+                  },
+                  {
+                    title: "HIWIN Technologies Corp.",
+                    subtitle: "UI/UX Designer",
+                    date: "July 2017 - February 2019",
+                    logo: <Image src="/images/logos/hiwin.png" alt="HIWIN" width={32} height={32} className="object-contain" />
+                  }
+                ]}
+              />
+            </div>
+          </section>
 
           {/* Education Section */}
           <section className="py-12">
@@ -62,38 +102,26 @@ export default function AboutPage() {
             </div>
           </section>
 
-          {/* Experience Section */}
+          {/* Achievements Section */}
           <section className="py-12">
             <div className="mb-12">
-              <h2 className="text-4xl font-bold text-gray-900">Experience</h2>
+              <h2 className="text-4xl font-bold text-gray-900">Achievements</h2>
             </div>
             
             <div className="bg-white rounded-xl p-8 shadow-sm">
               <Timeline 
                 items={[
                   {
-                    title: "Google",
-                    subtitle: "UX Designer",
-                    date: "January 2022 - Present",
-                    logo: <span className="text-sm text-gray-500">IMG</span>
+                    title: "2024 IF Design Award",
+                    subtitle: "MioNext App and MiSentry Series",
+                    date: "2024",
+                    logo: <Image src="/images/logos/if-design-award.png" alt="IF Design Award" width={32} height={32} className="object-contain" />
                   },
                   {
-                    title: "Adobe",
-                    subtitle: "Web Designer",
-                    date: "June 2019 - December 2021",
-                    logo: <span className="text-sm text-gray-500">IMG</span>
-                  },
-                  {
-                    title: "HubSpot",
-                    subtitle: "SEO Specialist",
-                    date: "July 2017 - May 2019",
-                    logo: <span className="text-sm text-gray-500">IMG</span>
-                  },
-                  {
-                    title: "Spotify",
-                    subtitle: "UI/UX Designer Intern",
-                    date: "January 2017 - June 2017",
-                    logo: <span className="text-sm text-gray-500">IMG</span>
+                    title: "2023 IF Design Award",
+                    subtitle: "E-mirror MiVue R850 series",
+                    date: "2023",
+                    logo: <Image src="/images/logos/if-design-award.png" alt="IF Design Award" width={32} height={32} className="object-contain" />
                   }
                 ]}
               />
@@ -106,56 +134,40 @@ export default function AboutPage() {
               <h2 className="text-4xl font-bold text-gray-900">Tech Stack</h2>
             </div>
             
-            <div className="bg-white rounded-xl p-8 shadow-sm">
-            <div className="grid grid-cols-3 gap-12">
-              <div className="flex items-center gap-6">
-                <div className="w-16 h-16 bg-orange-100 rounded-xl flex items-center justify-center">
-                  <svg className="w-8 h-8 text-orange-600" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M1.5 0h21l-1.91 21.563L11.977 24l-8.564-2.438L1.5 0zm7.031 9.75l-.232-2.718 10.059.003.23-2.622L5.412 4.41l.698 8.01h9.126l-.326 3.426-2.91.804-2.955-.81-.188-2.11H6.248l.33 4.171L12 19.351l5.379-1.443.744-8.157H8.531z"/>
-                  </svg>
-                </div>
-                <span className="text-xl font-medium text-gray-900">HTML5</span>
-              </div>
-              <div className="flex items-center gap-6">
-                <div className="w-16 h-16 bg-purple-100 rounded-xl flex items-center justify-center">
-                  <svg className="w-8 h-8 text-purple-600" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M15.852 8.981h-4.588V0h4.588c2.476 0 4.49 2.014 4.49 4.49s-2.014 4.491-4.49 4.491zM12.735 7.51h3.117c1.665 0 3.019-1.355 3.019-3.019s-1.354-3.019-3.019-3.019h-3.117V7.51zm0 1.471H8.148c-2.476 0-4.49-2.015-4.49-4.491S5.672 0 8.148 0h4.588v8.981zm-4.587-7.51c-1.665 0-3.019 1.355-3.019 3.019s1.354 3.02 3.019 3.02h3.117V1.471H8.148zm4.587 15.019H8.148c-2.476 0-4.49-2.014-4.49-4.49s2.014-4.49 4.49-4.49h4.588v8.98zM8.148 8.981c-1.665 0-3.019 1.355-3.019 3.019s1.355 3.019 3.019 3.019h3.117V8.981H8.148zm7.704 0c2.476 0 4.49 2.015 4.49 4.491s-2.014 4.49-4.49 4.49-4.49-2.015-4.49-4.491 2.014-4.49 4.49-4.49zm0 7.51c1.665 0 3.019-1.354 3.019-3.019s-1.355-3.019-3.019-3.019-3.019 1.355-3.019 3.019 1.354 3.019 3.019 3.019z"/>
-                  </svg>
-                </div>
-                <span className="text-xl font-medium text-gray-900">Figma</span>
-              </div>
-              <div className="flex items-center gap-6">
-                <div className="w-16 h-16 bg-black rounded-xl flex items-center justify-center">
-                  <svg className="w-8 h-8 text-white" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M4 12l1.41 1.41L11 7.83V20h2V7.83l5.58 5.59L20 12l-8-8-8 8z"/>
-                  </svg>
-                </div>
-                <span className="text-xl font-medium text-gray-900">Framer</span>
-              </div>
-              <div className="flex items-center gap-6">
-                <div className="w-16 h-16 bg-red-100 rounded-xl flex items-center justify-center">
-                  <svg className="w-8 h-8 text-red-600" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-                  </svg>
-                </div>
-                <span className="text-xl font-medium text-gray-900">Hotjar</span>
-              </div>
-              <div className="flex items-center gap-6">
-                <div className="w-16 h-16 bg-gray-100 rounded-xl flex items-center justify-center">
-                  <span className="text-2xl font-bold text-gray-700">N</span>
-                </div>
-                <span className="text-xl font-medium text-gray-900">Notion</span>
-              </div>
-              <div className="flex items-center gap-6">
-                <div className="w-16 h-16 bg-blue-100 rounded-xl flex items-center justify-center">
-                  <svg className="w-8 h-8 text-blue-600" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M1.5 0h21l-1.91 21.563L11.977 24l-8.564-2.438L1.5 0zm17.09 4.413L5.41 4.41l.213 2.622 10.125.002-.255 2.716h-6.64l.24 2.573h6.182l-.366 3.523-2.91.804-2.956-.81-.188-2.11h-2.61l.29 3.855L12 19.288l5.373-1.53L18.59 4.414z"/>
-                  </svg>
-                </div>
-                <span className="text-xl font-medium text-gray-900">CSS3</span>
-              </div>
-            </div>
-            </div>
+            <TechStack 
+              categories={[
+                {
+                  title: "Frontend",
+                  items: [
+                    { name: "React.js", iconSlug: "React" },
+                    { name: "React Native", iconSlug: "React" },
+                    { name: "JavaScript", iconSlug: "Javascript" },
+                    { name: "Next.js", iconSlug: "Nextdotjs" },
+                    { name: "Vue.js", iconSlug: "Vuedotjs" },
+                    { name: "Bootstrap", iconSlug: "Bootstrap" },
+                    { name: "Tailwind CSS", iconSlug: "Tailwindcss" },
+                    { name: "Electron", iconSlug: "Electron" }
+                  ]
+                },
+                {
+                  title: "Tools",
+                  items: [
+                    { name: "Visual Studio Code", customIconKey: "vscode", iconSize: 24 },
+                    { name: "Cursor", customIconKey: "cursor", iconSize: 24 },
+                    { name: "Claude Code", customIconKey: "claudeCode", iconSize: 24 },
+                    { name: "Git", iconSlug: "Git" },
+                    { name: "Figma", customIconKey: "figma", iconSize: 24 }
+                  ]
+                },
+                {
+                  title: "AI Integration",
+                  items: [
+                    { name: "Gemini API", customIconKey: "gemini", iconSize: 24 },
+                    { name: "Claude API", customIconKey: "claude", iconSize: 24 }
+                  ]
+                }
+              ]}
+            />
           </section>
 
           <CTASection />
