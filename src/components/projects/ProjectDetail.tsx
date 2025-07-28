@@ -6,6 +6,7 @@ import PageFooter from "@/components/layout/PageFooter";
 import CTASection from "@/components/home/CTASection";
 import ProjectCard from "@/components/projects/ProjectCard";
 import { AnimatedButton } from "@/components/ui/animated-button";
+import { Badge } from "@/components/ui/badge";
 import { readFileSync } from 'fs';
 import path from 'path';
 import { MDXRemote } from 'next-mdx-remote/rsc';
@@ -168,14 +169,21 @@ export default async function ProjectDetail({ project }: ProjectDetailProps) {
         <div className="max-w-5xl mx-auto px-6">
           {/* Hero Section */}
           <section className="py-8">
-            {/* Back to Projects */}
-            <Link
-              href="/projects"
-              className="inline-flex items-center gap-2 text-sm text-gray-600 hover:text-gray-900 mt-6 mb-8 transition-colors"
-            >
-              <ArrowLeft className="w-4 h-4" />
-              Back to Projects
-            </Link>
+            {/* Navigation Header */}
+            <div className="flex items-center justify-between mt-6 mb-8">
+              <Link
+                href="/projects"
+                className="inline-flex items-center gap-2 text-sm text-gray-600 hover:text-gray-900 transition-colors"
+              >
+                <ArrowLeft className="w-4 h-4" />
+                Back to Projects
+              </Link>
+              
+              <Badge variant="outline" className="gap-1.5 text-sm">
+                <Tag className="w-3 h-3" />
+                {project.category}
+              </Badge>
+            </div>
 
             {/* Project Title */}
             <h1 className="text-5xl font-bold text-gray-900 mb-12">
@@ -221,13 +229,6 @@ export default async function ProjectDetail({ project }: ProjectDetailProps) {
                   </div>
                 </div>
 
-                <div className="flex items-start gap-3 flex-1 basis-full md:basis-1/2 lg:basis-1/3 min-w-0">
-                  <Tag className="w-5 h-5 text-gray-600 mt-1 flex-shrink-0" />
-                  <div>
-                    <h3 className="font-semibold text-gray-900 mb-1">Category</h3>
-                    <p className="text-gray-600">{project.category}</p>
-                  </div>
-                </div>
 
                 {project.award && (
                   <div className="flex items-start gap-3 flex-1 basis-full md:basis-1/2 lg:basis-1/3 min-w-0">

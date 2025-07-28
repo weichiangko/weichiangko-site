@@ -24,7 +24,7 @@ export const mionext: ProjectDetail = {
   image: "/images/projects/mionext-hero.jpg",
   slug: "mionext",
   timeline: "6 months",
-  role: "UX Strategist, UI Design, Prototyping",
+  role: "UX Strategy, UI Design, Prototyping",
   company: "MiTAC",
   award: "2024 iF Design Award - User Experience",
   contentFile: "/content/projects/mionext.mdx"
