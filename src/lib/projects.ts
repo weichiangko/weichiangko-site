@@ -3,9 +3,10 @@ export interface ProjectDetail {
   title: string;
   category: string;
   client: string;
-  completionDate: string;
-  description: string;
+  completionDate?: string;
+  description?: string;
   image: string;
+  cardImage: string;
   slug: string;
   timeline: string;
   role: string;
@@ -22,6 +23,7 @@ export const mionext: ProjectDetail = {
   completionDate: "2024",
   description: "A comprehensive meal delivery platform with AI-powered personalization",
   image: "/images/projects/mionext-hero.jpg",
+  cardImage: "/images/projects/mionext-card.jpg",
   slug: "mionext",
   timeline: "6 months",
   role: "UX Strategy, UI Design, Prototyping",
@@ -38,6 +40,7 @@ export const natours: ProjectDetail = {
   completionDate: "2024",
   description: "Adventure travel booking platform with immersive user experience",
   image: "/images/projects/natours-hero.jpg",
+  cardImage: "/images/projects/natours-card.jpg",
   slug: "natours",
   timeline: "4 months",
   role: "UX/UI Designer",
@@ -53,6 +56,7 @@ export const nexter: ProjectDetail = {
   completionDate: "2024",
   description: "Modern real estate platform with advanced property search",
   image: "/images/projects/nexter-hero.jpg",
+  cardImage: "/images/projects/nexter-card.jpg",
   slug: "nexter",
   timeline: "5 months",
   role: "UX/UI Designer & Frontend Developer",

@@ -1,50 +1,45 @@
 import Image from "next/image";
 import Link from "next/link";
+import { Badge } from "@/components/ui/badge";
 
-interface BaseProject {
+interface Project {
   id: string;
   title: string;
   category: string;
   image: string;
-}
-
-type SimpleProject = BaseProject;
-
-interface DetailedProject extends BaseProject {
-  // For Other Projects section
-  slug: string;
-  description: string;
-  completionDate: string;
+  cardImage?: string;
+  slug?: string;
+  description?: string;
+  completionDate?: string;
 }
 
 interface ProjectCardProps {
-  project: SimpleProject | DetailedProject;
-  variant?: "simple" | "detailed";
-  href?: string; // Optional custom href for simple projects
+  project: Project;
+  href?: string; // Optional custom href for projects without slug
 }
 
-function isDetailedProject(project: SimpleProject | DetailedProject): project is DetailedProject {
-  return 'slug' in project && 'description' in project && 'completionDate' in project;
+function hasDetailedInfo(project: Project): boolean {
+  return !!(project.description && project.completionDate);
 }
 
-export default function ProjectCard({ project, variant = "simple", href }: ProjectCardProps) {
+export default function ProjectCard({ project, href }: ProjectCardProps) {
   // Determine the link URL
-  const linkUrl = href || (isDetailedProject(project) ? `/projects/${project.slug}` : `/projects/${project.id}`);
+  const linkUrl = href || (project.slug ? `/projects/${project.slug}` : `/projects/${project.id}`);
   
   // Determine if we should show additional content
-  const showDetails = variant === "detailed" && isDetailedProject(project);
+  const showDetails = hasDetailedInfo(project);
 
   return (
     <Link 
       href={linkUrl}
       className="group block bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300"
     >
-      <div className="aspect-[16/9] bg-gray-100 overflow-hidden">
+      <div className="aspect-[4/3] bg-gray-100 overflow-hidden">
         <Image
-          src={project.image}
+          src={project.cardImage || project.image}
           alt={project.title}
           width={1200}
-          height={675}
+          height={900}
           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
         />
       </div>
@@ -53,24 +48,22 @@ export default function ProjectCard({ project, variant = "simple", href }: Proje
           {project.title}
         </h3>
         
-        {showDetails && isDetailedProject(project) && (
+        {/* Always show category as badge */}
+        <div className="mb-4">
+          <Badge variant="secondary" className="text-xs">
+            {project.category}
+          </Badge>
+        </div>
+        
+        {showDetails && (
           <>
             <p className="text-gray-600 text-sm mb-4">
               {project.description}
             </p>
-            <div className="flex items-center gap-4 text-xs text-gray-500">
-              <span className="px-2 py-1 bg-gray-100 rounded-full">
-                {project.category}
-              </span>
+            <div className="text-xs text-gray-500">
               <span>{project.completionDate}</span>
             </div>
           </>
-        )}
-        
-        {!showDetails && (
-          <p className="text-sm font-medium text-gray-500">
-            {project.category}
-          </p>
         )}
       </div>
     </Link>

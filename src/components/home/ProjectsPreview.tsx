@@ -9,13 +9,15 @@ export default function ProjectsPreview() {
       title: "Mionext: Revolutionizing Personalized Meal Delivery",
       category: "Web Development",
       image: "/images/projects/mionext.jpg",
+      cardImage: "/images/projects/mionext-card.jpg",
       href: "/projects/mionext",
     },
     {
       id: "natours",
       title: "Natours: Elevating Adventure Travel Through Innovative Web Solutions",
       category: "UX/UI Design",
-      image: "/images/projects/natours.jpg", 
+      image: "/images/projects/natours.jpg",
+      cardImage: "/images/projects/natours-card.jpg", 
       href: "/projects/natours",
     },
   ];
@@ -33,7 +35,6 @@ export default function ProjectsPreview() {
             key={project.id} 
             project={project}
             href={project.href}
-            variant="simple"
           />
         ))}
       </div>

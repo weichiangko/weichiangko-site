@@ -263,7 +263,6 @@ export default async function ProjectDetail({ project }: ProjectDetailProps) {
                 <ProjectCard
                   key={otherProject.id}
                   project={otherProject}
-                  variant="simple"
                 />
               ))}
             </div>

@@ -15,6 +15,7 @@ const projects = [
     title: project.title,
     category: project.category === "Web Development" ? "Development" : project.category,
     image: project.image,
+    cardImage: project.cardImage,
     description: project.description
   })),
   // Additional showcase projects
@@ -121,7 +122,7 @@ export default function ProjectsPage() {
           {/* Projects Grid */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-20">
             {getFilteredProjects(activeCategory).map((project) => (
-              <ProjectCard key={project.id} project={project} variant="simple" />
+              <ProjectCard key={project.id} project={project} />
             ))}
           </div>
 
