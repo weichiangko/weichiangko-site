@@ -6,10 +6,6 @@ import ProjectImage from '@/components/projects/ProjectImage';
 
 The MioNext app and MiSentry dash-cam series deliver a cost-effective, IoT-powered solution that elevates every driver’s experience. Equipped with AI-driven ADAS and DMS, the system provides continuous monitoring and instant safety alerts, keeping owners effortlessly connected to their vehicles. If an incident occurs, it sends real-time notifications, uploads the relevant footage to the cloud, and enables remote viewing. More than a simple recorder, MioNext converts raw driving behavior into clear, actionable visual insights—going well beyond the basic driving focus of its competitors.
 
-<div className="flex justify-center rounded-2xl overflow-hidden">
-  <iframe className="aspect-video" src="https://www.youtube.com/embed/eopq-Nvargg?si=AHy1roe_zhS1X3ZH" title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen></iframe>
-</div>
-
 ## Problems
 
 1. The product lacks a unified design system, leading to inconsistent components and higher maintenance costs.
@@ -22,31 +18,53 @@ The MioNext app and MiSentry dash-cam series deliver a cost-effective, IoT-power
 
 We moved to Figma for its real-time collaboration speed, developer-friendly handoff (Dev Mode, interactive prototypes), and more affordable, seat-based pricing; during migration we rebuilt the entire component library with Auto-layout variants, converted colors/typography into tokenized styles, set up shared design system files and branching rules, and onboarded the team via live workshops—completing the full transition in just **4 weeks**.
 
-<ProjectImage 
-  src="/images/projects/mionext-2.jpg"
-  alt="Mionext meal planning interface"
-  caption="Addressing dietary restrictions and meal planning challenges"
-  size="medium"
-/>
-
 ### Ground-Up GUI Specification
 
 Starting from scratch, I built a comprehensive GUI Specification that standardized file structure, naming conventions, and a semantic version-numbering scheme; the living spec—documented in Figma with linked components and release notes—became the single source of truth for designers and engineers, cutting hand-off ambiguity and review cycles by **40%**.
 
+### Building Design Systems
+
+First, I rebuilt every core primitive—buttons, sheets, lists, search inputs—grounded in iOS UIKit and Android Material. Using Figma Auto-layout and variants, the library ships accessibility, motion, and edge-case states out of the box, giving designers and engineers a single source of truth.
+
+<ProjectImage 
+  src="/images/projects/mionext-1.jpg"  
+  alt="Mionext meal planning interface"
+  caption="Building design systems"
+  size="full"
+  position="center"
+/>
+
+Building on those primitives, I abstracted them into adaptive components that automatically apply native interaction patterns on iOS and Android. With one Figma spec driving both platforms, we eliminated duplicate tickets and cut front-end build time by 30 %.
+
 <ProjectImage 
   src="/images/projects/mionext-2.jpg"
   alt="Mionext meal planning interface"
-  caption="Addressing dietary restrictions and meal planning challenges"
-  size="medium"
+  caption="Building design systems"
+  size="full"
+  position="center"
 />
 
-### Solutions
+To future-proof the system, I distilled colors, typography, spacing, and elevation into JSON-based design tokens synced directly to code, enabling rapid brand theming across regions and guaranteeing pixel-perfect consistency from Figma all the way to production.
+
+<ProjectImage 
+  src="/images/projects/mionext-3.jpg"
+  alt="Mionext meal planning interface"
+  caption="Building design systems"
+  size="full"
+  position="center"
+/>
+
+### The Solution
 
 
 
 ## Final Design
 
 To address these challenges, Mionext utilizes AI to generate personalized weekly meal plans, ensuring nutritional balance and adherence to user preferences. Users can approve and modify their meal plans, swap ingredients, or add their own recipes, providing flexibility and control over their diet.
+
+<div className="flex justify-center rounded-2xl overflow-hidden">
+  <iframe className="aspect-video" src="https://www.youtube.com/embed/eopq-Nvargg?si=AHy1roe_zhS1X3ZH" title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen></iframe>
+</div>
 
 ## Impact and Learning
 

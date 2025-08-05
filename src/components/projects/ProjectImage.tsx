@@ -1,5 +1,9 @@
+"use client";
+
 import Image from "next/image";
 import { cn } from "@/lib/utils";
+import { useState } from "react";
+import { X } from "lucide-react";
 
 interface ProjectImageProps {
   src: string;
@@ -18,6 +22,8 @@ export default function ProjectImage({
   size = "full",
   position = "center",
 }: ProjectImageProps) {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   const sizeClasses = {
     small: "max-w-md",
     medium: "max-w-2xl",
@@ -26,33 +32,71 @@ export default function ProjectImage({
   };
 
   const positionClasses = {
-    left: "mr-auto",
-    center: "mx-auto",
-    right: "ml-auto",
+    left: "justify-start",
+    center: "justify-center", 
+    right: "justify-end",
   };
 
+  const openModal = () => setIsModalOpen(true);
+  const closeModal = () => setIsModalOpen(false);
+
   return (
-    <figure className={cn("my-8", positionClasses[position])}>
-      <div
-        className={cn(
-          "rounded-xl overflow-hidden bg-white shadow-sm",
-          sizeClasses[size],
-          className
+    <>
+      <figure className="my-8">
+        <div className={cn("flex", positionClasses[position])}>
+          <div
+            className={cn(
+              "rounded-xl overflow-hidden bg-white shadow-sm cursor-pointer transition-transform hover:scale-[1.02]",
+              sizeClasses[size],
+              className
+            )}
+            onClick={openModal}
+          >
+            <Image
+              src={src}
+              alt={alt}
+              width={1200}
+              height={675}
+              className="w-full h-auto object-cover"
+            />
+          </div>
+        </div>
+        {caption && (
+          <figcaption className="text-center text-sm text-gray-600 mt-3">
+            {caption}
+          </figcaption>
         )}
-      >
-        <Image
-          src={src}
-          alt={alt}
-          width={1200}
-          height={675}
-          className="w-full h-auto object-cover"
-        />
-      </div>
-      {caption && (
-        <figcaption className="text-center text-sm text-gray-600 mt-3">
-          {caption}
-        </figcaption>
+      </figure>
+
+      {/* Image Preview Modal */}
+      {isModalOpen && (
+        <div
+          className="fixed top-0 left-0 right-0 bottom-0 w-full h-full bg-black/80 flex items-center justify-center z-[9999]"
+          onClick={closeModal}
+          style={{ position: 'fixed', inset: 0 }}
+        >
+          {/* Close button positioned relative to viewport */}
+          <button
+            onClick={closeModal}
+            className="absolute top-4 right-4 z-10 bg-white/10 hover:bg-white/20 text-white p-2 rounded-full transition-colors backdrop-blur-sm cursor-pointer"
+            aria-label="Close image preview"
+          >
+            <X className="w-6 h-6" />
+          </button>
+          
+          {/* Image container */}
+          <div className="relative max-w-[90vw] max-h-[90vh] p-4">
+            <Image
+              src={src}
+              alt={alt}
+              width={1200}
+              height={675}
+              className="max-w-full max-h-full object-contain rounded-lg"
+              onClick={(e) => e.stopPropagation()}
+            />
+          </div>
+        </div>
       )}
-    </figure>
+    </>
   );
 }

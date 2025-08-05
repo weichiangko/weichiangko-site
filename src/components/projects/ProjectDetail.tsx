@@ -194,8 +194,8 @@ export default async function ProjectDetail({ project }: ProjectDetailProps) {
               <Image
                 src={project.image}
                 alt={project.title}
-                width={1200}
-                height={675}
+                width={2400}
+                height={1350}
                 className="w-full h-auto object-cover"
                 priority
               />
