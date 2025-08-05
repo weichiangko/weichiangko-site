@@ -21,32 +21,32 @@ const components = {
   ProjectImage,
   // Headings - 標題層次
   h1: ({ children }: { children: React.ReactNode }) => (
-    <h1 className="text-4xl font-bold text-gray-900 mb-6 mt-8">
+    <h1 className="text-4xl font-bold text-gray-900 mb-6 mt-10">
       {children}
     </h1>
   ),
   h2: ({ children }: { children: React.ReactNode }) => (
-    <h2 className="text-2xl font-semibold text-gray-900 mb-4 mt-6">
+    <h2 className="text-2xl font-semibold text-gray-900 mb-4 mt-10">
       {children}
     </h2>
   ),
   h3: ({ children }: { children: React.ReactNode }) => (
-    <h3 className="text-xl font-semibold text-gray-900 mb-3 mt-5">
+    <h3 className="text-xl font-semibold text-gray-900 mb-3 mt-10">
       {children}
     </h3>
   ),
   h4: ({ children }: { children: React.ReactNode }) => (
-    <h4 className="text-lg font-medium text-gray-900 mb-2 mt-4">
+    <h4 className="text-lg font-medium text-gray-900 mb-2 mt-10">
       {children}
     </h4>
   ),
   h5: ({ children }: { children: React.ReactNode }) => (
-    <h5 className="text-base font-medium text-gray-900 mb-2 mt-3">
+    <h5 className="text-base font-medium text-gray-900 mb-2 mt-10">
       {children}
     </h5>
   ),
   h6: ({ children }: { children: React.ReactNode }) => (
-    <h6 className="text-sm font-medium text-gray-900 mb-2 mt-3">
+    <h6 className="text-sm font-medium text-gray-900 mb-2 mt-10">
       {children}
     </h6>
   ),
@@ -58,19 +58,18 @@ const components = {
   ),
   // Lists
   ul: ({ children }: { children: React.ReactNode }) => (
-    <ul className="space-y-3 mb-4">
+    <ul className="space-y-3 mb-4 list-disc list-outside pl-6">
       {children}
     </ul>
   ),
   ol: ({ children }: { children: React.ReactNode }) => (
-    <ol className="space-y-3 mb-4 list-decimal list-inside">
+    <ol className="space-y-3 mb-4 list-decimal list-outside pl-6">
       {children}
     </ol>
   ),
   li: ({ children }: { children: React.ReactNode }) => (
-    <li className="flex items-start gap-3">
-      <div className="w-2 h-2 bg-gray-900 rounded-full mt-2 flex-shrink-0" />
-      <span className="text-gray-700">{children}</span>
+    <li className="text-gray-700 leading-relaxed">
+      {children}
     </li>
   ),
   // Emphasis and strong

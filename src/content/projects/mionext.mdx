@@ -1,23 +1,26 @@
 import ProjectImage from '@/components/projects/ProjectImage';
 
-## My Approach
+<h2 className="text-2xl font-semibold text-gray-900 mb-4">
+  Overview
+</h2>
 
-In developing Mionext, I adopted a user-centered design methodology, ensuring that every aspect of the platform caters to the needs and preferences of our diverse user base. By integrating advanced AI technology, we provide personalized meal plans that align with individual dietary requirements and taste preferences.
+The MioNext app and MiSentry dash-cam series deliver a cost-effective, IoT-powered solution that elevates every driver’s experience. Equipped with AI-driven ADAS and DMS, the system provides continuous monitoring and instant safety alerts, keeping owners effortlessly connected to their vehicles. If an incident occurs, it sends real-time notifications, uploads the relevant footage to the cloud, and enables remote viewing. More than a simple recorder, MioNext converts raw driving behavior into clear, actionable visual insights—going well beyond the basic driving focus of its competitors.
 
-<ProjectImage 
-  src="/images/projects/mionext-1.jpg"
-  alt="Mionext user interface design"
-  caption="User-centered design methodology in action"
-  size="large"
-/>
+<div className="flex justify-center rounded-2xl overflow-hidden">
+  <iframe className="aspect-video" src="https://www.youtube.com/embed/eopq-Nvargg?si=AHy1roe_zhS1X3ZH" title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen></iframe>
+</div>
 
-## Vision and Innovation
+## Problems
 
-Our vision is to disrupt the meal delivery industry by offering a smart, AI-driven subscription service that delivers healthy, tailored meals daily. Our vision is to eliminate the hassle of meal planning and cooking, allowing users to enjoy nutritious meals effortlessly.
+1. The product lacks a unified design system, leading to inconsistent components and higher maintenance costs.
+2. The current UX and visuals are outdated, lowering user efficiency and retention.
+3. The product is undergoing rebrand and therefore needs to integrate new brand design elements.
 
-## Identifying Unique Challenges
+## Design Process
 
-We recognized that many individuals struggle with maintaining a healthy diet due to time constraints, lack of culinary skills, or limited access to diverse recipes. Additionally, accommodating various dietary restrictions and preferences presents a significant challenge in meal planning.
+### From Sketch to Figma
+
+We moved to Figma for its real-time collaboration speed, developer-friendly handoff (Dev Mode, interactive prototypes), and more affordable, seat-based pricing; during migration we rebuilt the entire component library with Auto-layout variants, converted colors/typography into tokenized styles, set up shared design system files and branching rules, and onboarded the team via live workshops—completing the full transition in just **4 weeks**.
 
 <ProjectImage 
   src="/images/projects/mionext-2.jpg"
@@ -26,32 +29,25 @@ We recognized that many individuals struggle with maintaining a healthy diet due
   size="medium"
 />
 
-## Resolving Complex Problems
+### Ground-Up GUI Specification
+
+Starting from scratch, I built a comprehensive GUI Specification that standardized file structure, naming conventions, and a semantic version-numbering scheme; the living spec—documented in Figma with linked components and release notes—became the single source of truth for designers and engineers, cutting hand-off ambiguity and review cycles by **40%**.
+
+<ProjectImage 
+  src="/images/projects/mionext-2.jpg"
+  alt="Mionext meal planning interface"
+  caption="Addressing dietary restrictions and meal planning challenges"
+  size="medium"
+/>
+
+### Solutions
+
+
+
+## Final Design
 
 To address these challenges, Mionext utilizes AI to generate personalized weekly meal plans, ensuring nutritional balance and adherence to user preferences. Users can approve and modify their meal plans, swap ingredients, or add their own recipes, providing flexibility and control over their diet.
 
-## User-Centric Design
+## Impact and Learning
 
 Our platform is designed with simplicity and accessibility in mind. The intuitive interface allows users to easily navigate through meal options, customize their plans, and manage their orders. By focusing on user experience, we ensure that healthy eating becomes a seamless part of our users' daily lives.
-
-## Detailed Pages and Features
-
-- **Hero Section**: A compelling introduction highlighting the value and convenience of our service.
-- **Meal Options**: A diverse selection of over 5,000 recipes catering to various diets, including vegetarian, vegan, pescatarian, gluten-free, and more.
-- **Testimonials**: Real customer feedback showcasing the positive impact of Mionext on their lives.
-- **Pricing**: Transparent and flexible subscription plans that cater to different needs and budgets.
-
-<ProjectImage 
-  src="/images/projects/mionext-3.jpg"
-  alt="Mionext complete platform overview"
-  caption="Complete platform showcasing all key features and user interface"
-  size="full"
-/>
-
-## Accessibility and Optimization
-
-Mionext is designed to provide a seamless experience across all devices, from desktops to smartphones. We have implemented best practices in web development to ensure fast loading times, intuitive navigation, and compliance with accessibility standards, making our platform usable for individuals with varying abilities.
-
-## Conclusion
-
-Mionext represents a significant advancement in the meal delivery industry, combining AI technology with user-centric design to offer a personalized, convenient, and healthy dining experience. By addressing common challenges in meal planning and delivery, we empower users to maintain a nutritious diet effortlessly.
