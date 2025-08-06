@@ -11,6 +11,7 @@ import { readFileSync } from 'fs';
 import path from 'path';
 import { MDXRemote } from 'next-mdx-remote/rsc';
 import ProjectImage from '@/components/projects/ProjectImage';
+import { Alert, AlertDescription } from '@/components/ui/alert';
 
 interface ProjectDetailProps {
   project: ProjectDetailType;
@@ -19,6 +20,8 @@ interface ProjectDetailProps {
 // MDX components for styling
 const components = {
   ProjectImage,
+  Alert,
+  AlertDescription,
   // Headings - 標題層次
   h1: ({ children }: { children: React.ReactNode }) => (
     <h1 className="text-4xl font-bold text-gray-900 mb-6 mt-10">

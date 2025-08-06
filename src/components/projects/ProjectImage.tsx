@@ -85,13 +85,13 @@ export default function ProjectImage({
           </button>
           
           {/* Image container */}
-          <div className="relative max-w-[90vw] max-h-[90vh] p-4">
+          <div className="relative w-full h-full max-w-[90vw] max-h-[90vh] p-4 flex items-center justify-center">
             <Image
               src={src}
               alt={alt}
-              width={1200}
-              height={675}
-              className="max-w-full max-h-full object-contain rounded-lg"
+              width={2400}
+              height={1350}
+              className="max-w-full max-h-full w-auto h-auto object-contain rounded-lg"
               onClick={(e) => e.stopPropagation()}
             />
           </div>
