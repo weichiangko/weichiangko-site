@@ -9,7 +9,6 @@ interface Project {
   image: string;
   cardImage?: string;
   slug?: string;
-  description?: string;
   completionDate?: string;
 }
 
@@ -18,16 +17,13 @@ interface ProjectCardProps {
   href?: string; // Optional custom href for projects without slug
 }
 
-function hasDetailedInfo(project: Project): boolean {
-  return !!(project.description && project.completionDate);
-}
+// Removed hasDetailedInfo function as we now show info independently
 
 export default function ProjectCard({ project, href }: ProjectCardProps) {
   // Determine the link URL
   const linkUrl = href || (project.slug ? `/projects/${project.slug}` : `/projects/${project.id}`);
   
-  // Determine if we should show additional content
-  const showDetails = hasDetailedInfo(project);
+  // No longer need showDetails logic
 
   return (
     <Link 
@@ -55,15 +51,11 @@ export default function ProjectCard({ project, href }: ProjectCardProps) {
           </Badge>
         </div>
         
-        {showDetails && (
-          <>
-            <p className="text-gray-600 text-sm mb-4">
-              {project.description}
-            </p>
-            <div className="text-xs text-gray-500">
-              <span>{project.completionDate}</span>
-            </div>
-          </>
+        {/* Always show completion date if available */}
+        {project.completionDate && (
+          <div className="text-xs text-gray-500">
+            <span>{project.completionDate}</span>
+          </div>
         )}
       </div>
     </Link>

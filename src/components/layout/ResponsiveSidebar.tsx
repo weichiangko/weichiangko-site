@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Menu, X, Home, User, Briefcase, Mail, FileText, Linkedin } from "lucide-react";
+import { Menu, X, Home, User, Briefcase, Mail, FileText, Linkedin, Github } from "lucide-react";
 import { NAVIGATION, PERSONAL_INFO } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
@@ -253,6 +253,28 @@ export default function ResponsiveSidebar() {
                   >
                     <Linkedin className="w-6 h-6" />
                     <span>LinkedIn</span>
+                  </Link>
+                </motion.li>
+                <motion.li
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ 
+                    delay: 0.5, 
+                    duration: 0.2, 
+                    ease: "easeOut"
+                  }}
+                >
+                  <Link
+                    href={PERSONAL_INFO.github}
+                    target="_blank"
+                    onClick={() => {
+                  setIsMobileMenuOpen(false);
+                }}
+                    className="flex items-center gap-4 px-4 py-3 text-base text-gray-600 hover:bg-gray-100 hover:text-gray-900 rounded-lg transition-colors"
+                  >
+                    <Github className="w-6 h-6" />
+                    <span>GitHub</span>
                   </Link>
                 </motion.li>
               </ul>

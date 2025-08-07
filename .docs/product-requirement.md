@@ -84,7 +84,7 @@ Build a modern, responsive portfolio website for Ben Ko, a UX/UI Designer with f
 - **Project Grid**: Responsive card layout
 - **Mock Projects** (using Unsplash images):
   - Omnifood: Revolutionizing Personalized Meal Delivery (Web Development)
-  - Natours: Elevating Adventure Travel Through Innovative Web Solutions (UX/UI Design)
+  - VisionMax: Elevating Adventure Travel Through Innovative Web Solutions (UX/UI Design)
   - Nexter: Redefining Real Estate with Cutting-Edge Web Design (UX/UI Design)
   - Travel Planning Platform (Side Project)
 

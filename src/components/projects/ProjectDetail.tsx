@@ -1,4 +1,4 @@
-import { ArrowLeft, Award, Calendar, User, Tag, Building2 } from "lucide-react";
+import { ArrowLeft, Award, Calendar, User, Tag, Building2, ExternalLink } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { ProjectDetail as ProjectDetailType, PROJECT_DETAILS } from "@/lib/projects";
@@ -7,6 +7,7 @@ import CTASection from "@/components/home/CTASection";
 import ProjectCard from "@/components/projects/ProjectCard";
 import { AnimatedButton } from "@/components/ui/animated-button";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import { readFileSync } from 'fs';
 import path from 'path';
 import { MDXRemote } from 'next-mdx-remote/rsc';
@@ -16,6 +17,8 @@ import { Alert, AlertDescription } from '@/components/ui/alert';
 interface ProjectDetailProps {
   project: ProjectDetailType;
 }
+
+// Remove emoji function - no longer needed
 
 // MDX components for styling
 const components = {
@@ -103,14 +106,20 @@ const components = {
   hr: () => <hr className="border-gray-200 my-8" />,
   // Links
   a: ({ children, href }: { children: React.ReactNode; href?: string }) => (
-    <a 
-      href={href} 
-      className="text-blue-600 hover:text-blue-800 underline transition-colors"
-      target={href?.startsWith('http') ? '_blank' : undefined}
-      rel={href?.startsWith('http') ? 'noopener noreferrer' : undefined}
+    <Button
+      variant="link"
+      size="sm"
+      asChild
+      className="h-auto p-0 text-sm inline text-gray-600 hover:text-gray-600 underline underline-offset-4"
     >
-      {children}
-    </a>
+      <a 
+        href={href} 
+        target={href?.startsWith('http') ? '_blank' : undefined}
+        rel={href?.startsWith('http') ? 'noopener noreferrer' : undefined}
+      >
+        {children}
+      </a>
+    </Button>
   ),
   // Tables
   table: ({ children }: { children: React.ReactNode }) => (
@@ -237,7 +246,52 @@ export default async function ProjectDetail({ project }: ProjectDetailProps) {
                     <Award className="w-5 h-5 text-gray-600 mt-1 flex-shrink-0" />
                     <div>
                       <h3 className="font-semibold text-gray-900 mb-1">Award</h3>
-                      <p className="text-gray-600">{project.award}</p>
+                      {project.awardUrl ? (
+                        <Button
+                          variant="link"
+                          size="sm"
+                          asChild
+                          className="h-auto p-0 text-left justify-start text-gray-600 hover:text-gray-600 underline underline-offset-4"
+                        >
+                          <a 
+                            href={project.awardUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                          >
+                            {project.award}
+                          </a>
+                        </Button>
+                      ) : (
+                        <p className="text-gray-600">{project.award}</p>
+                      )}
+                    </div>
+                  </div>
+                )}
+
+                {project.links && project.links.length > 0 && (
+                  <div className="flex items-start gap-3 flex-1 basis-full md:basis-1/2 lg:basis-1/3 min-w-0">
+                    <ExternalLink className="w-5 h-5 text-gray-600 mt-1 flex-shrink-0" />
+                    <div>
+                      <h3 className="font-semibold text-gray-900 mb-1">Links</h3>
+                      <div className="flex flex-wrap gap-2">
+                        {project.links.map((link, index) => (
+                          <Button
+                            key={index}
+                            variant="link"
+                            size="sm"
+                            asChild
+                            className="h-auto p-0 text-sm text-gray-600 hover:text-gray-600 underline underline-offset-4"
+                          >
+                            <a
+                              href={link.url}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                            >
+                              {link.name}
+                            </a>
+                          </Button>
+                        ))}
+                      </div>
                     </div>
                   </div>
                 )}

@@ -16,7 +16,7 @@ const projects = [
     category: project.category === "Web Development" ? "Development" : project.category,
     image: project.image,
     cardImage: project.cardImage,
-    description: project.description
+    completionDate: project.completionDate
   })),
   // Additional showcase projects
   {
@@ -86,9 +86,9 @@ export default function ProjectsPage() {
           <div className="mb-16">
             <h1 className="text-5xl font-bold text-gray-900 my-8">Projects</h1>
             <p className="text-lg text-gray-600 leading-relaxed max-w-4xl">
-              My projects reflect my commitment to solving complex challenges through design. Whether it&apos;s building a travel 
-              platform or enhancing a real estate website, each project is a blend of innovation, strategy, and user-first design 
-              principles.
+              My projects showcase innovative solutions across diverse industries, from AI-powered fleet management systems to 
+              award-winning connected vehicle applications. Each project demonstrates my expertise in transforming complex 
+              technical challenges into intuitive, user-centered experiences that drive real business impact.
             </p>
           </div>
 

@@ -4,6 +4,7 @@ export const PERSONAL_INFO = {
   subtitle: "Software Designer",
   email: "designerko1215@gmail.com",
   linkedin: "https://www.linkedin.com/in/weichiangko/",
+  github: "https://github.com/weichiangko",
   bio: "Whether it's brainstorming a new project, discussing design optimizations, or just sharing creative insights, I'm always excited to collaborate. Reach out to me and let's craft something exceptional — together!",
 } as const;
 
@@ -25,13 +26,13 @@ export const PROJECTS = [
     slug: "mionext",
   },
   {
-    id: "natours",
-    title: "Natours: Elevating Adventure Travel Through Innovative Web Solutions",
+    id: "visionmax",
+    title: "VisionMax: Elevating Adventure Travel Through Innovative Web Solutions",
     category: "UX/UI Design",
-    client: "Natours",
+    client: "VisionMax",
     description: "Adventure travel booking platform with immersive user experience",
-    image: "/images/projects/natours.jpg",
-    slug: "natours",
+    image: "/images/projects/visionmax.jpg",
+    slug: "visionmax",
   },
   {
     id: "nexter",

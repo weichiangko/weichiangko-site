@@ -4,7 +4,6 @@ export interface ProjectDetail {
   category: string;
   client: string;
   completionDate?: string;
-  description?: string;
   image: string;
   cardImage: string;
   slug: string;
@@ -12,6 +11,12 @@ export interface ProjectDetail {
   role: string;
   company: string;
   award?: string;
+  awardUrl?: string;
+  links?: {
+    name: string;
+    url: string;
+    type?: 'playStore' | 'appStore' | 'website' | 'demo' | 'github';
+  }[];
   contentFile: string;
 }
 
@@ -21,7 +26,6 @@ export const mionext: ProjectDetail = {
   category: "UX/UI Design",
   client: "MioNext",
   completionDate: "2024",
-  description: "A comprehensive meal delivery platform with AI-powered personalization",
   image: "/images/projects/mionext-hero.jpg",
   cardImage: "/images/projects/mionext-card.jpg",
   slug: "mionext",
@@ -29,23 +33,47 @@ export const mionext: ProjectDetail = {
   role: "UX Strategy, UI Design, Prototyping",
   company: "MiTAC",
   award: "2024 iF Design Award - User Experience",
+  awardUrl: "https://ifdesign.com/en/winner-ranking/project/empowereddriving-mionext-app-and-misentry-series/614971",
+  links: [
+    {
+      name: "App Store",
+      url: "https://apps.apple.com/tw/app/mionext/id6443811785",
+      type: "appStore"
+    },
+    {
+      name: "Play Store",
+      url: "https://play.google.com/store/apps/details?id=com.mitac.mionext&hl=zh_TW",
+      type: "playStore"
+    }
+  ],
   contentFile: "/content/projects/mionext.mdx"
 };
 
-export const natours: ProjectDetail = {
-  id: "natours",
-  title: "Natours: Elevating Adventure Travel Through Innovative Web Solutions",
+export const visionmax: ProjectDetail = {
+  id: "visionmax",
+  title: "VisionMax: AI-Powered Video Telematics for Safer, Smarter Fleets",
   category: "UX/UI Design",
-  client: "Natours",
+  client: "VisionMax",
   completionDate: "2024",
-  description: "Adventure travel booking platform with immersive user experience",
-  image: "/images/projects/natours-hero.jpg",
-  cardImage: "/images/projects/natours-card.jpg",
-  slug: "natours",
-  timeline: "4 months",
-  role: "UX/UI Designer",
-  company: "Adobe",
-  contentFile: "/content/projects/natours.mdx"
+  image: "/images/projects/visionmax-hero.jpg",
+  cardImage: "/images/projects/visionmax-card.jpg",
+  slug: "visionmax",
+  timeline: "8 months",
+  role: "UX Strategy, UI Design, Functional Prototyping",
+  company: "MiTAC",
+  links: [
+    {
+      name: "Live Demo",
+      url: "https://www.visionmaxfleet.com/login",
+      type: "demo"
+    },
+    {
+      name: "Product Website",
+      url: "https://www.mitacmdt.com/tw/products/video-telematics/vt-solution/",
+      type: "website"
+    }
+  ],
+  contentFile: "/content/projects/visionmax.mdx"
 };
 
 export const nexter: ProjectDetail = {
@@ -54,7 +82,6 @@ export const nexter: ProjectDetail = {
   category: "UX/UI Design",
   client: "Nexter",
   completionDate: "2024",
-  description: "Modern real estate platform with advanced property search",
   image: "/images/projects/nexter-hero.jpg",
   cardImage: "/images/projects/nexter-card.jpg",
   slug: "nexter",
@@ -62,11 +89,24 @@ export const nexter: ProjectDetail = {
   role: "UX/UI Designer & Frontend Developer",
   company: "HubSpot",
   award: "Awwwards - Honorable Mention",
+  awardUrl: "https://www.awwwards.com/",
+  links: [
+    {
+      name: "Visit Website",
+      url: "https://nexter-realestate.netlify.app",
+      type: "website"
+    },
+    {
+      name: "GitHub",
+      url: "https://github.com/username/nexter-project",
+      type: "github"
+    }
+  ],
   contentFile: "/content/projects/nexter.mdx"
 };
 
 export const PROJECT_DETAILS: Record<string, ProjectDetail> = {
   mionext,
-  natours,
+  visionmax,
   nexter,
 };

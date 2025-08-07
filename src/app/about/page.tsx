@@ -23,8 +23,11 @@ export default function AboutPage() {
           {/* Main About Section - Home Section Style */}
           <section className="pb-16">
             {/* Description - Full Width */}
+            <p className="text-lg text-gray-600 leading-relaxed max-w-4xl mb-2">
+              Currently working as a UI Engineer at MiTAC and an award-winning designer, I specialize in frontend development and UX/UI design, turning concepts into market-ready products through effective cross-departmental collaboration.
+            </p>
             <p className="text-lg text-gray-600 leading-relaxed max-w-4xl mb-16">
-              Ben Ko is a Software Designer at Google with 3+ years of experience in UX design, inner of Red Dot Award 2024.
+              With over 10 years of hands-on experience across healthcare, machine-tool, consumer-electronics, automotive-electronics and AI-startup sectors, I’m adept at accurately assessing challenges, crafting practical solutions and ensuring seamless handoffs between design and development to drive continuous innovation and optimization.
             </p>
             
             {/* Stats Flex - Horizontal Layout */}

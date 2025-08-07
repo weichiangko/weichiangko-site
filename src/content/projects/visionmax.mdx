@@ -1,0 +1,43 @@
+import ProjectImage from '@/components/projects/ProjectImage';
+
+<Alert className="mb-6">
+  <AlertDescription>
+    <p><strong>Please note:</strong> This case study has been adapted for portfolio presentation in compliance with non-disclosure agreements. Sensitive details have been generalized while preserving core design insights.</p>
+  </AlertDescription>
+</Alert>
+
+<h2 className="text-2xl font-semibold text-gray-900 mb-4">
+  Overview
+</h2>
+
+VisionMax is a cloud-based video-telematics platform that links AI dash-cams to a web portal, giving fleet managers real-time visibility into up to seven simultaneous camera feeds, ADAS / DMS safety alerts, live vehicle tracking, and blockchain-backed incident evidence. Through a built-in 4G LTE modem, critical clips sync automatically to the cloud, where the console layers trip replays, driver scoring, and data-driven coaching tools—turning raw footage into actionable insights that cut risk and streamline operations.
+
+## Problems
+
+1. The earlier interface ran on a legacy ASP.NET front-end instead of a modern web framework, leading to brittle code and sub-par user experience.
+
+2. Lacking a design system, each UI component was hand-crafted without reference to established libraries, driving up cost and dragging down consistency and efficiency.
+
+3. Evolving business logic and feature scope now require a ground-up redesign to accommodate new workflows and expansion.
+
+## Design Process
+
+### Framework Modernization
+
+After a one-week research sprint I showed the benefits of a modern SaaS stack and secured team approval to rebuild the product as a Vue 3 single-page app. We paired Ant Design Vue for standard components with Tailwind CSS for layout and color tokens, and adopted Font Awesome for commonly used icons—creating a clean, maintainable foundation.
+
+### Unified Design System
+
+With the new stack in place, I rebuilt every UI element as a cohesive Ant Design Vue component set, backed by a full design-token layer for color, spacing, and typography. The token system now powers instant Light ⁄ Dark themes and gives designers and engineers a single, consistent source of truth.
+
+### The Solution
+
+Simplified booking flow with immersive visuals and clear information hierarchy to help users envision their adventure.
+
+## Final Design
+
+The platform is optimized for all devices with particular attention to mobile users who often browse travel content on-the-go. Performance optimization ensures quick loading of high-quality images.
+
+## Impact and Learning
+
+VisionMax successfully transforms the traditional travel booking experience into an inspiring journey of discovery, encouraging users to explore the world's most beautiful destinations.

@@ -75,7 +75,7 @@ src/
 │   ├── animations/ (PointSphere, RotatingText)
 │   └── common/
 ├── lib/
-│   ├── projects/ (natours.ts, nexter.ts, mionext.ts, index.ts)
+│   ├── projects/ (visionmax.ts, nexter.ts, mionext.ts, index.ts)
 │   ├── constants.ts
 │   ├── emailjs.ts
 │   └── utils.ts
@@ -98,7 +98,7 @@ src/
 
 ### Projects
 - Mionext: Revolutionizing Personalized Meal Delivery (Web Development)
-- Natours: Elevating Adventure Travel Through Innovative Web Solutions (UX/UI Design)
+- VisionMax: Elevating Adventure Travel Through Innovative Web Solutions (UX/UI Design)
 - Nexter: Redefining Real Estate with Cutting-Edge Web Design (UX/UI Design)
 - Travel Planning Platform (Side Project)
 
