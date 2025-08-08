@@ -91,7 +91,7 @@ export default function ContactForm() {
 
         {/* Resume */}
         <a
-          href="/resume.pdf"
+          href="https://www.cake.me/weichiangko"
           target="_blank"
           className="flex items-center gap-4 p-6 bg-white rounded-xl shadow-sm hover:shadow-md transition-all group"
         >

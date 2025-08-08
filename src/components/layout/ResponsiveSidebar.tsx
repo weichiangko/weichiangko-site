@@ -222,7 +222,7 @@ export default function ResponsiveSidebar() {
                   }}
                 >
                   <Link
-                    href="/resume.pdf"
+                    href="https://www.cake.me/weichiangko"
                     target="_blank"
                     onClick={() => {
                   setIsMobileMenuOpen(false);

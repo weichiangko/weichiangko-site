@@ -70,7 +70,7 @@ export default function Sidebar() {
       {/* Footer Links */}
       <div className="p-4 md:p-2 lg:p-4 space-y-2 md:space-y-3 lg:space-y-2">
         <Link
-          href="/resume.pdf"
+          href="https://www.cake.me/weichiangko"
           target="_blank"
           className="flex items-center gap-3 px-3 py-2 text-sm text-gray-600 hover:bg-gray-100 hover:text-gray-900 rounded-lg transition-colors md:justify-center md:p-3 lg:justify-start lg:gap-3 lg:px-3 lg:py-2"
         >
