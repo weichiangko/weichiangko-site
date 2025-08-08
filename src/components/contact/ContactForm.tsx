@@ -1,7 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { Mail, User, MessageSquare, ExternalLink } from "lucide-react";
+// Icons available for future use
+// import { Mail, User, MessageSquare, ExternalLink } from "lucide-react";
 import { PERSONAL_INFO } from "@/lib/constants";
 
 interface ContactFormData {

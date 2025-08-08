@@ -13,54 +13,12 @@ const projects = [
   ...Object.values(PROJECT_DETAILS).map(project => ({
     id: project.id,
     title: project.title,
-    category: project.category === "Web Development" ? "Development" : project.category,
+    category: Array.isArray(project.category) ? project.category :
+              project.category === "Web Development" ? "Development" : project.category,
     image: project.image,
     cardImage: project.cardImage,
     completionDate: project.completionDate
-  })),
-  // Additional showcase projects
-  {
-    id: "travel-planning",
-    title: "Simplifying Travel Planning with Smart, User-Focused Solutions",
-    category: "Development", 
-    image: "/images/projects/travel-planning.jpg",
-    description: "Smart travel planning application with collaborative features"
-  },
-  {
-    id: "fintech-app",
-    title: "FinTech Mobile App: Seamless Financial Management",
-    category: "UX/UI Design",
-    image: "/images/projects/fintech-app.jpg",
-    description: "Intuitive mobile banking application with advanced security features"
-  },
-  {
-    id: "ecommerce-platform",
-    title: "E-commerce Platform: Next-Gen Shopping Experience",
-    category: "Development",
-    image: "/images/projects/ecommerce-platform.jpg",
-    description: "Full-stack e-commerce solution with AI-powered recommendations"
-  },
-  {
-    id: "google-ux",
-    title: "Google Search Interface Enhancement",
-    category: "Experience",
-    image: "/images/projects/google-ux.jpg",
-    description: "Led UX improvements for Google Search, focusing on accessibility and performance"
-  },
-  {
-    id: "adobe-dashboard",
-    title: "Adobe Creative Cloud Dashboard Redesign",
-    category: "Experience",
-    image: "/images/projects/adobe-dashboard.jpg",
-    description: "Redesigned Creative Cloud dashboard for improved user workflow and efficiency"
-  },
-  {
-    id: "hubspot-seo",
-    title: "HubSpot SEO Tool Enhancement",
-    category: "Experience",
-    image: "/images/projects/hubspot-seo.jpg",
-    description: "Enhanced SEO analysis tools with improved data visualization and insights"
-  }
+  }))
 ];
 
 
@@ -72,10 +30,15 @@ export default function ProjectsPage() {
     if (category === "All") {
       return projects;
     }
-    if (category === "Design") {
-      return projects.filter(project => project.category === "UX/UI Design");
-    }
-    return projects.filter(project => project.category === category);
+    
+    const targetCategory = category === "Design" ? "UX/UI Design" : category;
+    
+    return projects.filter(project => {
+      if (Array.isArray(project.category)) {
+        return project.category.includes(targetCategory);
+      }
+      return project.category === targetCategory;
+    });
   };
 
   return (
@@ -120,9 +83,18 @@ export default function ProjectsPage() {
           </Tabs>
 
           {/* Projects Grid */}
+          {/* TODO: EdgeAI System & i4.0bs temp external links. Remove href when internal pages are ready */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-20">
             {getFilteredProjects(activeCategory).map((project) => (
-              <ProjectCard key={project.id} project={project} />
+              <ProjectCard 
+                key={project.id} 
+                project={project} 
+                href={
+                  project.id === 'edgeAISystem' ? 'https://www.behance.net/gallery/110448371/Smart-AI-Camera-System' :
+                  project.id === 'i40bs' ? 'https://www.behance.net/gallery/100527681/Smart-Module-System' :
+                  undefined
+                }
+              />
             ))}
           </div>
 

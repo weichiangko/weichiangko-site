@@ -12,7 +12,9 @@ import { readFileSync } from 'fs';
 import path from 'path';
 import { MDXRemote } from 'next-mdx-remote/rsc';
 import ProjectImage from '@/components/projects/ProjectImage';
+import ProjectVideo from '@/components/projects/ProjectVideo';
 import { Alert, AlertDescription } from '@/components/ui/alert';
+import BackToTop from '@/components/common/BackToTop';
 
 interface ProjectDetailProps {
   project: ProjectDetailType;
@@ -23,6 +25,7 @@ interface ProjectDetailProps {
 // MDX components for styling
 const components = {
   ProjectImage,
+  ProjectVideo,
   Alert,
   AlertDescription,
   // Headings - 標題層次
@@ -190,10 +193,21 @@ export default async function ProjectDetail({ project }: ProjectDetailProps) {
                 Back to Projects
               </Link>
               
-              <Badge variant="outline" className="gap-1.5 text-sm">
-                <Tag className="w-3 h-3" />
-                {project.category}
-              </Badge>
+              <div className="flex flex-wrap gap-2">
+                {Array.isArray(project.category) ? (
+                  project.category.map((cat, index) => (
+                    <Badge key={index} variant="outline" className="gap-1.5 text-sm">
+                      <Tag className="w-3 h-3" />
+                      {cat}
+                    </Badge>
+                  ))
+                ) : (
+                  <Badge variant="outline" className="gap-1.5 text-sm">
+                    <Tag className="w-3 h-3" />
+                    {project.category}
+                  </Badge>
+                )}
+              </div>
             </div>
 
             {/* Project Title */}
@@ -337,6 +351,9 @@ export default async function ProjectDetail({ project }: ProjectDetailProps) {
       </div>
 
       <PageFooter />
+      
+      {/* Back to Top Button */}
+      <BackToTop showAfterScroll={400} />
     </div>
   );
 }

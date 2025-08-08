@@ -26,7 +26,7 @@ export async function generateMetadata({ params }: ProjectPageProps) {
 
   return {
     title: `${project.title} - Ben Ko`,
-    description: project.description,
+    description: `${Array.isArray(project.category) ? project.category.join(' & ') : project.category} project by Ben Ko - ${project.title}`,
   };
 }
 
