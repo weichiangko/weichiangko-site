@@ -264,15 +264,15 @@ export default function PointSphere() {
       longPressTimeout = window.setTimeout(() => {
         isDragging = true;
         // Visual feedback: diffusion highlight + slight scale up
-        if ((material as any).uniforms?.highlightProgress) {
-          (material as any).uniforms.highlightProgress.value = 0.0;
-          (material as any).uniforms.highlightIntensity.value = 1.0;
-          gsap.to((material as any).uniforms.highlightProgress, {
+        if (material && 'uniforms' in material && material.uniforms?.highlightProgress) {
+          material.uniforms.highlightProgress.value = 0.0;
+          material.uniforms.highlightIntensity.value = 1.0;
+          gsap.to(material.uniforms.highlightProgress, {
             value: 1.0,
             duration: 0.6,
             ease: 'power2.out'
           });
-          gsap.to((material as any).uniforms.highlightIntensity, {
+          gsap.to(material.uniforms.highlightIntensity, {
             value: 0.0,
             duration: 0.6,
             ease: 'power2.out'
@@ -368,10 +368,10 @@ export default function PointSphere() {
       
       document.removeEventListener('mousemove', handleMouseMove);
       if (currentContainer) {
-        currentContainer.removeEventListener('touchstart', touchStart as any);
-        currentContainer.removeEventListener('touchmove', touchMove as any);
-        currentContainer.removeEventListener('touchend', touchEnd as any);
-        currentContainer.removeEventListener('touchcancel', touchCancel as any);
+        currentContainer.removeEventListener('touchstart', touchStart);
+        currentContainer.removeEventListener('touchmove', touchMove);
+        currentContainer.removeEventListener('touchend', touchEnd);
+        currentContainer.removeEventListener('touchcancel', touchCancel);
       }
       window.removeEventListener('resize', handleResize);
       
