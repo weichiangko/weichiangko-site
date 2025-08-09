@@ -50,8 +50,11 @@ export default function PointSphere() {
       const sizeRange = 2; // Same size range for all devices
       sizes[i] = baseSize + Math.random() * sizeRange;
       
-      // All particles are on surface
-      distanceFromCenter[i] = 1.0;
+      // Normalized XY distance to sphere center (0 at center → 1 at outer edge in screen-aligned plane)
+      const xyDistance = Math.sqrt(
+        positions[i3] * positions[i3] + positions[i3 + 1] * positions[i3 + 1]
+      );
+      distanceFromCenter[i] = Math.min(1, xyDistance / radius);
     }
     
     const geometry = new THREE.BufferGeometry();
@@ -133,7 +136,9 @@ export default function PointSphere() {
       uniforms: {
         time: { value: 0 },
         pixelRatio: { value: 1.0 }, // Fixed to 1.0 for consistent sizing across devices
-        isMobile: { value: window.innerWidth < 768 ? 1.0 : 0.0 }
+        isMobile: { value: window.innerWidth < 768 ? 1.0 : 0.0 },
+        highlightProgress: { value: 0.0 }, // 0 → 1 radial expansion from center
+        highlightIntensity: { value: 0.0 }  // 1 → 0 fade out strength
       },
       vertexShader: `
         attribute float size;
@@ -157,6 +162,8 @@ export default function PointSphere() {
         varying vec3 vColor;
         varying float vDistanceRatio;
         uniform float isMobile;
+        uniform float highlightProgress; 
+        uniform float highlightIntensity;
         
         void main() {
           float r = 0.0;
@@ -178,6 +185,13 @@ export default function PointSphere() {
             float transparencyMultiplier = 0.5 + 0.5 * fadeRatio; // 50% at center, 100% at 80% radius
             finalAlpha *= transparencyMultiplier;
           }
+
+          // One-shot radial diffusion highlight from center → edge
+          // vDistanceRatio: 0 at center → 1 at outer edge
+          float edge = 0.12; // soften band width
+          float wave = 1.0 - smoothstep(highlightProgress - edge, highlightProgress, vDistanceRatio);
+          float alphaBoost = 1.0 + highlightIntensity * 0.25 * wave; // up to +25%
+          finalAlpha *= alphaBoost;
           
           gl_FragColor = vec4(vColor, finalAlpha);
         }
@@ -193,6 +207,9 @@ export default function PointSphere() {
     scene.add(points);
     pointsRef.current = points;
 
+    // Interaction state for touch-driven scaling during drag
+    const interaction = { dragScale: 1 };
+
     // Animation loop
     let time = 0;
     const animate = () => {
@@ -201,9 +218,12 @@ export default function PointSphere() {
       time += 0.005;
       
       if (pointsRef.current) {
-        // Continuous pulsing (scale 1 → 1.1) - subtler effect
-        const pulseScale = 1 + 0.1 * (0.5 + 0.5 * Math.sin(time * 0.8));
-        pointsRef.current.scale.setScalar(pulseScale);
+        // Responsive pulsing strength: stronger and slightly slower on mobile
+        const isMobileScreen = window.innerWidth < 768;
+        const pulseAmplitude = isMobileScreen ? 0.22 : 0.1; // Mobile: 1 → 1.22, Desktop: 1 → 1.1
+        const pulseSpeed = isMobileScreen ? 0.6 : 0.8;
+        const pulseScale = 1 + pulseAmplitude * (0.5 + 0.5 * Math.sin(time * pulseSpeed));
+        pointsRef.current.scale.setScalar(pulseScale * interaction.dragScale);
         
         // Auto-rotation (X-axis: 240s, Y-axis: 480s)
         const xRotationSpeed = (Math.PI * 2) / (240 * 60); // 240 seconds for full rotation
@@ -229,6 +249,100 @@ export default function PointSphere() {
     // Add mouse move listener
     document.addEventListener('mousemove', handleMouseMove);
 
+    // Touch interactions for mobile: long-press to enter drag mode with diffusion highlight
+    let isDragging = false;
+    let longPressTimeout: number | null = null;
+
+    const touchStart = (event: TouchEvent) => {
+      if (!containerRef.current) return;
+      if (event.touches.length === 0) return;
+      const rect = containerRef.current.getBoundingClientRect();
+      const startX = event.touches[0].clientX;
+      const startY = event.touches[0].clientY;
+
+      // Schedule long-press activation
+      longPressTimeout = window.setTimeout(() => {
+        isDragging = true;
+        // Visual feedback: diffusion highlight + slight scale up
+        if ((material as any).uniforms?.highlightProgress) {
+          (material as any).uniforms.highlightProgress.value = 0.0;
+          (material as any).uniforms.highlightIntensity.value = 1.0;
+          gsap.to((material as any).uniforms.highlightProgress, {
+            value: 1.0,
+            duration: 0.6,
+            ease: 'power2.out'
+          });
+          gsap.to((material as any).uniforms.highlightIntensity, {
+            value: 0.0,
+            duration: 0.6,
+            ease: 'power2.out'
+          });
+        }
+        gsap.to(interaction, { dragScale: 1.05, duration: 0.2, ease: 'power2.out' });
+
+        // Initialize rotation towards current touch position
+        const centerX = rect.left + rect.width / 2;
+        const centerY = rect.top + rect.height / 2;
+        const mouseX = (startX - centerX) / (rect.width / 2);
+        const mouseY = (startY - centerY) / (rect.height / 2);
+        const targetRotationY = mouseX * 0.5;
+        const targetRotationX = -mouseY * 0.3;
+        gsap.killTweensOf(rotationRef.current);
+        gsap.to(rotationRef.current, {
+          x: targetRotationX,
+          y: targetRotationY,
+          duration: 0.12,
+          ease: 'power2.out'
+        });
+      }, 600);
+    };
+
+    const touchMove = (event: TouchEvent) => {
+      if (!containerRef.current) return;
+      if (!isDragging) return;
+      if (event.touches.length === 0) return;
+      // Prevent page scroll while dragging
+      event.preventDefault();
+      const rect = containerRef.current.getBoundingClientRect();
+      const centerX = rect.left + rect.width / 2;
+      const centerY = rect.top + rect.height / 2;
+      const currentX = event.touches[0].clientX;
+      const currentY = event.touches[0].clientY;
+      const mouseX = (currentX - centerX) / (rect.width / 2);
+      const mouseY = (currentY - centerY) / (rect.height / 2);
+      const targetRotationY = mouseX * 0.5;
+      const targetRotationX = -mouseY * 0.3;
+      gsap.killTweensOf(rotationRef.current);
+      gsap.to(rotationRef.current, {
+        x: targetRotationX,
+        y: targetRotationY,
+        duration: 0.1,
+        ease: 'power2.out'
+      });
+    };
+
+    const endDrag = () => {
+      if (longPressTimeout) {
+        window.clearTimeout(longPressTimeout);
+        longPressTimeout = null;
+      }
+      if (isDragging) {
+        isDragging = false;
+        gsap.to(interaction, { dragScale: 1, duration: 0.2, ease: 'power2.out' });
+      }
+    };
+
+    const touchEnd = () => endDrag();
+    const touchCancel = () => endDrag();
+
+    // Attach to the container so only sphere area responds
+    if (containerRef.current) {
+      containerRef.current.addEventListener('touchstart', touchStart, { passive: true });
+      containerRef.current.addEventListener('touchmove', touchMove, { passive: false });
+      containerRef.current.addEventListener('touchend', touchEnd, { passive: true });
+      containerRef.current.addEventListener('touchcancel', touchCancel, { passive: true });
+    }
+
     // Handle resize
     const handleResize = () => {
       if (!containerRef.current || !camera || !renderer) return;
@@ -253,6 +367,12 @@ export default function PointSphere() {
       }
       
       document.removeEventListener('mousemove', handleMouseMove);
+      if (currentContainer) {
+        currentContainer.removeEventListener('touchstart', touchStart as any);
+        currentContainer.removeEventListener('touchmove', touchMove as any);
+        currentContainer.removeEventListener('touchend', touchEnd as any);
+        currentContainer.removeEventListener('touchcancel', touchCancel as any);
+      }
       window.removeEventListener('resize', handleResize);
       
       // Kill all GSAP tweens

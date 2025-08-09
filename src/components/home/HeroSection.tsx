@@ -33,7 +33,7 @@ export default function HeroSection() {
 
 
       {/* 3D Sphere Background */}
-      <div className="absolute inset-0 flex items-center justify-center z-0 md:translate-y-0 -translate-y-8">
+      <div className="absolute inset-0 flex items-center justify-center z-0 md:translate-y-0 -translate-y-12">
         <div className="w-full h-full max-w-[800px] max-h-[800px] relative">
           <Suspense fallback={<div className="w-full h-full" />}>
             <PointSphere />
@@ -42,7 +42,7 @@ export default function HeroSection() {
       </div>
       
       {/* Hero Content */}
-      <div className="relative z-10 flex items-center justify-center min-h-screen md:translate-y-0 -translate-y-8">
+      <div className="relative z-10 flex items-center justify-center min-h-screen md:translate-y-0 -translate-y-12">
         <div className="text-center max-w-2xl mx-auto px-6">
           {/* Main Heading */}
           <h1 className="text-4xl md:text-5xl font-bold text-gray-600 mb-6">
