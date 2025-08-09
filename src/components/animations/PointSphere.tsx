@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useCallback } from "react";
+import { useEffect, useRef, useCallback, useState } from "react";
 import * as THREE from "three";
 import { gsap } from "gsap";
 
@@ -22,6 +22,8 @@ export default function PointSphere() {
   const gyroRef = useRef({ alpha: 0, beta: 0, gamma: 0 });
   const isGyroActive = useRef(false);
   const needsPermission = useRef(false);
+  const [isMobile, setIsMobile] = useState(false);
+  const [showPermissionHint, setShowPermissionHint] = useState(false);
 
   // Create point sphere geometry with varied sizes and grayscales
   const createPointSphere = () => {
@@ -93,18 +95,31 @@ export default function PointSphere() {
         // If this is the initial attempt without user gesture, just mark that permission is needed
         if (!requiresUserGesture) {
           needsPermission.current = true;
-          console.log('iOS device detected - permission required for gyroscope');
+          setShowPermissionHint(true);
+          console.log('🍎 iOS device detected - permission required for gyroscope');
+          console.log('📍 Current protocol:', window.location.protocol);
+          console.log('🔒 HTTPS required for iOS gyroscope permissions');
           return;
         }
         
         // Request permission with user gesture
-        const permission = await DeviceOrientationEventAny.requestPermission?.();
-        if (permission !== 'granted') {
-          console.log('Gyroscope permission denied');
+        console.log('🙋‍♂️ Requesting iOS DeviceOrientation permission...');
+        try {
+          const permission = await DeviceOrientationEventAny.requestPermission?.();
+          console.log('✅ Permission response:', permission);
+          
+          if (permission !== 'granted') {
+            console.log('❌ Gyroscope permission denied by user');
+            return;
+          }
+          
+          console.log('🎉 Gyroscope permission granted!');
+          needsPermission.current = false;
+          setShowPermissionHint(false);
+        } catch (error) {
+          console.error('🚨 Error requesting permission:', error);
           return;
         }
-        
-        needsPermission.current = false;
       }
 
       // Setup device orientation listener
@@ -203,6 +218,9 @@ export default function PointSphere() {
 
   useEffect(() => {
     if (!containerRef.current) return;
+    
+    // Set mobile state
+    setIsMobile(window.innerWidth < 768);
     
     // Force fresh creation with timestamp
     console.log('Creating PointSphere with new colors:', Date.now());
@@ -414,25 +432,55 @@ export default function PointSphere() {
     };
   }, [handleMouseMove, setupGyroscope]);
 
+  // Update mobile state on resize
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   // Handle user interaction to enable gyroscope (only for iOS devices that need permission)
   const handleUserInteraction = useCallback(async (event: React.MouseEvent | React.TouchEvent) => {
-    if (window.innerWidth < 768 && needsPermission.current && !isGyroActive.current) {
+    if (isMobile && needsPermission.current && !isGyroActive.current) {
       event.preventDefault();
-      console.log('Requesting gyroscope permission...');
+      event.stopPropagation();
+      
+      console.log('🔄 User interaction detected, requesting gyroscope permission...');
+      console.log('📱 Device info:', {
+        userAgent: navigator.userAgent,
+        https: window.location.protocol === 'https:',
+        deviceOrientation: 'DeviceOrientationEvent' in window,
+        hasRequestPermission: typeof (DeviceOrientationEvent as unknown as DeviceOrientationEventiOS).requestPermission
+      });
+      
       await setupGyroscope(true); // true = user gesture provided
     }
-  }, [setupGyroscope]);
+  }, [setupGyroscope, isMobile]);
 
   return (
-    <div 
-      ref={containerRef} 
-      className="absolute inset-0 w-full h-full"
-      style={{ 
-        pointerEvents: (window.innerWidth < 768 && needsPermission.current && !isGyroActive.current) ? 'auto' : 'none',
-        cursor: (window.innerWidth < 768 && needsPermission.current && !isGyroActive.current) ? 'pointer' : 'default'
-      }}
-      onClick={handleUserInteraction}
-      onTouchStart={handleUserInteraction}
-    />
+    <>
+      <div 
+        ref={containerRef} 
+        className="absolute inset-0 w-full h-full"
+        style={{ 
+          pointerEvents: (isMobile && showPermissionHint) ? 'auto' : 'none',
+          cursor: (isMobile && showPermissionHint) ? 'pointer' : 'default'
+        }}
+        onClick={handleUserInteraction}
+        onTouchStart={handleUserInteraction}
+      />
+      
+      {/* iOS Gyroscope Permission Hint */}
+      {isMobile && showPermissionHint && (
+        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-50 pointer-events-none">
+          <div className="bg-black/80 text-white px-4 py-2 rounded-full text-sm backdrop-blur-sm animate-pulse">
+            👆 Tap sphere to enable tilt control
+          </div>
+        </div>
+      )}
+    </>
   );
 }
