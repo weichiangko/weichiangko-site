@@ -21,6 +21,7 @@ export default function PointSphere() {
   const autoRotationRef = useRef(0);
   const gyroRef = useRef({ alpha: 0, beta: 0, gamma: 0 });
   const isGyroActive = useRef(false);
+  const needsPermission = useRef(false);
 
   // Create point sphere geometry with varied sizes and grayscales
   const createPointSphere = () => {
@@ -74,7 +75,7 @@ export default function PointSphere() {
   };
 
   // Request gyroscope permission and setup event listeners
-  const setupGyroscope = useCallback(async () => {
+  const setupGyroscope = useCallback(async (requiresUserGesture = false) => {
     if (typeof window === 'undefined') return;
     
     // Check if device supports DeviceOrientationEvent
@@ -84,22 +85,36 @@ export default function PointSphere() {
     }
 
     try {
-      // Request permission for iOS 13+
+      // Check if permission is needed (iOS 13+)
       const DeviceOrientationEventAny = DeviceOrientationEvent as unknown as DeviceOrientationEventiOS;
-      if (typeof DeviceOrientationEventAny.requestPermission === 'function') {
-        const permission = await DeviceOrientationEventAny.requestPermission();
+      const hasRequestPermission = typeof DeviceOrientationEventAny.requestPermission === 'function';
+      
+      if (hasRequestPermission) {
+        // If this is the initial attempt without user gesture, just mark that permission is needed
+        if (!requiresUserGesture) {
+          needsPermission.current = true;
+          console.log('iOS device detected - permission required for gyroscope');
+          return;
+        }
+        
+        // Request permission with user gesture
+        const permission = await DeviceOrientationEventAny.requestPermission?.();
         if (permission !== 'granted') {
           console.log('Gyroscope permission denied');
           return;
         }
+        
+        needsPermission.current = false;
       }
 
-      isGyroActive.current = true;
-      console.log('Gyroscope activated');
-
-      // Add event listener for device orientation
+      // Setup device orientation listener
       const handleDeviceOrientation = (event: DeviceOrientationEvent) => {
         if (!isGyroActive.current) return;
+        
+        // Validate that we're getting real gyroscope data
+        if (event.alpha === null && event.beta === null && event.gamma === null) {
+          return;
+        }
         
         // Update gyroscope data
         gyroRef.current = {
@@ -124,7 +139,29 @@ export default function PointSphere() {
         });
       };
 
-      window.addEventListener('deviceorientation', handleDeviceOrientation);
+      // Test with a temporary listener to see if gyroscope works
+      const testGyroscope = () => {
+        const testHandler = (event: DeviceOrientationEvent) => {
+          if (event.alpha !== null || event.beta !== null || event.gamma !== null) {
+            isGyroActive.current = true;
+            console.log('Gyroscope activated automatically');
+            window.removeEventListener('deviceorientation', testHandler);
+            window.addEventListener('deviceorientation', handleDeviceOrientation);
+          }
+        };
+        
+        window.addEventListener('deviceorientation', testHandler);
+        
+        // Give it 2 seconds to detect gyroscope data
+        setTimeout(() => {
+          window.removeEventListener('deviceorientation', testHandler);
+          if (!isGyroActive.current && !hasRequestPermission) {
+            console.log('No gyroscope data detected');
+          }
+        }, 2000);
+      };
+
+      testGyroscope();
       
       // Store cleanup function
       return () => {
@@ -319,12 +356,12 @@ export default function PointSphere() {
     // Setup input controls
     document.addEventListener('mousemove', handleMouseMove);
     
-    // Setup gyroscope for mobile devices
+    // Setup gyroscope for mobile devices - try immediately
     let gyroCleanup: (() => void) | undefined;
     const initGyroscope = async () => {
-      // Only try gyroscope on mobile devices
+      // Try gyroscope on mobile devices (automatically for Android, marks needed for iOS)
       if (window.innerWidth < 768) {
-        gyroCleanup = await setupGyroscope();
+        gyroCleanup = await setupGyroscope(false); // false = no user gesture required yet
       }
     };
     
@@ -377,10 +414,12 @@ export default function PointSphere() {
     };
   }, [handleMouseMove, setupGyroscope]);
 
-  // Handle user interaction to enable gyroscope
-  const handleUserInteraction = useCallback(async () => {
-    if (window.innerWidth < 768 && !isGyroActive.current) {
-      await setupGyroscope();
+  // Handle user interaction to enable gyroscope (only for iOS devices that need permission)
+  const handleUserInteraction = useCallback(async (event: React.MouseEvent | React.TouchEvent) => {
+    if (window.innerWidth < 768 && needsPermission.current && !isGyroActive.current) {
+      event.preventDefault();
+      console.log('Requesting gyroscope permission...');
+      await setupGyroscope(true); // true = user gesture provided
     }
   }, [setupGyroscope]);
 
@@ -388,7 +427,10 @@ export default function PointSphere() {
     <div 
       ref={containerRef} 
       className="absolute inset-0 w-full h-full"
-      style={{ pointerEvents: window.innerWidth < 768 ? 'auto' : 'none' }}
+      style={{ 
+        pointerEvents: (window.innerWidth < 768 && needsPermission.current && !isGyroActive.current) ? 'auto' : 'none',
+        cursor: (window.innerWidth < 768 && needsPermission.current && !isGyroActive.current) ? 'pointer' : 'default'
+      }}
       onClick={handleUserInteraction}
       onTouchStart={handleUserInteraction}
     />
