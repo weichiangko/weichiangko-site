@@ -1,13 +1,8 @@
 "use client";
 
-import { useEffect, useRef, useCallback, useState } from "react";
+import { useEffect, useRef, useCallback } from "react";
 import * as THREE from "three";
 import { gsap } from "gsap";
-
-// Type definitions for iOS DeviceOrientation permission
-interface DeviceOrientationEventiOS extends DeviceOrientationEvent {
-  requestPermission?: () => Promise<'granted' | 'denied'>;
-}
 
 export default function PointSphere() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -19,11 +14,6 @@ export default function PointSphere() {
   const mouseRef = useRef({ x: 0, y: 0 });
   const rotationRef = useRef({ x: 0, y: 0 });
   const autoRotationRef = useRef(0);
-  const gyroRef = useRef({ alpha: 0, beta: 0, gamma: 0 });
-  const isGyroActive = useRef(false);
-  const needsPermission = useRef(false);
-  const [isMobile, setIsMobile] = useState(false);
-  const [showPermissionHint, setShowPermissionHint] = useState(false);
 
   // Create point sphere geometry with varied sizes and grayscales
   const createPointSphere = () => {
@@ -76,151 +66,59 @@ export default function PointSphere() {
     return geometry;
   };
 
-  // Request gyroscope permission and setup event listeners
-  const setupGyroscope = useCallback(async (requiresUserGesture = false) => {
-    if (typeof window === 'undefined') return;
-    
-    // Check if device supports DeviceOrientationEvent
-    if (!window.DeviceOrientationEvent) {
-      console.log('DeviceOrientationEvent not supported');
-      return;
-    }
 
-    try {
-      // Check if permission is needed (iOS 13+)
-      const DeviceOrientationEventAny = DeviceOrientationEvent as unknown as DeviceOrientationEventiOS;
-      const hasRequestPermission = typeof DeviceOrientationEventAny.requestPermission === 'function';
-      
-      if (hasRequestPermission) {
-        // If this is the initial attempt without user gesture, just mark that permission is needed
-        if (!requiresUserGesture) {
-          needsPermission.current = true;
-          setShowPermissionHint(true);
-          console.log('🍎 iOS device detected - permission required for gyroscope');
-          console.log('📍 Current protocol:', window.location.protocol);
-          console.log('🔒 HTTPS required for iOS gyroscope permissions');
-          return;
-        }
-        
-        // Request permission with user gesture
-        console.log('🙋‍♂️ Requesting iOS DeviceOrientation permission...');
-        try {
-          const permission = await DeviceOrientationEventAny.requestPermission?.();
-          console.log('✅ Permission response:', permission);
-          
-          if (permission !== 'granted') {
-            console.log('❌ Gyroscope permission denied by user');
-            return;
-          }
-          
-          console.log('🎉 Gyroscope permission granted!');
-          needsPermission.current = false;
-          setShowPermissionHint(false);
-        } catch (error) {
-          console.error('🚨 Error requesting permission:', error);
-          return;
-        }
-      }
 
-      // Setup device orientation listener
-      const handleDeviceOrientation = (event: DeviceOrientationEvent) => {
-        if (!isGyroActive.current) return;
-        
-        // Validate that we're getting real gyroscope data
-        if (event.alpha === null && event.beta === null && event.gamma === null) {
-          return;
-        }
-        
-        // Update gyroscope data
-        gyroRef.current = {
-          alpha: event.alpha || 0,  // Z-axis rotation (0-360°)
-          beta: event.beta || 0,    // X-axis rotation (-180 to 180°)
-          gamma: event.gamma || 0   // Y-axis rotation (-90 to 90°)
-        };
-
-        // Convert device orientation to sphere rotation
-        // Beta (front/back tilt) controls X-axis rotation
-        // Gamma (left/right tilt) controls Y-axis rotation
-        const targetRotationX = (gyroRef.current.beta * Math.PI) / 180 * 0.3; // Scale down
-        const targetRotationY = (gyroRef.current.gamma * Math.PI) / 180 * 0.5; // Scale down
-
-        // Smooth transition to new rotation
-        gsap.killTweensOf(rotationRef.current);
-        gsap.to(rotationRef.current, {
-          x: targetRotationX,
-          y: targetRotationY,
-          duration: 0.2,
-          ease: "power2.out"
-        });
-      };
-
-      // Test with a temporary listener to see if gyroscope works
-      const testGyroscope = () => {
-        const testHandler = (event: DeviceOrientationEvent) => {
-          if (event.alpha !== null || event.beta !== null || event.gamma !== null) {
-            isGyroActive.current = true;
-            console.log('Gyroscope activated automatically');
-            window.removeEventListener('deviceorientation', testHandler);
-            window.addEventListener('deviceorientation', handleDeviceOrientation);
-          }
-        };
-        
-        window.addEventListener('deviceorientation', testHandler);
-        
-        // Give it 2 seconds to detect gyroscope data
-        setTimeout(() => {
-          window.removeEventListener('deviceorientation', testHandler);
-          if (!isGyroActive.current && !hasRequestPermission) {
-            console.log('No gyroscope data detected');
-          }
-        }, 2000);
-      };
-
-      testGyroscope();
-      
-      // Store cleanup function
-      return () => {
-        window.removeEventListener('deviceorientation', handleDeviceOrientation);
-        isGyroActive.current = false;
-      };
-    } catch (error) {
-      console.error('Error setting up gyroscope:', error);
-    }
-  }, []);
-
-  // Mouse move handler for desktop devices (fallback)
-  const handleMouseMove = useCallback((event: MouseEvent) => {
-    if (!containerRef.current || isGyroActive.current) return; // Skip if gyro is active
+  // Handle both mouse movement and click/touch interaction
+  const handlePointerInteraction = useCallback((clientX: number, clientY: number) => {
+    if (!containerRef.current) return;
     
     const rect = containerRef.current.getBoundingClientRect();
     const centerX = rect.left + rect.width / 2;
     const centerY = rect.top + rect.height / 2;
     
-    // Normalize mouse position (-1 to 1)
-    const mouseX = (event.clientX - centerX) / (rect.width / 2);
-    const mouseY = (event.clientY - centerY) / (rect.height / 2);
+    // Normalize position (-1 to 1)
+    const normalizedX = (clientX - centerX) / (rect.width / 2);
+    const normalizedY = (clientY - centerY) / (rect.height / 2);
     
-    mouseRef.current = { x: mouseX, y: mouseY };
+    mouseRef.current = { x: normalizedX, y: normalizedY };
     
-    // Map mouse movement to rotation (X → Y-axis, Y → X-axis inverted)
-    const targetRotationY = mouseX * 0.5; // Horizontal movement → Y-axis rotation
-    const targetRotationX = -mouseY * 0.3; // Vertical movement → X-axis rotation (inverted)
+    // Map position to rotation (X → Y-axis, Y → X-axis inverted)
+    const targetRotationY = normalizedX * 0.5; // Horizontal → Y-axis rotation
+    const targetRotationX = -normalizedY * 0.3; // Vertical → X-axis rotation (inverted)
     
-    // Kill previous tweens and create new ones for smooth motion
+    // Smooth rotation transition
     gsap.killTweensOf(rotationRef.current);
     gsap.to(rotationRef.current, {
       x: targetRotationX,
       y: targetRotationY,
-      duration: 0.1,
+      duration: 0.2,
       ease: "power2.out"
     });
   }, []);
 
+  // Mouse move handler for desktop devices
+  const handleMouseMove = useCallback((event: MouseEvent) => {
+    handlePointerInteraction(event.clientX, event.clientY);
+  }, [handlePointerInteraction]);
+
+  // Click/touch handler for mobile devices
+  const handleClick = useCallback((event: React.MouseEvent | React.TouchEvent) => {
+    const clientX = 'touches' in event && event.touches.length > 0 
+      ? event.touches[0].clientX 
+      : 'clientX' in event 
+      ? event.clientX 
+      : 0;
+    const clientY = 'touches' in event && event.touches.length > 0 
+      ? event.touches[0].clientY 
+      : 'clientY' in event 
+      ? event.clientY 
+      : 0;
+    
+    handlePointerInteraction(clientX, clientY);
+  }, [handlePointerInteraction]);
+
   useEffect(() => {
     if (!containerRef.current) return;
-    
-    // Set mobile state
-    setIsMobile(window.innerWidth < 768);
     
     // Force fresh creation with timestamp
     console.log('Creating PointSphere with new colors:', Date.now());
@@ -373,17 +271,6 @@ export default function PointSphere() {
 
     // Setup input controls
     document.addEventListener('mousemove', handleMouseMove);
-    
-    // Setup gyroscope for mobile devices - try immediately
-    let gyroCleanup: (() => void) | undefined;
-    const initGyroscope = async () => {
-      // Try gyroscope on mobile devices (automatically for Android, marks needed for iOS)
-      if (window.innerWidth < 768) {
-        gyroCleanup = await setupGyroscope(false); // false = no user gesture required yet
-      }
-    };
-    
-    initGyroscope();
 
     // Handle resize
     const handleResize = () => {
@@ -412,11 +299,6 @@ export default function PointSphere() {
       document.removeEventListener('mousemove', handleMouseMove);
       window.removeEventListener('resize', handleResize);
       
-      // Cleanup gyroscope
-      if (gyroCleanup) {
-        gyroCleanup();
-      }
-      
       // Kill all GSAP tweens
       gsap.killTweensOf(currentRotationRef);
       
@@ -430,57 +312,20 @@ export default function PointSphere() {
       geometry.dispose();
       material.dispose();
     };
-  }, [handleMouseMove, setupGyroscope]);
+  }, [handleMouseMove]);
 
-  // Update mobile state on resize
-  useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth < 768);
-    };
-    
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
 
-  // Handle user interaction to enable gyroscope (only for iOS devices that need permission)
-  const handleUserInteraction = useCallback(async (event: React.MouseEvent | React.TouchEvent) => {
-    if (isMobile && needsPermission.current && !isGyroActive.current) {
-      event.preventDefault();
-      event.stopPropagation();
-      
-      console.log('🔄 User interaction detected, requesting gyroscope permission...');
-      console.log('📱 Device info:', {
-        userAgent: navigator.userAgent,
-        https: window.location.protocol === 'https:',
-        deviceOrientation: 'DeviceOrientationEvent' in window,
-        hasRequestPermission: typeof (DeviceOrientationEvent as unknown as DeviceOrientationEventiOS).requestPermission
-      });
-      
-      await setupGyroscope(true); // true = user gesture provided
-    }
-  }, [setupGyroscope, isMobile]);
 
   return (
-    <>
-      <div 
-        ref={containerRef} 
-        className="absolute inset-0 w-full h-full"
-        style={{ 
-          pointerEvents: (isMobile && showPermissionHint) ? 'auto' : 'none',
-          cursor: (isMobile && showPermissionHint) ? 'pointer' : 'default'
-        }}
-        onClick={handleUserInteraction}
-        onTouchStart={handleUserInteraction}
-      />
-      
-      {/* iOS Gyroscope Permission Hint */}
-      {isMobile && showPermissionHint && (
-        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-50 pointer-events-none">
-          <div className="bg-black/80 text-white px-4 py-2 rounded-full text-sm backdrop-blur-sm animate-pulse">
-            👆 Tap sphere to enable tilt control
-          </div>
-        </div>
-      )}
-    </>
+    <div 
+      ref={containerRef} 
+      className="absolute inset-0 w-full h-full"
+      style={{ 
+        pointerEvents: 'auto',
+        cursor: 'pointer'
+      }}
+      onClick={handleClick}
+      onTouchStart={handleClick}
+    />
   );
 }
