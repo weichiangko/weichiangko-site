@@ -7,7 +7,7 @@ import { cn } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, MotionConfig } from "framer-motion";
 import Sidebar from "./Sidebar";
 
 const iconMap = {
@@ -31,6 +31,20 @@ export default function ResponsiveSidebar() {
     window.addEventListener("resize", checkScreenSize);
     return () => window.removeEventListener("resize", checkScreenSize);
   }, []);
+
+  // Lock body scroll when mobile menu is open to prevent background jank on iOS Safari
+  useEffect(() => {
+    if (!isMobile) return;
+    const originalOverflow = document.body.style.overflow;
+    if (isMobileMenuOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = originalOverflow;
+    }
+    return () => {
+      document.body.style.overflow = originalOverflow;
+    };
+  }, [isMobileMenuOpen, isMobile]);
 
 
   if (!isMobile) {
@@ -70,72 +84,45 @@ export default function ResponsiveSidebar() {
       </div>
 
       {/* Mobile Navigation Overlay */}
-      <AnimatePresence>
-        {isMobileMenuOpen && (
-          <div className="fixed inset-0 z-50 md:hidden">
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ 
-                duration: 0.25, 
-                ease: "easeOut"
-              }}
-              className="absolute inset-0 bg-black bg-opacity-50"
-              onClick={() => {
-                setIsMobileMenuOpen(false);
-              }}
-            />
-            
-            {/* Background Card that scales */}
-            <motion.div
-              initial={{ 
-                borderRadius: "12px",
-                x: "16px",
-                y: "16px",
-                width: "calc(100vw - 32px)",
-                height: "80px"
-              }}
-              animate={{ 
-                borderRadius: "0px",
-                x: 0,
-                y: 0,
-                width: "100vw",
-                height: "100vh"
-              }}
-              exit={{ 
-                scale: 0.85,
-                opacity: 0,
-                transition: { duration: 0.15, ease: "easeOut" }
-              }}
-              transition={{ 
-                duration: 0.15, 
-                ease: "easeOut"
-              }}
-              className="absolute bg-white"
-            />
-            
-            {/* Content overlay that fades independently */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ 
-                duration: 0.2, 
-                ease: "easeOut"
-              }}
-              className="relative w-full h-full flex flex-col"
-            >
+      <MotionConfig transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}>
+        <AnimatePresence mode="wait" initial={false}>
+          {isMobileMenuOpen && (
+            <div className="fixed inset-0 z-50 md:hidden">
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.24 }}
+                className="absolute inset-0 bg-black bg-opacity-50"
+                style={{ willChange: "opacity" }}
+                onClick={() => {
+                  setIsMobileMenuOpen(false);
+                }}
+              />
+              
+              {/* Background surface - transform-based for smoother perf */}
+              <motion.div
+                initial={{ borderRadius: 12, opacity: 0.98, scale: 0.98, y: -8 }}
+                animate={{ borderRadius: 0, opacity: 1, scale: 1, y: 0 }}
+                exit={{ opacity: 0, scale: 0.98, y: 8 }}
+                className="absolute inset-0 bg-white"
+                style={{ willChange: "transform, opacity" }}
+              />
+              
+              {/* Content overlay that fades/moves independently */}
+              <motion.div
+                initial={{ opacity: 0, y: 6 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: 6 }}
+                className="relative w-full h-full flex flex-col"
+                style={{ willChange: "transform, opacity" }}
+              >
             {/* Header with profile and close button */}
             <motion.div 
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ 
-                delay: 0.15,
-                duration: 0.2, 
-                ease: "easeOut"
-              }}
+              initial={{ opacity: 0, y: 4 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 4 }}
+              transition={{ delay: 0.08 }}
               className="p-8 border-b border-gray-200"
             >
               <div className="flex items-center justify-between">
@@ -176,14 +163,10 @@ export default function ResponsiveSidebar() {
                   return (
                     <motion.li 
                       key={item.name}
-                      initial={{ opacity: 0, y: 20 }}
+                      initial={{ opacity: 0, y: 12 }}
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0 }}
-                      transition={{ 
-                        delay: 0.2 + (index * 0.05), 
-                        duration: 0.2, 
-                        ease: "easeOut"
-                      }}
+                      transition={{ delay: 0.12 + (index * 0.04) }}
                     >
                       <Link
                         href={item.href}
@@ -212,14 +195,10 @@ export default function ResponsiveSidebar() {
               {/* Footer Links */}
               <ul className="space-y-4">
                 <motion.li
-                  initial={{ opacity: 0, y: 20 }}
+                  initial={{ opacity: 0, y: 12 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0 }}
-                  transition={{ 
-                    delay: 0.4, 
-                    duration: 0.2, 
-                    ease: "easeOut"
-                  }}
+                  transition={{ delay: 0.28 }}
                 >
                   <Link
                     href="https://www.cake.me/weichiangko"
@@ -234,14 +213,10 @@ export default function ResponsiveSidebar() {
                   </Link>
                 </motion.li>
                 <motion.li
-                  initial={{ opacity: 0, y: 20 }}
+                  initial={{ opacity: 0, y: 12 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0 }}
-                  transition={{ 
-                    delay: 0.45, 
-                    duration: 0.2, 
-                    ease: "easeOut"
-                  }}
+                  transition={{ delay: 0.32 }}
                 >
                   <Link
                     href={PERSONAL_INFO.linkedin}
@@ -256,14 +231,10 @@ export default function ResponsiveSidebar() {
                   </Link>
                 </motion.li>
                 <motion.li
-                  initial={{ opacity: 0, y: 20 }}
+                  initial={{ opacity: 0, y: 12 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0 }}
-                  transition={{ 
-                    delay: 0.5, 
-                    duration: 0.2, 
-                    ease: "easeOut"
-                  }}
+                  transition={{ delay: 0.36 }}
                 >
                   <Link
                     href={PERSONAL_INFO.github}
@@ -283,14 +254,10 @@ export default function ResponsiveSidebar() {
             {/* Available for Projects & Contact - Fixed Bottom */}
             <div className="p-8 space-y-4 border-t border-gray-200 bg-white">
               <motion.div
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 12 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0 }}
-                transition={{ 
-                  delay: 0.5, 
-                  duration: 0.2, 
-                  ease: "easeOut"
-                }}
+                transition={{ delay: 0.36 }}
                 className="space-y-3"
               >
                 <div className="flex items-center gap-2 text-sm text-gray-600 px-4">
@@ -311,7 +278,8 @@ export default function ResponsiveSidebar() {
             </motion.div>
           </div>
         )}
-      </AnimatePresence>
+        </AnimatePresence>
+      </MotionConfig>
     </>
   );
 }

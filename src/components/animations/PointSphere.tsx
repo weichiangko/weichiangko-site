@@ -14,6 +14,14 @@ export default function PointSphere() {
   const mouseRef = useRef({ x: 0, y: 0 });
   const rotationRef = useRef({ x: 0, y: 0 });
   const autoRotationRef = useRef(0);
+  // Momentum for click/touch interactions on mobile
+  const velocityRef = useRef({ x: 0, y: 0 });
+  const MOMENTUM = {
+    damping: 0.92, // how quickly the motion slows down each frame
+    kickFactor: 0.6, // how strong the impulse is towards the target
+    maxSpeed: 0.05, // clamp to avoid excessive spin
+    epsilon: 0.0005 // threshold to stop micro jitter
+  };
 
   // Create point sphere geometry with varied sizes and grayscales
   const createPointSphere = () => {
@@ -83,6 +91,7 @@ export default function PointSphere() {
     mouseRef.current = { x: normalizedX, y: normalizedY };
     
     // Map position to rotation (X → Y-axis, Y → X-axis inverted)
+    // Desktop/precision control path
     const targetRotationY = normalizedX * 0.5; // Horizontal → Y-axis rotation
     const targetRotationX = -normalizedY * 0.3; // Vertical → X-axis rotation (inverted)
     
@@ -113,8 +122,47 @@ export default function PointSphere() {
       : 'clientY' in event 
       ? event.clientY 
       : 0;
-    
-    handlePointerInteraction(clientX, clientY);
+
+    if (!containerRef.current) return;
+
+    const rect = containerRef.current.getBoundingClientRect();
+    const centerX = rect.left + rect.width / 2;
+    const centerY = rect.top + rect.height / 2;
+
+    // Normalize position (-1 to 1)
+    const normalizedX = (clientX - centerX) / (rect.width / 2);
+    const normalizedY = (clientY - centerY) / (rect.height / 2);
+
+    const isMobile = window.innerWidth < 768;
+
+    if (isMobile) {
+      // Stronger mapping on mobile for clearer movement
+      const targetRotationY = normalizedX * 1.0;  // was 0.5
+      const targetRotationX = -normalizedY * 0.8; // was 0.3
+
+      // Apply impulse towards target using momentum model
+      const deltaX = targetRotationX - rotationRef.current.x;
+      const deltaY = targetRotationY - rotationRef.current.y;
+
+      velocityRef.current.x += deltaX * MOMENTUM.kickFactor;
+      velocityRef.current.y += deltaY * MOMENTUM.kickFactor;
+
+      // Clamp to max speed
+      velocityRef.current.x = Math.max(-MOMENTUM.maxSpeed, Math.min(MOMENTUM.maxSpeed, velocityRef.current.x));
+      velocityRef.current.y = Math.max(-MOMENTUM.maxSpeed, Math.min(MOMENTUM.maxSpeed, velocityRef.current.y));
+
+      // Also ease a bit toward the target to ensure it reaches perceptibly
+      gsap.killTweensOf(rotationRef.current);
+      gsap.to(rotationRef.current, {
+        x: targetRotationX,
+        y: targetRotationY,
+        duration: 0.45, // longer for clearer motion on mobile
+        ease: "power3.out"
+      });
+    } else {
+      // Desktop click behaves like precise pointer interaction
+      handlePointerInteraction(clientX, clientY);
+    }
   }, [handlePointerInteraction]);
 
   useEffect(() => {
@@ -254,7 +302,19 @@ export default function PointSphere() {
         
         autoRotationRef.current += 0.016; // Base time increment
         
-        // Combine auto-rotation with mouse rotation
+        // Momentum integration for mobile click interactions
+        // Apply velocity to rotation, then damp it to simulate friction
+        if (Math.abs(velocityRef.current.x) > MOMENTUM.epsilon || Math.abs(velocityRef.current.y) > MOMENTUM.epsilon) {
+          rotationRef.current.x += velocityRef.current.x;
+          rotationRef.current.y += velocityRef.current.y;
+          velocityRef.current.x *= MOMENTUM.damping;
+          velocityRef.current.y *= MOMENTUM.damping;
+          // Snap to zero when very small
+          if (Math.abs(velocityRef.current.x) <= MOMENTUM.epsilon) velocityRef.current.x = 0;
+          if (Math.abs(velocityRef.current.y) <= MOMENTUM.epsilon) velocityRef.current.y = 0;
+        }
+
+        // Combine auto-rotation with interactive rotation
         pointsRef.current.rotation.x = (autoRotationRef.current * xRotationSpeed) + rotationRef.current.x;
         pointsRef.current.rotation.y = (autoRotationRef.current * yRotationSpeed) + rotationRef.current.y;
       }
