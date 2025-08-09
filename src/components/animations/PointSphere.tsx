@@ -4,6 +4,11 @@ import { useEffect, useRef, useCallback } from "react";
 import * as THREE from "three";
 import { gsap } from "gsap";
 
+// Type definitions for iOS DeviceOrientation permission
+interface DeviceOrientationEventiOS extends DeviceOrientationEvent {
+  requestPermission?: () => Promise<'granted' | 'denied'>;
+}
+
 export default function PointSphere() {
   const containerRef = useRef<HTMLDivElement>(null);
   const sceneRef = useRef<THREE.Scene | null>(null);
@@ -14,6 +19,8 @@ export default function PointSphere() {
   const mouseRef = useRef({ x: 0, y: 0 });
   const rotationRef = useRef({ x: 0, y: 0 });
   const autoRotationRef = useRef(0);
+  const gyroRef = useRef({ alpha: 0, beta: 0, gamma: 0 });
+  const isGyroActive = useRef(false);
 
   // Create point sphere geometry with varied sizes and grayscales
   const createPointSphere = () => {
@@ -66,9 +73,72 @@ export default function PointSphere() {
     return geometry;
   };
 
-  // Mouse move handler for interactive rotation
+  // Request gyroscope permission and setup event listeners
+  const setupGyroscope = useCallback(async () => {
+    if (typeof window === 'undefined') return;
+    
+    // Check if device supports DeviceOrientationEvent
+    if (!window.DeviceOrientationEvent) {
+      console.log('DeviceOrientationEvent not supported');
+      return;
+    }
+
+    try {
+      // Request permission for iOS 13+
+      const DeviceOrientationEventAny = DeviceOrientationEvent as unknown as DeviceOrientationEventiOS;
+      if (typeof DeviceOrientationEventAny.requestPermission === 'function') {
+        const permission = await DeviceOrientationEventAny.requestPermission();
+        if (permission !== 'granted') {
+          console.log('Gyroscope permission denied');
+          return;
+        }
+      }
+
+      isGyroActive.current = true;
+      console.log('Gyroscope activated');
+
+      // Add event listener for device orientation
+      const handleDeviceOrientation = (event: DeviceOrientationEvent) => {
+        if (!isGyroActive.current) return;
+        
+        // Update gyroscope data
+        gyroRef.current = {
+          alpha: event.alpha || 0,  // Z-axis rotation (0-360°)
+          beta: event.beta || 0,    // X-axis rotation (-180 to 180°)
+          gamma: event.gamma || 0   // Y-axis rotation (-90 to 90°)
+        };
+
+        // Convert device orientation to sphere rotation
+        // Beta (front/back tilt) controls X-axis rotation
+        // Gamma (left/right tilt) controls Y-axis rotation
+        const targetRotationX = (gyroRef.current.beta * Math.PI) / 180 * 0.3; // Scale down
+        const targetRotationY = (gyroRef.current.gamma * Math.PI) / 180 * 0.5; // Scale down
+
+        // Smooth transition to new rotation
+        gsap.killTweensOf(rotationRef.current);
+        gsap.to(rotationRef.current, {
+          x: targetRotationX,
+          y: targetRotationY,
+          duration: 0.2,
+          ease: "power2.out"
+        });
+      };
+
+      window.addEventListener('deviceorientation', handleDeviceOrientation);
+      
+      // Store cleanup function
+      return () => {
+        window.removeEventListener('deviceorientation', handleDeviceOrientation);
+        isGyroActive.current = false;
+      };
+    } catch (error) {
+      console.error('Error setting up gyroscope:', error);
+    }
+  }, []);
+
+  // Mouse move handler for desktop devices (fallback)
   const handleMouseMove = useCallback((event: MouseEvent) => {
-    if (!containerRef.current) return;
+    if (!containerRef.current || isGyroActive.current) return; // Skip if gyro is active
     
     const rect = containerRef.current.getBoundingClientRect();
     const centerX = rect.left + rect.width / 2;
@@ -246,102 +316,19 @@ export default function PointSphere() {
 
     animate();
 
-    // Add mouse move listener
+    // Setup input controls
     document.addEventListener('mousemove', handleMouseMove);
-
-    // Touch interactions for mobile: long-press to enter drag mode with diffusion highlight
-    let isDragging = false;
-    let longPressTimeout: number | null = null;
-
-    const touchStart = (event: TouchEvent) => {
-      if (!containerRef.current) return;
-      if (event.touches.length === 0) return;
-      const rect = containerRef.current.getBoundingClientRect();
-      const startX = event.touches[0].clientX;
-      const startY = event.touches[0].clientY;
-
-      // Schedule long-press activation
-      longPressTimeout = window.setTimeout(() => {
-        isDragging = true;
-        // Visual feedback: diffusion highlight + slight scale up
-        if (material && 'uniforms' in material && material.uniforms?.highlightProgress) {
-          material.uniforms.highlightProgress.value = 0.0;
-          material.uniforms.highlightIntensity.value = 1.0;
-          gsap.to(material.uniforms.highlightProgress, {
-            value: 1.0,
-            duration: 0.6,
-            ease: 'power2.out'
-          });
-          gsap.to(material.uniforms.highlightIntensity, {
-            value: 0.0,
-            duration: 0.6,
-            ease: 'power2.out'
-          });
-        }
-        gsap.to(interaction, { dragScale: 1.05, duration: 0.2, ease: 'power2.out' });
-
-        // Initialize rotation towards current touch position
-        const centerX = rect.left + rect.width / 2;
-        const centerY = rect.top + rect.height / 2;
-        const mouseX = (startX - centerX) / (rect.width / 2);
-        const mouseY = (startY - centerY) / (rect.height / 2);
-        const targetRotationY = mouseX * 0.5;
-        const targetRotationX = -mouseY * 0.3;
-        gsap.killTweensOf(rotationRef.current);
-        gsap.to(rotationRef.current, {
-          x: targetRotationX,
-          y: targetRotationY,
-          duration: 0.12,
-          ease: 'power2.out'
-        });
-      }, 600);
-    };
-
-    const touchMove = (event: TouchEvent) => {
-      if (!containerRef.current) return;
-      if (!isDragging) return;
-      if (event.touches.length === 0) return;
-      // Prevent page scroll while dragging
-      event.preventDefault();
-      const rect = containerRef.current.getBoundingClientRect();
-      const centerX = rect.left + rect.width / 2;
-      const centerY = rect.top + rect.height / 2;
-      const currentX = event.touches[0].clientX;
-      const currentY = event.touches[0].clientY;
-      const mouseX = (currentX - centerX) / (rect.width / 2);
-      const mouseY = (currentY - centerY) / (rect.height / 2);
-      const targetRotationY = mouseX * 0.5;
-      const targetRotationX = -mouseY * 0.3;
-      gsap.killTweensOf(rotationRef.current);
-      gsap.to(rotationRef.current, {
-        x: targetRotationX,
-        y: targetRotationY,
-        duration: 0.1,
-        ease: 'power2.out'
-      });
-    };
-
-    const endDrag = () => {
-      if (longPressTimeout) {
-        window.clearTimeout(longPressTimeout);
-        longPressTimeout = null;
-      }
-      if (isDragging) {
-        isDragging = false;
-        gsap.to(interaction, { dragScale: 1, duration: 0.2, ease: 'power2.out' });
+    
+    // Setup gyroscope for mobile devices
+    let gyroCleanup: (() => void) | undefined;
+    const initGyroscope = async () => {
+      // Only try gyroscope on mobile devices
+      if (window.innerWidth < 768) {
+        gyroCleanup = await setupGyroscope();
       }
     };
-
-    const touchEnd = () => endDrag();
-    const touchCancel = () => endDrag();
-
-    // Attach to the container so only sphere area responds
-    if (containerRef.current) {
-      containerRef.current.addEventListener('touchstart', touchStart, { passive: true });
-      containerRef.current.addEventListener('touchmove', touchMove, { passive: false });
-      containerRef.current.addEventListener('touchend', touchEnd, { passive: true });
-      containerRef.current.addEventListener('touchcancel', touchCancel, { passive: true });
-    }
+    
+    initGyroscope();
 
     // Handle resize
     const handleResize = () => {
@@ -357,7 +344,7 @@ export default function PointSphere() {
 
     window.addEventListener('resize', handleResize);
 
-    // Store container reference for cleanup
+    // Store references for cleanup
     const currentContainer = containerRef.current;
     const currentRotationRef = rotationRef.current;
 
@@ -366,18 +353,19 @@ export default function PointSphere() {
         cancelAnimationFrame(animationRef.current);
       }
       
+      // Remove event listeners
       document.removeEventListener('mousemove', handleMouseMove);
-      if (currentContainer) {
-        currentContainer.removeEventListener('touchstart', touchStart);
-        currentContainer.removeEventListener('touchmove', touchMove);
-        currentContainer.removeEventListener('touchend', touchEnd);
-        currentContainer.removeEventListener('touchcancel', touchCancel);
-      }
       window.removeEventListener('resize', handleResize);
+      
+      // Cleanup gyroscope
+      if (gyroCleanup) {
+        gyroCleanup();
+      }
       
       // Kill all GSAP tweens
       gsap.killTweensOf(currentRotationRef);
       
+      // Remove renderer from DOM
       if (currentContainer && renderer.domElement && currentContainer.contains(renderer.domElement)) {
         currentContainer.removeChild(renderer.domElement);
       }
@@ -387,13 +375,22 @@ export default function PointSphere() {
       geometry.dispose();
       material.dispose();
     };
-  }, [handleMouseMove]);
+  }, [handleMouseMove, setupGyroscope]);
+
+  // Handle user interaction to enable gyroscope
+  const handleUserInteraction = useCallback(async () => {
+    if (window.innerWidth < 768 && !isGyroActive.current) {
+      await setupGyroscope();
+    }
+  }, [setupGyroscope]);
 
   return (
     <div 
       ref={containerRef} 
       className="absolute inset-0 w-full h-full"
-      style={{ pointerEvents: 'none' }}
+      style={{ pointerEvents: window.innerWidth < 768 ? 'auto' : 'none' }}
+      onClick={handleUserInteraction}
+      onTouchStart={handleUserInteraction}
     />
   );
 }
