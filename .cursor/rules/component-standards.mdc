@@ -1,0 +1,95 @@
+---
+alwaysApply: false
+---
+
+# Component Development Standards
+
+## Component Architecture
+Follow the established component structure in the project:
+
+```
+src/components/
+├── ui/ (shadcn/ui base components)
+├── layout/ (Header, Footer, Sidebar, ResponsiveSidebar)
+├── home/ (AboutPreview, CTASection, HeroSection, ProjectsPreview)
+├── projects/ (ProjectCard, ProjectDetail, ProjectImage, ProjectVideo)
+├── contact/ (ContactForm)
+├── animations/ (PointSphere, RotatingText)
+└── common/ (BackToTop, shared utilities)
+```
+
+## Component Guidelines
+- Use functional components with TypeScript interfaces for all props
+- Implement proper error boundaries and loading states
+- Follow the existing naming conventions and file organization
+- Use shadcn/ui components as base building blocks when possible
+- Ensure all components are responsive and accessible
+
+## Animation Components
+- Three.js components should be wrapped in React.Suspense with fallbacks
+- Use React.memo for performance optimization on animation-heavy components
+- Implement cleanup functions in useEffect for Three.js scenes
+- Make particle counts responsive based on device capabilities
+
+## Form Components
+- Use controlled components with proper validation
+- Implement loading and error states for form submissions
+- Ensure proper accessibility with labels, ARIA attributes, and keyboard navigation
+- Follow the existing EmailJS integration pattern
+
+## Styling Guidelines
+- Use Tailwind CSS classes with the established design system
+- Leverage CSS custom properties for theme consistency
+- Implement responsive design with mobile-first approach
+- Use Framer Motion for page transitions and micro-interactions
+
+## Performance Requirements
+- Lazy load non-critical components
+- Optimize images with Next.js Image component
+- Implement proper code splitting for heavy components
+- Monitor bundle size and performance metrics# Component Development Standards
+
+## Component Architecture
+Follow the established component structure in the project:
+
+```
+src/components/
+├── ui/ (shadcn/ui base components)
+├── layout/ (Header, Footer, Sidebar, ResponsiveSidebar)
+├── home/ (AboutPreview, CTASection, HeroSection, ProjectsPreview)
+├── projects/ (ProjectCard, ProjectDetail, ProjectImage, ProjectVideo)
+├── contact/ (ContactForm)
+├── animations/ (PointSphere, RotatingText)
+└── common/ (BackToTop, shared utilities)
+```
+
+## Component Guidelines
+- Use functional components with TypeScript interfaces for all props
+- Implement proper error boundaries and loading states
+- Follow the existing naming conventions and file organization
+- Use shadcn/ui components as base building blocks when possible
+- Ensure all components are responsive and accessible
+
+## Animation Components
+- Three.js components should be wrapped in React.Suspense with fallbacks
+- Use React.memo for performance optimization on animation-heavy components
+- Implement cleanup functions in useEffect for Three.js scenes
+- Make particle counts responsive based on device capabilities
+
+## Form Components
+- Use controlled components with proper validation
+- Implement loading and error states for form submissions
+- Ensure proper accessibility with labels, ARIA attributes, and keyboard navigation
+- Follow the existing EmailJS integration pattern
+
+## Styling Guidelines
+- Use Tailwind CSS classes with the established design system
+- Leverage CSS custom properties for theme consistency
+- Implement responsive design with mobile-first approach
+- Use Framer Motion for page transitions and micro-interactions
+
+## Performance Requirements
+- Lazy load non-critical components
+- Optimize images with Next.js Image component
+- Implement proper code splitting for heavy components
+- Monitor bundle size and performance metrics

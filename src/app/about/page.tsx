@@ -27,7 +27,7 @@ export default function AboutPage() {
               Currently working as a Senior UI Engineer at <a href="https://www.mitac.com/" target="_blank" rel="noopener noreferrer" className="underline text-primary hover:text-primary/80 transition-colors">MiTAC</a> and an award-winning designer, I specialize in <strong>UX/UI design</strong> and <strong>frontend development</strong>, turning concepts into market-ready products through effective cross-departmental collaboration.
             </p>
             <p className="text-lg text-gray-600 leading-relaxed max-w-4xl mb-16">
-              With over 10 years of hands-on experience across healthcare, machine-tool, consumer-electronics, automotive-electronics and AI-startup sectors, I’m adept at accurately assessing challenges, crafting practical solutions and ensuring seamless handoffs between design and development to drive continuous innovation and optimization.
+              With over <strong>10 years</strong> of hands-on experience across healthcare, machine-tool, consumer-electronics, automotive-electronics and AI-startup sectors, I’m adept at accurately assessing challenges, crafting practical solutions and ensuring seamless handoffs between design and development to drive continuous innovation and optimization.
             </p>
             
             {/* Stats Flex - Horizontal Layout */}

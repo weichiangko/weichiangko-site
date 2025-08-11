@@ -1,0 +1,97 @@
+---
+alwaysApply: false
+---
+
+# Ben Ko's Portfolio Website - Development Guidelines
+
+You are working on Ben Ko's portfolio website, a modern Next.js 15 application showcasing UX/UI design work with frontend development expertise.
+
+## Project Context
+- **Project**: Ben Ko's Portfolio Website
+- **Type**: Next.js 15 Portfolio with 3D animations
+- **Purpose**: Showcase UX/UI design and frontend development skills
+- **Target**: Professional audience (designers, developers, recruiters)
+
+## Tech Stack Requirements
+- Next.js 15.3.4 with App Router
+- React 19 with TypeScript (strict mode)
+- Tailwind CSS v4 with shadcn/ui components
+- Three.js v0.178.0 for 3D hero animation
+- Framer Motion v12.23.3 and GSAP v3.13.0 for animations
+- EmailJS v4.4.1 for contact form functionality
+
+## Code Standards
+- Always use TypeScript with strict mode enabled
+- Follow existing component structure and established patterns
+- Use descriptive, consistent naming conventions (camelCase for variables, PascalCase for components)
+- Write clean, readable, and well-documented code with meaningful comments
+- Prioritize accessibility (WCAG 2.1 AA compliance) in all implementations
+- Optimize for performance, especially Three.js animations and mobile devices
+
+## Development Guidelines
+- Mobile-first responsive design approach (breakpoints: 320px+, 768px+, 1024px+)
+- Maintain existing design system and component architecture
+- Use established patterns already present in the codebase
+- Avoid introducing unnecessary dependencies or breaking changes
+- Implement code splitting for Three.js components to improve performance
+- Use lazy loading for non-critical animations and components
+
+## Design Requirements
+- Strictly follow reference images and design specifications
+- All UI elements, spacing, colors, and typography must match designs exactly
+- Maintain visual consistency across all breakpoints and devices
+- Ensure smooth animations and interactions that enhance user experience
+- Focus on professional presentation and modern web design principles
+
+## Critical Implementation Notes
+- Three.js animations must be performance-optimized and not impact page loading speed
+- All components must be fully accessible with proper ARIA labels and keyboard navigation
+- Code must be maintainable, extensible, and follow established architectural patterns
+- Mobile optimization is crucial - test all features on mobile devices
+- SEO optimization is required with proper meta tags and structured data# Ben Ko's Portfolio Website - Development Guidelines
+
+You are working on Ben Ko's portfolio website, a modern Next.js 15 application showcasing UX/UI design work with frontend development expertise.
+
+## Project Context
+- **Project**: Ben Ko's Portfolio Website
+- **Type**: Next.js 15 Portfolio with 3D animations
+- **Purpose**: Showcase UX/UI design and frontend development skills
+- **Target**: Professional audience (designers, developers, recruiters)
+
+## Tech Stack Requirements
+- Next.js 15.3.4 with App Router
+- React 19 with TypeScript (strict mode)
+- Tailwind CSS v4 with shadcn/ui components
+- Three.js v0.178.0 for 3D hero animation
+- Framer Motion v12.23.3 and GSAP v3.13.0 for animations
+- EmailJS v4.4.1 for contact form functionality
+
+## Code Standards
+- Always use TypeScript with strict mode enabled
+- Follow existing component structure and established patterns
+- Use descriptive, consistent naming conventions (camelCase for variables, PascalCase for components)
+- Write clean, readable, and well-documented code with meaningful comments
+- Prioritize accessibility (WCAG 2.1 AA compliance) in all implementations
+- Optimize for performance, especially Three.js animations and mobile devices
+
+## Development Guidelines
+- Mobile-first responsive design approach (breakpoints: 320px+, 768px+, 1024px+)
+- Maintain existing design system and component architecture
+- Use established patterns already present in the codebase
+- Avoid introducing unnecessary dependencies or breaking changes
+- Implement code splitting for Three.js components to improve performance
+- Use lazy loading for non-critical animations and components
+
+## Design Requirements
+- Strictly follow reference images and design specifications
+- All UI elements, spacing, colors, and typography must match designs exactly
+- Maintain visual consistency across all breakpoints and devices
+- Ensure smooth animations and interactions that enhance user experience
+- Focus on professional presentation and modern web design principles
+
+## Critical Implementation Notes
+- Three.js animations must be performance-optimized and not impact page loading speed
+- All components must be fully accessible with proper ARIA labels and keyboard navigation
+- Code must be maintainable, extensible, and follow established architectural patterns
+- Mobile optimization is crucial - test all features on mobile devices
+- SEO optimization is required with proper meta tags and structured data

@@ -1,0 +1,104 @@
+---
+alwaysApply: false
+---
+# TypeScript Development Guidelines
+
+## Type Safety Requirements
+- Use TypeScript strict mode for all files
+- Define proper interfaces for all component props and data structures
+- Avoid using `any` type - use proper typing or `unknown` with type guards
+- Implement type guards for external data validation
+- Use generic types where appropriate for reusable components
+
+## Interface and Type Definitions
+- Create interfaces for all component props in the same file or dedicated types file
+- Use descriptive names that clearly indicate the data structure purpose
+- Export types that might be used across multiple components
+- Group related types in dedicated files under `src/lib/types/`
+
+## Component Props Typing
+```typescript
+interface ComponentProps {
+  title: string;
+  description?: string;
+  isActive: boolean;
+  onClick: (id: string) => void;
+  children?: React.ReactNode;
+}
+
+const Component: React.FC<ComponentProps> = ({ title, description, isActive, onClick, children }) => {
+  // Component implementation
+};
+```
+
+## API and Data Typing
+- Define interfaces for all API responses and external data
+- Use proper typing for EmailJS configuration and responses
+- Type all project data and mock content structures
+- Implement proper error typing for async operations
+
+## Event Handling
+- Use proper event types for all event handlers
+- Type custom event handlers with specific parameter types
+- Implement proper keyboard event typing for accessibility features
+
+## Three.js and Animation Typing
+- Use @types/three for Three.js components
+- Type all animation parameters and configuration objects
+- Implement proper typing for GSAP and Framer Motion configurations
+- Use proper refs typing for DOM manipulation
+
+## Utility Function Typing
+- Type all utility functions with clear input and output types
+- Use function overloads when functions accept multiple parameter patterns
+- Implement proper typing for configuration objects and constants# TypeScript Development Guidelines
+
+## Type Safety Requirements
+- Use TypeScript strict mode for all files
+- Define proper interfaces for all component props and data structures
+- Avoid using `any` type - use proper typing or `unknown` with type guards
+- Implement type guards for external data validation
+- Use generic types where appropriate for reusable components
+
+## Interface and Type Definitions
+- Create interfaces for all component props in the same file or dedicated types file
+- Use descriptive names that clearly indicate the data structure purpose
+- Export types that might be used across multiple components
+- Group related types in dedicated files under `src/lib/types/`
+
+## Component Props Typing
+```typescript
+interface ComponentProps {
+  title: string;
+  description?: string;
+  isActive: boolean;
+  onClick: (id: string) => void;
+  children?: React.ReactNode;
+}
+
+const Component: React.FC<ComponentProps> = ({ title, description, isActive, onClick, children }) => {
+  // Component implementation
+};
+```
+
+## API and Data Typing
+- Define interfaces for all API responses and external data
+- Use proper typing for EmailJS configuration and responses
+- Type all project data and mock content structures
+- Implement proper error typing for async operations
+
+## Event Handling
+- Use proper event types for all event handlers
+- Type custom event handlers with specific parameter types
+- Implement proper keyboard event typing for accessibility features
+
+## Three.js and Animation Typing
+- Use @types/three for Three.js components
+- Type all animation parameters and configuration objects
+- Implement proper typing for GSAP and Framer Motion configurations
+- Use proper refs typing for DOM manipulation
+
+## Utility Function Typing
+- Type all utility functions with clear input and output types
+- Use function overloads when functions accept multiple parameter patterns
+- Implement proper typing for configuration objects and constants
