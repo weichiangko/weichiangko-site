@@ -169,10 +169,18 @@ async function getMDXContent(contentFile: string) {
 }
 
 export default async function ProjectDetail({ project }: ProjectDetailProps) {
-  // Get other projects for the "Other Projects" section
-  const otherProjects = Object.values(PROJECT_DETAILS)
-    .filter(p => p.id !== project.id)
-    .slice(0, 2);
+  // Get previous and next projects for circular navigation
+  const allProjects = Object.values(PROJECT_DETAILS);
+  const currentIndex = allProjects.findIndex(p => p.id === project.id);
+  
+  // Calculate previous and next indices with circular logic
+  const previousIndex = currentIndex === 0 ? allProjects.length - 1 : currentIndex - 1;
+  const nextIndex = currentIndex === allProjects.length - 1 ? 0 : currentIndex + 1;
+  
+  const otherProjects = [
+    allProjects[previousIndex],
+    allProjects[nextIndex]
+  ];
 
   // Get MDX content
   const mdxSource = await getMDXContent(project.contentFile);
@@ -322,10 +330,10 @@ export default async function ProjectDetail({ project }: ProjectDetailProps) {
             </div>
           </section>
 
-          {/* Other Projects Section */}
+          {/* More Projects Section */}
           <section className="py-8">
             <div className="mb-8">
-              <h2 className="text-3xl font-bold text-gray-900">Other Projects</h2>
+              <h2 className="text-3xl font-bold text-gray-900">More Projects</h2>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
@@ -333,6 +341,11 @@ export default async function ProjectDetail({ project }: ProjectDetailProps) {
                 <ProjectCard
                   key={otherProject.id}
                   project={otherProject}
+                  href={
+                    otherProject.id === 'edgeAISystem' ? 'https://www.behance.net/gallery/110448371/Smart-AI-Camera-System' :
+                    otherProject.id === 'i40bs' ? 'https://www.behance.net/gallery/100527681/Smart-Module-System' :
+                    undefined
+                  }
                 />
               ))}
             </div>
