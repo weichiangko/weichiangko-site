@@ -2,7 +2,7 @@
 
 import { NAVIGATION, PERSONAL_INFO } from "@/lib/constants";
 import { cn } from "@/lib/utils";
-import { Home, User, Briefcase, Mail, FileText, Linkedin, Github } from "lucide-react";
+import { Home, User, Briefcase, Mail, FileText, Linkedin, Github, FlaskConical } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -11,6 +11,7 @@ const iconMap = {
   Home,
   User,
   Briefcase,
+  FlaskConical,
   Mail,
 };
 
@@ -44,7 +45,9 @@ export default function Sidebar() {
         <ul className="space-y-2 md:space-y-3 lg:space-y-2">
           {NAVIGATION.map((item) => {
             const Icon = iconMap[item.icon as keyof typeof iconMap];
-            const isActive = pathname === item.href || (item.href === '/projects' && pathname.startsWith('/projects/'));
+            const isActive = pathname === item.href || 
+              (item.href === '/projects' && pathname.startsWith('/projects/')) ||
+              (item.href === '/labs' && pathname.startsWith('/labs/'));
             
             return (
               <li key={item.name}>

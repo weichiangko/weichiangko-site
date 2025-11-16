@@ -1,10 +1,5 @@
-"use client";
-
-import { useState } from "react";
 import PageFooter from "@/components/layout/PageFooter";
 import CTASection from "@/components/home/CTASection";
-import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import ProjectCard from "@/components/projects/ProjectCard";
 import { PROJECT_DETAILS } from "@/lib/projects";
 
@@ -23,24 +18,6 @@ const projects = [
 
 
 export default function ProjectsPage() {
-  const categories = ["All", "Design", "Development", "Experience"];
-  const [activeCategory, setActiveCategory] = useState("All");
-  
-  const getFilteredProjects = (category: string) => {
-    if (category === "All") {
-      return projects;
-    }
-    
-    const targetCategory = category === "Design" ? "UX/UI Design" : category;
-    
-    return projects.filter(project => {
-      if (Array.isArray(project.category)) {
-        return project.category.includes(targetCategory);
-      }
-      return project.category === targetCategory;
-    });
-  };
-
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col">
       <div className="flex-1">
@@ -55,37 +32,10 @@ export default function ProjectsPage() {
             </p>
           </div>
 
-          {/* Mobile Select (sm以下) */}
-          <div className="block sm:hidden mb-12">
-            <Select value={activeCategory} onValueChange={setActiveCategory}>
-              <SelectTrigger className="w-full">
-                <SelectValue placeholder="選擇分類" />
-              </SelectTrigger>
-              <SelectContent>
-                {categories.map((category) => (
-                  <SelectItem key={category} value={category}>
-                    {category}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
-
-          {/* Desktop Tabs (sm以上) */}
-          <Tabs value={activeCategory} onValueChange={setActiveCategory} className="hidden sm:block mb-10">
-            <TabsList className="inline-flex w-fit mb-8">
-              {categories.map((category) => (
-                <TabsTrigger key={category} value={category} className="text-sm font-medium px-6">
-                  {category}
-                </TabsTrigger>
-              ))}
-            </TabsList>
-          </Tabs>
-
           {/* Projects Grid */}
           {/* TODO: EdgeAI System & i4.0bs temp external links. Remove href when internal pages are ready */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-20">
-            {getFilteredProjects(activeCategory).map((project) => (
+            {projects.map((project) => (
               <ProjectCard 
                 key={project.id} 
                 project={project} 

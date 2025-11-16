@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Menu, X, Home, User, Briefcase, Mail, FileText, Linkedin, Github } from "lucide-react";
+import { Menu, X, Home, User, Briefcase, Mail, FileText, Linkedin, Github, FlaskConical } from "lucide-react";
 import { NAVIGATION, PERSONAL_INFO } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
@@ -14,6 +14,7 @@ const iconMap = {
   Home,
   User,
   Briefcase,
+  FlaskConical,
   Mail,
 };
 
@@ -158,7 +159,9 @@ export default function ResponsiveSidebar() {
               <ul className="space-y-4">
                 {NAVIGATION.map((item, index) => {
                   const Icon = iconMap[item.icon as keyof typeof iconMap];
-                  const isActive = pathname === item.href;
+                  const isActive = pathname === item.href || 
+                    (item.href === '/projects' && pathname.startsWith('/projects/')) ||
+                    (item.href === '/labs' && pathname.startsWith('/labs/'));
                   
                   return (
                     <motion.li 

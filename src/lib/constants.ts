@@ -12,6 +12,7 @@ export const NAVIGATION = [
   { name: "Home", href: "/", icon: "Home" },
   { name: "About", href: "/about", icon: "User" },
   { name: "Projects", href: "/projects", icon: "Briefcase" },
+  { name: "Labs", href: "/labs", icon: "FlaskConical" },
   { name: "Contact", href: "/contact", icon: "Mail" },
 ] as const;
 

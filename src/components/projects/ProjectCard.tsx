@@ -1,3 +1,5 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
@@ -10,6 +12,7 @@ interface Project {
   cardImage?: string;
   slug?: string;
   completionDate?: string;
+  video?: string; // Optional: hover preview video (保留但不使用)
 }
 
 interface ProjectCardProps {
@@ -17,12 +20,25 @@ interface ProjectCardProps {
   href?: string; // Optional custom href for projects without slug
 }
 
-// Removed hasDetailedInfo function as we now show info independently
+// 統一的媒體容器 - 所有卡片都使用相同的縮放動畫
+function MediaContainer({ project }: { project: Project }) {
+  return (
+    <div className="aspect-[4/3] bg-gray-100 overflow-hidden">
+      <Image
+        src={project.cardImage || project.image}
+        alt={project.title}
+        width={1200}
+        height={900}
+        className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-110"
+      />
+    </div>
+  );
+}
 
 export default function ProjectCard({ project, href }: ProjectCardProps) {
   // Determine the link URL
   const linkUrl = href || (project.slug ? `/projects/${project.slug}` : `/projects/${project.id}`);
-  
+
   // Check if it's an external link
   const isExternal = href && (href.startsWith('http') || href.startsWith('https'));
 
@@ -35,15 +51,7 @@ export default function ProjectCard({ project, href }: ProjectCardProps) {
         rel="noopener noreferrer"
         className="group block bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300"
       >
-        <div className="aspect-[4/3] bg-gray-100 overflow-hidden">
-          <Image
-            src={project.cardImage || project.image}
-            alt={project.title}
-            width={1200}
-            height={900}
-            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-          />
-        </div>
+        <MediaContainer project={project} />
         <div className="p-6">
           <h3 className="text-xl font-semibold text-gray-900 mb-3 group-hover:text-gray-600 transition-colors">
             {project.title}
@@ -81,15 +89,7 @@ export default function ProjectCard({ project, href }: ProjectCardProps) {
       href={linkUrl}
       className="group block bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300"
     >
-      <div className="aspect-[4/3] bg-gray-100 overflow-hidden">
-        <Image
-          src={project.cardImage || project.image}
-          alt={project.title}
-          width={1200}
-          height={900}
-          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-        />
-      </div>
+      <MediaContainer project={project} />
       <div className="p-6">
         <h3 className="text-xl font-semibold text-gray-900 mb-3 group-hover:text-gray-600 transition-colors">
           {project.title}

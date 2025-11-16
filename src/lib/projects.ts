@@ -18,6 +18,7 @@ export interface ProjectDetail {
     type?: 'playStore' | 'appStore' | 'website' | 'demo' | 'github';
   }[];
   contentFile: string;
+  video?: string;  // Optional: hover preview video
 }
 
 export const mionext: ProjectDetail = {
