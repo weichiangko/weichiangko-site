@@ -17,14 +17,14 @@ export default function ContactSection() {
         {/* Contact Links Row */}
         <div className="flex flex-wrap gap-4">
           <a
-            href="mailto:contact@example.com"
+            href="mailto:designerko1215@gmail.com"
             className="inline-flex items-center gap-2 px-5 py-2.5 bg-accent text-accent-foreground rounded-lg text-sm font-medium hover:opacity-90 transition-opacity duration-150"
           >
             <Mail className="w-4 h-4" />
             Email
           </a>
           <a
-            href="https://linkedin.com/in/yourprofile"
+            href="https://www.linkedin.com/in/weichiangko/"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 px-5 py-2.5 bg-bg-elevated border border-border rounded-lg text-sm font-medium hover:border-accent transition-colors duration-150 group"
