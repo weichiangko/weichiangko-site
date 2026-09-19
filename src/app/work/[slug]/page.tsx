@@ -15,13 +15,13 @@ export default function CaseStudyPage({ params }: { params: Promise<{ slug: stri
   }
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen">
       {/* Back Button */}
-      <div className="border-b border-gray-200 bg-white sticky top-0 z-40">
-        <div className="max-w-5xl mx-auto px-6 py-4">
+      <div className="border-b border-border bg-background/80 backdrop-blur-sm sticky top-16 z-30">
+        <div className="max-w-[720px] mx-auto px-6 py-4">
           <Link
             href="/#work"
-            className="inline-flex items-center text-gray-600 hover:text-gray-900 transition-colors"
+            className="inline-flex items-center text-fg-muted hover:text-foreground transition-colors duration-150 text-sm"
           >
             <ArrowLeft className="w-4 h-4 mr-2" />
             Back to work
@@ -29,74 +29,69 @@ export default function CaseStudyPage({ params }: { params: Promise<{ slug: stri
         </div>
       </div>
 
-      <div className="max-w-5xl mx-auto px-6 py-12">
+      <div className="max-w-[720px] mx-auto px-6 py-16 md:py-24">
         {/* Header */}
-        <div className="mb-12">
-          <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4 leading-tight">
+        <div className="mb-16 animate-[fadeInUp_280ms_ease-out]">
+          <h1 className="mb-6">
             {caseStudy.problemStatement}
           </h1>
           
           {/* Chips */}
-          <div className="flex flex-wrap gap-2 mb-6">
+          <div className="flex flex-wrap gap-2">
             {caseStudy.chips.map((chip, index) => (
               <span
                 key={index}
-                className="px-4 py-2 bg-gray-100 text-gray-700 rounded-full text-sm font-medium"
+                className="px-3 py-1 bg-accent-soft border border-border rounded-full text-sm"
               >
                 {chip}
               </span>
             ))}
           </div>
-
-          {/* Hero Image Placeholder */}
-          {caseStudy.heroImage && (
-            <div className="aspect-[16/9] bg-gradient-to-br from-gray-200 to-gray-300 rounded-xl mb-12" />
-          )}
         </div>
 
         {/* Six-column template */}
-        <div className="space-y-12">
+        <div className="space-y-16">
           {/* Problem */}
-          <div className="border-l-4 border-black pl-6">
-            <h2 className="text-2xl font-bold text-gray-900 mb-3">Problem</h2>
-            <p className="text-gray-700 leading-relaxed">{caseStudy.problem}</p>
+          <div className="border-l-2 border-accent pl-6 animate-[fadeInUp_280ms_ease-out]" style={{ animationDelay: '40ms' }}>
+            <h2 className="mb-4">Problem</h2>
+            <p className="text-fg-muted leading-relaxed">{caseStudy.problem}</p>
           </div>
 
           {/* Constraints */}
-          <div className="border-l-4 border-gray-300 pl-6">
-            <h2 className="text-2xl font-bold text-gray-900 mb-3">Constraints</h2>
-            <p className="text-gray-700 leading-relaxed">{caseStudy.constraints}</p>
+          <div className="border-l-2 border-border pl-6 animate-[fadeInUp_280ms_ease-out]" style={{ animationDelay: '80ms' }}>
+            <h2 className="mb-4">Constraints</h2>
+            <p className="text-fg-muted leading-relaxed">{caseStudy.constraints}</p>
           </div>
 
           {/* What I owned */}
-          <div className="border-l-4 border-black pl-6">
-            <h2 className="text-2xl font-bold text-gray-900 mb-3">What I owned</h2>
-            <p className="text-gray-700 leading-relaxed">{caseStudy.whatIOwned}</p>
+          <div className="border-l-2 border-accent pl-6 animate-[fadeInUp_280ms_ease-out]" style={{ animationDelay: '120ms' }}>
+            <h2 className="mb-4">What I owned</h2>
+            <p className="text-fg-muted leading-relaxed">{caseStudy.whatIOwned}</p>
           </div>
 
           {/* Trade-offs */}
-          <div className="border-l-4 border-gray-300 pl-6">
-            <h2 className="text-2xl font-bold text-gray-900 mb-3">Trade-offs</h2>
-            <p className="text-gray-700 leading-relaxed">{caseStudy.tradeoffs}</p>
+          <div className="border-l-2 border-border pl-6 animate-[fadeInUp_280ms_ease-out]" style={{ animationDelay: '160ms' }}>
+            <h2 className="mb-4">Trade-offs</h2>
+            <p className="text-fg-muted leading-relaxed">{caseStudy.tradeoffs}</p>
           </div>
 
           {/* Outcome */}
-          <div className="border-l-4 border-black pl-6">
-            <h2 className="text-2xl font-bold text-gray-900 mb-3">Outcome</h2>
-            <p className="text-gray-700 leading-relaxed">{caseStudy.outcome}</p>
+          <div className="border-l-2 border-accent pl-6 animate-[fadeInUp_280ms_ease-out]" style={{ animationDelay: '200ms' }}>
+            <h2 className="mb-4">Outcome</h2>
+            <p className="text-fg-muted leading-relaxed">{caseStudy.outcome}</p>
           </div>
 
           {/* Artifacts */}
-          <div className="border-l-4 border-gray-300 pl-6">
-            <h2 className="text-2xl font-bold text-gray-900 mb-4">Artifacts</h2>
+          <div className="border-l-2 border-border pl-6 animate-[fadeInUp_280ms_ease-out]" style={{ animationDelay: '240ms' }}>
+            <h2 className="mb-6">Artifacts</h2>
             <div className="space-y-6">
               {caseStudy.artifacts.map((artifact, index) => (
                 <div key={index}>
                   {artifact.type === 'image' && (
                     <div>
-                      <div className="aspect-[16/9] bg-gradient-to-br from-gray-200 to-gray-300 rounded-lg mb-2" />
+                      <div className="aspect-[16/9] bg-accent-soft border border-border rounded-lg mb-2" />
                       {artifact.caption && (
-                        <p className="text-sm text-gray-600 italic">{artifact.caption}</p>
+                        <p className="text-sm text-fg-muted">{artifact.caption}</p>
                       )}
                     </div>
                   )}
@@ -105,10 +100,10 @@ export default function CaseStudyPage({ params }: { params: Promise<{ slug: stri
                       href={artifact.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 text-gray-900 hover:text-gray-600 font-medium"
+                      className="inline-flex items-center gap-2 hover:underline underline-offset-4 transition-colors duration-150 group"
                     >
-                      <ExternalLink className="w-4 h-4" />
                       {artifact.caption || artifact.alt}
+                      <ExternalLink className="w-4 h-4 text-fg-muted group-hover:text-foreground transition-colors" />
                     </a>
                   )}
                 </div>
@@ -117,11 +112,11 @@ export default function CaseStudyPage({ params }: { params: Promise<{ slug: stri
           </div>
         </div>
 
-        {/* Next Case CTA */}
-        <div className="mt-16 pt-12 border-t border-gray-200">
+        {/* Back to work CTA */}
+        <div className="mt-24 pt-12 border-t border-border">
           <Link
             href="/#work"
-            className="inline-flex items-center text-gray-900 hover:text-gray-600 font-medium"
+            className="inline-flex items-center text-sm hover:underline underline-offset-4"
           >
             <ArrowLeft className="w-4 h-4 mr-2" />
             View all work

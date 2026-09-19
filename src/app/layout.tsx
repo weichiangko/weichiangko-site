@@ -1,14 +1,15 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import ResponsiveSidebar from "@/components/layout/ResponsiveSidebar";
-import PresentModeToggle from "@/components/present/PresentModeToggle";
+import MinimalNav from "@/components/layout/MinimalNav";
 import PresentModeView from "@/components/present/PresentModeView";
+import { ThemeProvider } from "@/components/theme/ThemeProvider";
 import { Suspense } from "react";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
+  weight: ["400", "500", "600"],
 });
 
 const geistMono = Geist_Mono({
@@ -27,20 +28,20 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-gray-50`}
+        className={`${geistSans.variable} ${geistMono.variable}`}
+        style={{ fontFamily: 'var(--font-geist-sans)' }}
       >
-        <div className="flex min-h-screen bg-gray-50">
-          <ResponsiveSidebar />
-          <main className="flex-1 md:ml-[120px] lg:ml-72 ml-0 pt-16 md:pt-0">
+        <ThemeProvider>
+          <MinimalNav />
+          <main className="pt-16">
             {children}
           </main>
-        </div>
-        <Suspense>
-          <PresentModeToggle />
-          <PresentModeView />
-        </Suspense>
+          <Suspense>
+            <PresentModeView />
+          </Suspense>
+        </ThemeProvider>
       </body>
     </html>
   );

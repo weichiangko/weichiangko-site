@@ -6,36 +6,36 @@ import { profileData } from "@/data/profileData";
 
 export default function HeroSection() {
   return (
-    <section id="hero" className="relative min-h-screen overflow-hidden flex items-center justify-center px-6 py-20">
-      {/* Hero Content */}
-      <div className="relative z-10 text-center max-w-4xl mx-auto">
-        {/* Name */}
-        <h1 className="text-5xl md:text-7xl font-bold text-gray-900 mb-4">
+    <section id="hero" className="relative min-h-screen flex items-center justify-center px-6 py-32">
+      <div className="max-w-4xl mx-auto text-center animate-[fadeInUp_280ms_ease-out]">
+        {/* Name - Hero display typography */}
+        <h1 className="mb-6">
           {profileData.name}
         </h1>
         
         {/* Roles */}
-        <div className="flex items-center justify-center gap-2 mb-6">
-          <span className="text-xl md:text-2xl text-gray-700 font-medium">
+        <div className="flex items-center justify-center gap-3 mb-8 text-xl md:text-2xl">
+          <span className="font-medium">
             {profileData.roles[0]}
           </span>
-          <span className="text-gray-400">·</span>
-          <span className="text-xl md:text-2xl text-gray-600">
+          <span className="text-fg-muted">·</span>
+          <span className="text-fg-muted">
             {profileData.roles[1]}
           </span>
         </div>
         
         {/* One-liner */}
-        <p className="text-lg md:text-2xl text-gray-600 leading-relaxed mb-8 max-w-3xl mx-auto">
+        <p className="text-lg md:text-[1.125rem] text-fg-muted leading-relaxed mb-10 max-w-2xl mx-auto">
           {profileData.oneLiner}
         </p>
         
-        {/* Credentials Chips */}
-        <div className="flex flex-wrap items-center justify-center gap-3 mb-10">
+        {/* Credentials */}
+        <div className="flex flex-wrap items-center justify-center gap-3 mb-12">
           {profileData.credentials.map((credential, index) => (
             <span 
               key={index}
-              className="px-4 py-2 bg-gray-100 text-gray-700 rounded-full text-sm font-medium"
+              className="px-4 py-1.5 bg-accent-soft border border-border rounded-full text-sm"
+              style={{ animationDelay: `${index * 40}ms` }}
             >
               {credential}
             </span>
@@ -46,25 +46,25 @@ export default function HeroSection() {
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
           <Link 
             href="#work"
-            className="px-6 py-3 bg-black text-white rounded-lg text-base font-medium hover:bg-gray-900 transition-colors w-full sm:w-auto"
+            className="px-6 py-3 bg-accent text-accent-foreground rounded-lg text-base font-medium hover:opacity-90 transition-opacity duration-150 w-full sm:w-auto"
           >
             Explore work
           </Link>
           <Link 
             href="#webmcp"
-            className="px-6 py-3 bg-white text-gray-900 border-2 border-gray-300 rounded-lg text-base font-medium hover:bg-gray-50 transition-colors flex items-center justify-center gap-2 w-full sm:w-auto"
+            className="px-6 py-3 bg-bg-elevated border border-border rounded-lg text-base font-medium hover:border-foreground transition-colors duration-150 flex items-center justify-center gap-2 w-full sm:w-auto group"
           >
-            <Sparkles className="w-4 h-4" />
+            <Sparkles className="w-4 h-4 group-hover:scale-110 transition-transform duration-150" />
             Talk to this site
           </Link>
         </div>
       </div>
 
       {/* Scroll Indicator */}
-      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-20">
+      <div className="absolute bottom-12 left-1/2 transform -translate-x-1/2">
         <ChevronDown 
-          className="w-6 h-6 md:w-7 md:h-7 animate-bounce text-gray-600" 
-          strokeWidth={2}
+          className="w-6 h-6 text-fg-muted animate-bounce" 
+          strokeWidth={1.5}
         />
       </div>
     </section>

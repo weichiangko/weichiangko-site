@@ -3,7 +3,7 @@
 import { useEffect } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { useSiteStore } from '@/lib/siteStore';
-import { LayoutGrid, Presentation } from 'lucide-react';
+import { Presentation } from 'lucide-react';
 
 export default function PresentModeToggle() {
   const searchParams = useSearchParams();
@@ -20,7 +20,6 @@ export default function PresentModeToggle() {
     const newMode = mode === 'public' ? 'present' : 'public';
     setMode(newMode);
     
-    // Update URL
     const url = new URL(window.location.href);
     if (newMode === 'present') {
       url.searchParams.set('mode', 'present');
@@ -33,19 +32,12 @@ export default function PresentModeToggle() {
   return (
     <button
       onClick={toggleMode}
-      className="fixed top-6 right-6 z-50 flex items-center gap-2 px-4 py-2 bg-black text-white rounded-lg text-sm font-medium hover:bg-gray-900 transition-colors shadow-lg"
-      aria-label={mode === 'public' ? 'Switch to present mode' : 'Switch to public mode'}
+      className="p-2 hover:bg-accent-soft rounded-md transition-colors duration-150 relative"
+      aria-label={mode === 'public' ? 'Switch to present mode' : 'Exit present mode'}
     >
-      {mode === 'public' ? (
-        <>
-          <Presentation className="w-4 h-4" />
-          <span className="hidden sm:inline">Present</span>
-        </>
-      ) : (
-        <>
-          <LayoutGrid className="w-4 h-4" />
-          <span className="hidden sm:inline">Public</span>
-        </>
+      <Presentation className="w-5 h-5" />
+      {mode === 'present' && (
+        <span className="absolute -top-1 -right-1 w-2 h-2 bg-accent rounded-full" />
       )}
     </button>
   );

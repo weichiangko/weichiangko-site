@@ -1,36 +1,37 @@
 'use client';
 
-import { Mail, Linkedin } from 'lucide-react';
+import { Mail, Linkedin, ExternalLink } from 'lucide-react';
 
 export default function ContactSection() {
   return (
-    <section id="contact" className="py-20 px-6">
-      <div className="max-w-4xl mx-auto text-center">
+    <section id="contact" className="py-24 md:py-32 px-6 border-t border-border">
+      <div className="max-w-[720px] mx-auto">
         {/* Section Header */}
-        <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+        <h2 className="mb-6">
           Get in touch
         </h2>
-        <p className="text-lg text-gray-600 mb-10 max-w-2xl mx-auto">
-          Interested in working together or want to discuss a project? Reach out via email or LinkedIn.
+        <p className="text-fg-muted mb-12">
+          Interested in working together or want to discuss a project? Reach out via email or connect on LinkedIn.
         </p>
 
-        {/* Contact Links */}
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+        {/* Contact Links Row */}
+        <div className="flex flex-wrap gap-4">
           <a
             href="mailto:contact@example.com"
-            className="flex items-center gap-2 px-6 py-3 bg-black text-white rounded-lg text-base font-medium hover:bg-gray-900 transition-colors w-full sm:w-auto justify-center"
+            className="inline-flex items-center gap-2 px-5 py-2.5 bg-accent text-accent-foreground rounded-lg text-sm font-medium hover:opacity-90 transition-opacity duration-150"
           >
-            <Mail className="w-5 h-5" />
-            Email me
+            <Mail className="w-4 h-4" />
+            Email
           </a>
           <a
             href="https://linkedin.com/in/yourprofile"
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-2 px-6 py-3 bg-white text-gray-900 border-2 border-gray-300 rounded-lg text-base font-medium hover:bg-gray-50 transition-colors w-full sm:w-auto justify-center"
+            className="inline-flex items-center gap-2 px-5 py-2.5 bg-bg-elevated border border-border rounded-lg text-sm font-medium hover:border-accent transition-colors duration-150 group"
           >
-            <Linkedin className="w-5 h-5" />
+            <Linkedin className="w-4 h-4" />
             LinkedIn
+            <ExternalLink className="w-3 h-3 text-fg-muted group-hover:text-foreground transition-colors" />
           </a>
         </div>
       </div>
