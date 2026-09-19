@@ -6,10 +6,10 @@ import { caseStudies } from '@/data/caseStudies';
 
 export default function WorkSection() {
   return (
-    <section id="work" className="py-24 md:py-32 px-6">
+    <section id="work" className="py-24 md:py-32 px-6 divider-glow">
       <div className="max-w-[960px] mx-auto">
         {/* Section Header */}
-        <div className="mb-16 max-w-[720px]">
+        <div className="mb-16 max-w-[720px] animate-[fadeInUp_320ms_ease-out]">
           <h2 className="mb-6">
             Work
           </h2>
@@ -24,13 +24,12 @@ export default function WorkSection() {
             <Link
               key={caseStudy.slug}
               href={`/work/${caseStudy.slug}`}
-              className="group block border-b border-border py-8 transition-colors duration-150 hover:border-accent relative"
-              style={{ animationDelay: `${index * 40}ms` }}
+              className={`group block border-b border-border py-8 transition-all duration-220 hover:border-accent relative animate-[fadeInUp_320ms_ease-out] stagger-${index + 1}`}
             >
               {/* Hover accent bar */}
-              <div className="absolute left-0 top-0 bottom-0 w-0.5 bg-accent scale-y-0 group-hover:scale-y-100 transition-transform duration-180 origin-top" />
+              <div className="absolute left-0 top-0 bottom-0 w-0.5 bg-accent scale-y-0 group-hover:scale-y-100 transition-transform duration-200 origin-top" />
               
-              <div className="pl-6">
+              <div className="pl-6 transition-transform duration-220 group-hover:-translate-y-0.5">
                 {/* Title */}
                 <h3 className="text-xl md:text-2xl font-semibold mb-3 tracking-tight">
                   {caseStudy.title}
@@ -46,17 +45,17 @@ export default function WorkSection() {
                   {caseStudy.chips.map((chip, chipIndex) => (
                     <span
                       key={chipIndex}
-                      className="px-3 py-1 bg-accent-soft border border-border rounded-full text-sm"
+                      className="px-3 py-1 bg-accent-soft border border-border rounded-full text-sm transition-colors duration-200 group-hover:border-accent"
                     >
                       {chip}
                     </span>
                   ))}
                 </div>
 
-                {/* CTA */}
-                <div className="flex items-center text-sm font-medium group-hover:underline underline-offset-4">
-                  Read case study
-                  <ArrowRight className="w-4 h-4 ml-1 group-hover:translate-x-0.5 transition-transform duration-150" />
+                {/* CTA with underline draw */}
+                <div className="relative inline-flex items-center text-sm font-medium">
+                  <span className="link-underline">Read case study</span>
+                  <ArrowRight className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform duration-200" />
                 </div>
               </div>
             </Link>

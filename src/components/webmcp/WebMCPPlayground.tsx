@@ -45,10 +45,10 @@ export default function WebMCPPlayground() {
   };
 
   return (
-    <section id="webmcp" className="py-24 md:py-32 px-6">
+    <section id="webmcp" className="py-24 md:py-32 px-6 divider-glow">
       <div className="max-w-[960px] mx-auto">
         {/* Section Header */}
-        <div className="mb-12 max-w-[720px]">
+        <div className="mb-12 max-w-[720px] animate-[fadeInUp_320ms_ease-out]">
           <h2 className="mb-6">
             WebMCP Playground
           </h2>
@@ -57,7 +57,7 @@ export default function WebMCPPlayground() {
           </p>
           <button
             onClick={handleCopyPrompt}
-            className="inline-flex items-center gap-2 px-4 py-2 bg-bg-elevated border border-border rounded-lg text-sm font-medium hover:border-accent transition-colors duration-150"
+            className="inline-flex items-center gap-2 px-4 py-2 bg-bg-elevated border border-border rounded-lg text-sm font-medium hover:border-accent hover:scale-[1.02] transition-all duration-200"
           >
             {copied ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
             {copied ? 'Copied!' : 'Copy prompt for AI'}
@@ -65,7 +65,7 @@ export default function WebMCPPlayground() {
         </div>
 
         {/* Toolbench Surface */}
-        <div className="bg-bg-elevated border border-border rounded-lg p-6 md:p-8">
+        <div className="bg-bg-elevated border border-border rounded-lg p-6 md:p-8 card-lift animate-[fadeInUp_320ms_ease-out] stagger-2">
           <div className="grid lg:grid-cols-2 gap-8">
             {/* Left: Tool Selection & Parameters */}
             <div className="space-y-6">

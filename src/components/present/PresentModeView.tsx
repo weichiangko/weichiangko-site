@@ -18,7 +18,7 @@ export default function PresentModeView() {
   const renderStepContent = () => {
     if (presentStep === 'overview') {
       return (
-        <div className="text-center max-w-4xl mx-auto animate-[fadeIn_200ms_ease-out]">
+        <div className="text-center max-w-4xl mx-auto animate-[fadeIn_250ms_ease-out]">
           <h1 className="mb-8">
             {profileData.name}
           </h1>
@@ -51,7 +51,7 @@ export default function PresentModeView() {
       if (!caseStudy) return null;
 
       return (
-        <div className="max-w-[800px] mx-auto animate-[fadeIn_200ms_ease-out]">
+        <div className="max-w-[800px] mx-auto animate-[fadeIn_250ms_ease-out]">
           <h1 className="mb-12 text-center">
             {caseStudy.problemStatement}
           </h1>
@@ -79,7 +79,7 @@ export default function PresentModeView() {
 
     if (presentStep === 'webmcp') {
       return (
-        <div className="text-center max-w-4xl mx-auto animate-[fadeIn_200ms_ease-out]">
+        <div className="text-center max-w-4xl mx-auto animate-[fadeIn_250ms_ease-out]">
           <h1 className="mb-8">
             WebMCP Tools
           </h1>
@@ -95,7 +95,7 @@ export default function PresentModeView() {
                 setMode('public');
                 window.location.hash = 'webmcp';
               }}
-              className="px-6 py-3 bg-accent text-accent-foreground rounded-lg text-base font-medium hover:opacity-90 transition-opacity duration-150"
+              className="px-6 py-3 bg-accent text-accent-foreground rounded-lg text-base font-medium hover:opacity-90 hover:scale-[1.02] transition-all duration-200"
             >
               Try the playground
             </button>
@@ -106,7 +106,7 @@ export default function PresentModeView() {
 
     if (presentStep === 'close') {
       return (
-        <div className="text-center max-w-3xl mx-auto animate-[fadeIn_200ms_ease-out]">
+        <div className="text-center max-w-3xl mx-auto animate-[fadeIn_250ms_ease-out]">
           <h1 className="mb-8">
             Thank you
           </h1>
@@ -115,7 +115,7 @@ export default function PresentModeView() {
           </p>
           <button
             onClick={() => setMode('public')}
-            className="px-6 py-3 bg-accent text-accent-foreground rounded-lg text-base font-medium hover:opacity-90 transition-opacity duration-150"
+            className="px-6 py-3 bg-accent text-accent-foreground rounded-lg text-base font-medium hover:opacity-90 hover:scale-[1.02] transition-all duration-200"
           >
             Exit presentation
           </button>
