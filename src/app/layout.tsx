@@ -2,6 +2,9 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import ResponsiveSidebar from "@/components/layout/ResponsiveSidebar";
+import PresentModeToggle from "@/components/present/PresentModeToggle";
+import PresentModeView from "@/components/present/PresentModeView";
+import { Suspense } from "react";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -14,8 +17,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Ben Ko - Software Designer",
-  description: "Passionate designer bridging creativity and development to solve real problems with user-first thinking.",
+  title: "Ben Ko - Design Engineer · Product Designer",
+  description: "I turn ambiguous product problems into shippable interfaces and systems. iF Design Award 2024 · Sr. UI Engineer @ MiTAC",
 };
 
 export default function RootLayout({
@@ -34,6 +37,10 @@ export default function RootLayout({
             {children}
           </main>
         </div>
+        <Suspense>
+          <PresentModeToggle />
+          <PresentModeView />
+        </Suspense>
       </body>
     </html>
   );

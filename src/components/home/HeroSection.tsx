@@ -1,67 +1,67 @@
 "use client";
 
-import { Suspense } from "react";
-import dynamic from "next/dynamic";
 import Link from "next/link";
-import { ChevronDown } from "lucide-react";
-import RotatingText from "@/components/animations/RotatingText";
-
-// Dynamically import PointSphere to avoid SSR issues
-const PointSphere = dynamic(() => import("@/components/animations/PointSphere"), {
-  ssr: false,
-  loading: () => <div className="absolute inset-0 bg-gray-50" />,
-});
+import { ChevronDown, Sparkles } from "lucide-react";
+import { profileData } from "@/data/profileData";
 
 export default function HeroSection() {
-  const rotatingWords = ["designer", "developer", "creator", "shuttler", "gearhead"];
-  
   return (
-    <section className="relative min-h-screen overflow-hidden">
-      {/* Top Right Contact Button - Desktop */}
-      <div className="absolute top-6 right-6 z-20 hidden md:flex items-center gap-4">
-        <div className="flex items-center gap-2 text-sm text-gray-600">
-          <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-          Available for Projects
-        </div>
-        <Link 
-          href="/contact"
-          className="bg-black text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-gray-900 transition-colors"
-        >
-          Contact Me
-        </Link>
-      </div>
-
-
-      {/* 3D Sphere Background */}
-      <div className="absolute inset-0 flex items-center justify-center z-0 md:translate-y-0 -translate-y-12">
-        <div className="w-full h-full max-w-[800px] max-h-[800px] relative">
-          <Suspense fallback={<div className="w-full h-full" />}>
-            <PointSphere />
-          </Suspense>
-        </div>
-      </div>
-      
+    <section id="hero" className="relative min-h-screen overflow-hidden flex items-center justify-center px-6 py-20">
       {/* Hero Content */}
-      <div className="relative z-10 flex items-center justify-center min-h-screen md:translate-y-0 -translate-y-12">
-        <div className="text-center max-w-2xl mx-auto px-6">
-          {/* Main Heading */}
-          <h1 className="text-4xl md:text-5xl font-bold text-gray-600 mb-6">
-            I&apos;m a{" "}
-            <RotatingText 
-              words={rotatingWords} 
-              className="text-gray-900" 
-            />
-          </h1>
-          
-          {/* Description */}
-          <p className="text-lg md:text-xl text-gray-600 leading-relaxed max-w-xl mx-auto">
-            Bridging pixels and logic to turn problems into products.
-          </p>
+      <div className="relative z-10 text-center max-w-4xl mx-auto">
+        {/* Name */}
+        <h1 className="text-5xl md:text-7xl font-bold text-gray-900 mb-4">
+          {profileData.name}
+        </h1>
+        
+        {/* Roles */}
+        <div className="flex items-center justify-center gap-2 mb-6">
+          <span className="text-xl md:text-2xl text-gray-700 font-medium">
+            {profileData.roles[0]}
+          </span>
+          <span className="text-gray-400">·</span>
+          <span className="text-xl md:text-2xl text-gray-600">
+            {profileData.roles[1]}
+          </span>
+        </div>
+        
+        {/* One-liner */}
+        <p className="text-lg md:text-2xl text-gray-600 leading-relaxed mb-8 max-w-3xl mx-auto">
+          {profileData.oneLiner}
+        </p>
+        
+        {/* Credentials Chips */}
+        <div className="flex flex-wrap items-center justify-center gap-3 mb-10">
+          {profileData.credentials.map((credential, index) => (
+            <span 
+              key={index}
+              className="px-4 py-2 bg-gray-100 text-gray-700 rounded-full text-sm font-medium"
+            >
+              {credential}
+            </span>
+          ))}
+        </div>
+        
+        {/* CTAs */}
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+          <Link 
+            href="#work"
+            className="px-6 py-3 bg-black text-white rounded-lg text-base font-medium hover:bg-gray-900 transition-colors w-full sm:w-auto"
+          >
+            Explore work
+          </Link>
+          <Link 
+            href="#webmcp"
+            className="px-6 py-3 bg-white text-gray-900 border-2 border-gray-300 rounded-lg text-base font-medium hover:bg-gray-50 transition-colors flex items-center justify-center gap-2 w-full sm:w-auto"
+          >
+            <Sparkles className="w-4 h-4" />
+            Talk to this site
+          </Link>
         </div>
       </div>
 
-      {/* Bouncing Arrow Down - Scroll Indicator */}
-      <div className="absolute bottom-16 md:bottom-8 left-1/2 transform -translate-x-1/2 z-20">
+      {/* Scroll Indicator */}
+      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-20">
         <ChevronDown 
           className="w-6 h-6 md:w-7 md:h-7 animate-bounce text-gray-600" 
           strokeWidth={2}
