@@ -52,10 +52,12 @@ export default function WorkSection() {
                   ))}
                 </div>
 
-                {/* CTA with underline draw */}
-                <div className="relative inline-flex items-center text-sm font-medium">
-                  <span className="link-underline">Read case study</span>
-                  <ArrowRight className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform duration-200" />
+                {/* CTA with glass pill on hover */}
+                <div className="inline-flex items-center text-sm font-medium opacity-85 group-hover:opacity-100 transition-opacity">
+                  <span className="glass glass-pill px-4 py-2 text-[13px] font-medium inline-flex items-center gap-1.5">
+                    Read case study
+                    <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform duration-200" strokeWidth={2} />
+                  </span>
                 </div>
               </div>
             </Link>

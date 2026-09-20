@@ -51,9 +51,31 @@
   --bg-elevated: oklch(1 0 0); /* #FFFFFF */
   --foreground: oklch(0.186 0 0); /* #0A0A0A */
   --fg-muted: oklch(0.466 0 0); /* #525252 */
+  --fg-secondary: oklch(0.186 0 0 / 0.58);
+  --fg-tertiary: oklch(0.186 0 0 / 0.40);
   --border: oklch(0.925 0 0); /* #E5E5E5 */
+  --hairline: oklch(0.186 0 0 / 0.10);
   --accent: oklch(0.186 0 0); /* #0A0A0A */
   --accent-soft: oklch(0.186 0 0 / 0.06);
+  
+  /* Liquid Glass tokens - Light */
+  --glass-bg: oklch(1 0 0 / 0.55);
+  --glass-bg-strong: oklch(1 0 0 / 0.72);
+  --glass-border: oklch(1 0 0 / 0.70);
+  --glass-highlight: inset 0 1px 0 oklch(1 0 0 / 0.90);
+  --glass-shadow: 0 8px 32px oklch(0 0 0 / 0.10), 0 2px 8px oklch(0 0 0 / 0.06);
+  --glass-blur: 20px;
+  --glass-saturate: 160%;
+  --glass-radius: 22px;
+  
+  /* Liquid-silk background - Pearl folds on light ground */
+  --silk-base: #F5F5F7;
+  --silk-ridge: oklch(1 0 0 / 0.95);
+  --silk-ridge-soft: oklch(0.827 0 0 / 0.65);
+  --silk-specular: oklch(1 0 0);
+  --silk-specular-core: #FFFFFF;
+  --silk-shadow: oklch(0.612 0 0 / 0.42);
+  --silk-ambient: oklch(0.708 0 0 / 0.28);
   
   /* Map to existing semantic tokens */
   --card: var(--bg-elevated);
@@ -74,13 +96,35 @@
 
 [data-theme="dark"] {
   /* Dark theme - mapped to design tokens */
-  --background: oklch(0.186 0 0); /* #0A0A0A */
-  --bg-elevated: oklch(0.235 0 0); /* #141414 */
-  --foreground: oklch(0.973 0 0); /* #F5F5F5 */
+  --background: oklch(0.108 0 0); /* #050505 */
+  --bg-elevated: oklch(0.235 0 0); /* #121212 */
+  --foreground: oklch(0.973 0 0); /* #F5F5F7 */
   --fg-muted: oklch(0.691 0 0); /* #A3A3A3 */
+  --fg-secondary: oklch(0.973 0 0 / 0.62);
+  --fg-tertiary: oklch(0.973 0 0 / 0.42);
   --border: oklch(0.312 0 0); /* #262626 */
+  --hairline: oklch(0.973 0 0 / 0.12);
   --accent: oklch(1 0 0); /* #FFFFFF */
   --accent-soft: oklch(1 0 0 / 0.08);
+  
+  /* Liquid Glass tokens - Dark */
+  --glass-bg: oklch(1 0 0 / 0.10);
+  --glass-bg-strong: oklch(1 0 0 / 0.16);
+  --glass-border: oklch(1 0 0 / 0.28);
+  --glass-highlight: inset 0 1px 0 oklch(1 0 0 / 0.55);
+  --glass-shadow: 0 8px 32px oklch(0 0 0 / 0.40), 0 2px 8px oklch(0 0 0 / 0.25);
+  --glass-blur: 20px;
+  --glass-saturate: 160%;
+  --glass-radius: 22px;
+  
+  /* Liquid-silk background - Cooler, dimmer white folds on true dark */
+  --silk-base: #000000;
+  --silk-ridge: oklch(0.627 0 0 / 0.38);
+  --silk-ridge-soft: oklch(0.427 0 0 / 0.28);
+  --silk-specular: oklch(0.717 0 0 / 0.28);
+  --silk-specular-core: oklch(0.827 0 0 / 0.18);
+  --silk-shadow: oklch(0 0 0 / 0.92);
+  --silk-ambient: oklch(0.165 0 0 / 0.14);
   
   /* Map to existing semantic tokens */
   --card: var(--bg-elevated);
@@ -319,4 +363,266 @@
   .stagger-4 { animation-delay: 180ms; }
   .stagger-5 { animation-delay: 240ms; }
   .stagger-6 { animation-delay: 300ms; }
+}
+
+/* ========== Liquid-silk background (fixed, behind content) ========== */
+.bg-silk {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+  background: var(--silk-base);
+}
+
+.silk-base {
+  position: absolute;
+  inset: 0;
+  background: var(--silk-base);
+}
+
+/* Primary diagonal fold — top-left → bottom-center */
+.silk-fold {
+  position: absolute;
+  border-radius: 50%;
+  will-change: transform, opacity;
+}
+
+.silk-fold-primary {
+  /* Elongated ellipse = soft satin crease */
+  width: 160vmax;
+  height: 52vmax;
+  top: -18%;
+  left: -55%;
+  background:
+    /* lit face of the fold */
+    radial-gradient(
+      48% 38% at 46% 42%,
+      var(--silk-ridge) 0%,
+      var(--silk-ridge-soft) 32%,
+      transparent 68%
+    ),
+    /* shadowed underside */
+    radial-gradient(
+      42% 48% at 58% 58%,
+      var(--silk-shadow) 0%,
+      transparent 60%
+    );
+  filter: blur(36px);
+  transform: rotate(-40deg) scale(1);
+  opacity: 1;
+  animation: silk-fold-drift 16s ease-in-out infinite;
+}
+
+/* Secondary companion fold — softer volume under the ridge */
+.silk-fold-secondary {
+  width: 130vmax;
+  height: 48vmax;
+  top: 18%;
+  left: -28%;
+  background:
+    radial-gradient(
+      50% 36% at 48% 38%,
+      var(--silk-ridge-soft) 0%,
+      transparent 58%
+    ),
+    radial-gradient(
+      55% 45% at 40% 62%,
+      var(--silk-shadow) 0%,
+      transparent 55%
+    );
+  filter: blur(52px);
+  transform: rotate(-34deg);
+  opacity: 0.95;
+  animation: silk-fold-drift-alt 18s ease-in-out infinite;
+}
+
+/* Explicit satin crease band — reads as the fold peak */
+.silk-ridge-band {
+  position: absolute;
+  width: 180vmax;
+  height: 28vmax;
+  top: 8%;
+  left: -60%;
+  background:
+    radial-gradient(
+      55% 55% at 50% 50%,
+      var(--silk-ridge) 0%,
+      var(--silk-ridge-soft) 35%,
+      transparent 70%
+    );
+  filter: blur(28px);
+  transform: rotate(-40deg);
+  opacity: 0.95;
+  animation: silk-specular-drift 15s ease-in-out infinite;
+  pointer-events: none;
+}
+
+/* Specular highlight — thin bright ridge that drifts across */
+.silk-specular {
+  position: absolute;
+  width: 170vmax;
+  height: 10vmax;
+  top: 18%;
+  left: -55%;
+  background:
+    linear-gradient(
+      98deg,
+      transparent 0%,
+      transparent 34%,
+      var(--silk-specular-core) 47%,
+      var(--silk-specular) 50%,
+      var(--silk-specular-core) 53%,
+      transparent 66%,
+      transparent 100%
+    );
+  filter: blur(22px);
+  transform: rotate(-40deg);
+  opacity: 1;
+  mix-blend-mode: screen;
+  animation: silk-specular-drift 14s ease-in-out infinite;
+}
+
+[data-theme="light"] .silk-specular {
+  mix-blend-mode: soft-light;
+  opacity: 0.9;
+  filter: blur(18px);
+  height: 12vmax;
+}
+
+/* Calm ambient wash — right side depth */
+.silk-ambient {
+  position: absolute;
+  width: 95vmax;
+  height: 95vmax;
+  top: -8%;
+  right: -38%;
+  background:
+    radial-gradient(
+      circle at 38% 42%,
+      var(--silk-ambient) 0%,
+      transparent 55%
+    );
+  filter: blur(72px);
+  opacity: 0.75;
+  animation: silk-ambient-breathe 20s ease-in-out infinite;
+}
+
+@keyframes silk-fold-drift {
+  0%, 100% {
+    transform: rotate(-40deg) translate(0, 0) scale(1);
+  }
+  33% {
+    transform: rotate(-37deg) translate(2.2%, 1.2%) scale(1.025);
+  }
+  66% {
+    transform: rotate(-42deg) translate(-1.2%, 1.8%) scale(0.985);
+  }
+}
+
+@keyframes silk-fold-drift-alt {
+  0%, 100% {
+    transform: rotate(-34deg) translate(0, 0) scale(1);
+  }
+  50% {
+    transform: rotate(-36deg) translate(-1.8%, 2.2%) scale(1.03);
+  }
+}
+
+@keyframes silk-specular-drift {
+  0%, 100% {
+    transform: rotate(-40deg) translate(0, 0);
+    opacity: 0.82;
+  }
+  50% {
+    transform: rotate(-38deg) translate(3.5%, 2.5%);
+    opacity: 1;
+  }
+}
+
+@keyframes silk-ambient-breathe {
+  0%, 100% {
+    transform: translate(0, 0) scale(1);
+    opacity: 0.6;
+  }
+  50% {
+    transform: translate(-2.5%, 1.5%) scale(1.05);
+    opacity: 0.85;
+  }
+}
+
+/* ========== Liquid Glass material ========== */
+.glass {
+  background: var(--glass-bg);
+  backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-highlight), var(--glass-shadow);
+  border-radius: var(--glass-radius);
+  transition:
+    background 280ms cubic-bezier(0.25, 0.1, 0.25, 1),
+    border-color 280ms cubic-bezier(0.25, 0.1, 0.25, 1),
+    box-shadow 280ms cubic-bezier(0.25, 0.1, 0.25, 1),
+    transform 220ms cubic-bezier(0.25, 0.1, 0.25, 1);
+}
+
+.glass-pill {
+  border-radius: 999px;
+}
+
+.glass:active {
+  transform: scale(0.98);
+}
+
+.glass-strong {
+  background: var(--glass-bg-strong);
+}
+
+/* ========== Accessibility fallbacks ========== */
+@media (prefers-reduced-transparency: reduce) {
+  .glass,
+  .glass-strong {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    background: var(--bg-elevated);
+    border-color: var(--hairline);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .glass:active { 
+    transform: none; 
+  }
+  
+  /* Freeze silk at a nice static fold frame — still show the ridge */
+  .silk-fold-primary,
+  .silk-fold-secondary,
+  .silk-ridge-band,
+  .silk-specular,
+  .silk-ambient {
+    animation: none !important;
+  }
+
+  .silk-ridge-band {
+    transform: rotate(-40deg) translate(1%, 0.8%);
+    opacity: 0.95;
+  }
+
+  .silk-fold-primary {
+    transform: rotate(-40deg) translate(1%, 0.5%) scale(1.01);
+  }
+
+  .silk-fold-secondary {
+    transform: rotate(-34deg) translate(-0.5%, 1%) scale(1);
+  }
+
+  .silk-specular {
+    transform: rotate(-39deg) translate(1.5%, 1%);
+    opacity: 1;
+  }
+
+  .silk-ambient {
+    transform: translate(-1%, 0.5%) scale(1.02);
+    opacity: 0.65;
+  }
 }

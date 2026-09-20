@@ -32,12 +32,12 @@ export default function PresentModeToggle() {
   return (
     <button
       onClick={toggleMode}
-      className="p-2 hover:bg-accent-soft rounded-md transition-colors duration-150 relative"
+      className="w-9 h-9 flex items-center justify-center rounded-full hover:bg-[var(--glass-bg)] transition-all duration-180 active:scale-95 relative"
       aria-label={mode === 'public' ? 'Switch to present mode' : 'Exit present mode'}
     >
-      <Presentation className="w-5 h-5" />
+      <Presentation className="w-4 h-4" strokeWidth={1.75} />
       {mode === 'present' && (
-        <span className="absolute -top-1 -right-1 w-2 h-2 bg-accent rounded-full" />
+        <span className="absolute top-1 right-1 w-1.5 h-1.5 bg-accent rounded-full" />
       )}
     </button>
   );

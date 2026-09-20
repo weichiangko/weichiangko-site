@@ -57,7 +57,7 @@ export default function WebMCPPlayground() {
           </p>
           <button
             onClick={handleCopyPrompt}
-            className="inline-flex items-center gap-2 px-4 py-2 bg-bg-elevated border border-border rounded-lg text-sm font-medium hover:border-accent hover:scale-[1.02] transition-all duration-200"
+            className="glass glass-pill inline-flex items-center gap-2 px-4 py-2 text-sm font-medium hover:scale-[1.02] transition-all duration-200"
           >
             {copied ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
             {copied ? 'Copied!' : 'Copy prompt for AI'}
@@ -150,7 +150,7 @@ export default function WebMCPPlayground() {
               <button
                 onClick={handleExecute}
                 disabled={isExecuting}
-                className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-accent text-accent-foreground rounded-lg text-sm font-medium hover:opacity-90 transition-opacity duration-150 disabled:opacity-50"
+                className="glass glass-pill glass-strong w-full flex items-center justify-center gap-2 px-4 py-3 text-sm font-semibold hover:scale-[1.02] transition-all duration-200 disabled:opacity-50 disabled:hover:scale-100"
               >
                 <Play className="w-4 h-4" />
                 {isExecuting ? 'Running...' : 'Run'}

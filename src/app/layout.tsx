@@ -4,6 +4,7 @@ import "./globals.css";
 import MinimalNav from "@/components/layout/MinimalNav";
 import PresentModeView from "@/components/present/PresentModeView";
 import { ThemeProvider } from "@/components/theme/ThemeProvider";
+import LiquidSilkBackground from "@/components/effects/LiquidSilkBackground";
 import { Suspense } from "react";
 
 const geistSans = Geist({
@@ -50,10 +51,13 @@ export default function RootLayout({
         style={{ fontFamily: 'var(--font-geist-sans)' }}
       >
         <ThemeProvider>
-          <MinimalNav />
-          <main className="pt-16">
-            {children}
-          </main>
+          <LiquidSilkBackground />
+          <div className="relative z-10">
+            <MinimalNav />
+            <main>
+              {children}
+            </main>
+          </div>
           <Suspense>
             <PresentModeView />
           </Suspense>

@@ -45,13 +45,16 @@ export default function HeroSection() {
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4 animate-[fadeInUp_280ms_ease-out] stagger-5">
           <Link 
             href="#work"
-            className="px-6 py-3 bg-accent text-accent-foreground rounded-lg text-base font-medium hover:opacity-90 hover:scale-[1.02] transition-all duration-200 w-full sm:w-auto"
+            className="glass glass-pill glass-strong px-6 py-3 text-base font-semibold hover:opacity-90 hover:scale-[1.02] transition-all duration-200 w-full sm:w-auto inline-flex items-center justify-center gap-2"
           >
             Explore work
+            <svg className="w-3.5 h-3.5 opacity-70" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M5 12h14M13 6l6 6-6 6" />
+            </svg>
           </Link>
           <Link 
             href="#webmcp"
-            className="px-6 py-3 bg-bg-elevated border border-border rounded-lg text-base font-medium hover:border-accent transition-all duration-200 flex items-center justify-center gap-2 w-full sm:w-auto group"
+            className="glass glass-pill px-6 py-3 text-base font-medium hover:scale-[1.02] transition-all duration-200 flex items-center justify-center gap-2 w-full sm:w-auto group"
           >
             <Sparkles className="w-4 h-4 group-hover:scale-110 transition-transform duration-200" />
             Talk to this site
