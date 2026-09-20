@@ -30,7 +30,8 @@ export default function WebMCPPlayground() {
   };
 
   const handleCopyPrompt = () => {
-    const prompt = `Open https://weichiangko.vercel.app/#webmcp. Available tools: get_profile, list_case_studies, get_case_study(slug), filter_work(tags), contact_intent(message), set_site_mode(mode), set_present_deck(step). Start with list_case_studies. If interviewing, call set_site_mode("present") then set_present_deck("overview").`;
+    const currentUrl = typeof window !== 'undefined' ? `${window.location.origin}/#webmcp` : 'https://weichiangko.vercel.app/#webmcp';
+    const prompt = `Open ${currentUrl}. Available tools: get_profile, list_case_studies, get_case_study(slug), filter_work(tags), contact_intent(message), set_site_mode(mode), set_present_deck(step). Start with list_case_studies. If interviewing, call set_site_mode("present") then set_present_deck("overview").`;
     
     navigator.clipboard.writeText(prompt);
     setCopied(true);
