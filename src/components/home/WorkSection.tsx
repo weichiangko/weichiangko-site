@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { ArrowRight } from 'lucide-react';
 import { caseStudies } from '@/data/caseStudies';
 
@@ -24,12 +25,25 @@ export default function WorkSection() {
             <Link
               key={caseStudy.slug}
               href={`/work/${caseStudy.slug}`}
-              className={`group block border-b border-border py-8 transition-all duration-220 hover:border-accent relative animate-[fadeInUp_320ms_ease-out] stagger-${index + 1}`}
+              className={`group grid ${caseStudy.thumbnail ? 'grid-cols-[120px_1fr_auto]' : 'grid-cols-[1fr_auto]'} gap-6 items-center border-b border-border py-8 transition-all duration-220 hover:border-accent relative animate-[fadeInUp_320ms_ease-out] stagger-${index + 1}`}
             >
               {/* Hover accent bar */}
               <div className="absolute left-0 top-0 bottom-0 w-0.5 bg-accent scale-y-0 group-hover:scale-y-100 transition-transform duration-200 origin-top" />
               
-              <div className="pl-6 transition-transform duration-220 group-hover:-translate-y-0.5">
+              {/* Thumbnail */}
+              {caseStudy.thumbnail && (
+                <div className="relative w-[120px] h-[80px] rounded-lg overflow-hidden border border-hairline bg-bg-elevated flex-shrink-0">
+                  <Image
+                    src={caseStudy.thumbnail}
+                    alt={`${caseStudy.title} preview`}
+                    fill
+                    className="object-cover"
+                    sizes="120px"
+                  />
+                </div>
+              )}
+              
+              <div className={`${caseStudy.thumbnail ? '' : 'pl-6'} transition-transform duration-220 group-hover:-translate-y-0.5 min-w-0`}>
                 {/* Title */}
                 <h3 className="text-xl md:text-2xl font-semibold mb-3 tracking-tight">
                   {caseStudy.title}
@@ -51,14 +65,14 @@ export default function WorkSection() {
                     </span>
                   ))}
                 </div>
+              </div>
 
-                {/* CTA with glass pill on hover */}
-                <div className="inline-flex items-center text-sm font-medium opacity-85 group-hover:opacity-100 transition-opacity">
-                  <span className="glass glass-pill px-4 py-2 text-[13px] font-medium inline-flex items-center gap-1.5">
-                    Read case study
-                    <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform duration-200" strokeWidth={2} />
-                  </span>
-                </div>
+              {/* CTA with glass pill */}
+              <div className="inline-flex items-center text-sm font-medium opacity-85 group-hover:opacity-100 transition-opacity flex-shrink-0">
+                <span className="glass glass-pill px-4 py-2 text-[13px] font-medium inline-flex items-center gap-1.5 whitespace-nowrap">
+                  Read case study
+                  <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform duration-200" strokeWidth={2} />
+                </span>
               </div>
             </Link>
           ))}

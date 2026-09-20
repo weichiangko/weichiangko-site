@@ -16,6 +16,7 @@ export interface CaseStudy {
     caption?: string;
   }>;
   heroImage?: string;
+  thumbnail?: string;
 }
 
 export const caseStudies: CaseStudy[] = [
@@ -44,7 +45,8 @@ export const caseStudies: CaseStudy[] = [
         caption: 'Cross-platform design system'
       }
     ],
-    heroImage: '/images/projects/mionext-hero.jpg'
+    heroImage: '/images/projects/mionext-hero.jpg',
+    thumbnail: '/images/projects/mionext-card.jpg'
   },
   {
     slug: 'visionmax',
@@ -71,7 +73,8 @@ export const caseStudies: CaseStudy[] = [
         caption: 'Design system and component library'
       }
     ],
-    heroImage: '/images/projects/visionmax-hero.jpg'
+    heroImage: '/images/projects/visionmax-hero.jpg',
+    thumbnail: '/images/projects/visionmax-card.jpg'
   },
   {
     slug: 'edge-ai-surveillance',
@@ -98,7 +101,8 @@ export const caseStudies: CaseStudy[] = [
         caption: 'Full case study on Behance'
       }
     ],
-    heroImage: '/images/projects/edge-ai-hero.jpg'
+    heroImage: '/images/projects/edge-ai-hero.jpg',
+    thumbnail: '/images/projects/i40bs-card.jpg'
   }
 ];
 

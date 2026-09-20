@@ -49,14 +49,14 @@
   /* Light theme - mapped to design tokens */
   --background: oklch(0.984 0 0); /* #FAFAFA */
   --bg-elevated: oklch(1 0 0); /* #FFFFFF */
-  --foreground: oklch(0.186 0 0); /* #0A0A0A */
-  --fg-muted: oklch(0.466 0 0); /* #525252 */
-  --fg-secondary: oklch(0.186 0 0 / 0.58);
-  --fg-tertiary: oklch(0.186 0 0 / 0.40);
+  --foreground: oklch(0.128 0 0); /* Darker for better contrast: ~#121212 */
+  --fg-muted: oklch(0.380 0 0); /* Darker muted text: ~#3D3D3D */
+  --fg-secondary: oklch(0.128 0 0 / 0.72); /* Stronger secondary */
+  --fg-tertiary: oklch(0.128 0 0 / 0.52); /* Stronger tertiary */
   --border: oklch(0.925 0 0); /* #E5E5E5 */
-  --hairline: oklch(0.186 0 0 / 0.10);
-  --accent: oklch(0.186 0 0); /* #0A0A0A */
-  --accent-soft: oklch(0.186 0 0 / 0.06);
+  --hairline: oklch(0.128 0 0 / 0.12); /* Slightly darker hairline */
+  --accent: oklch(0.128 0 0); /* Darker accent for better contrast */
+  --accent-soft: oklch(0.128 0 0 / 0.08);
   
   /* Liquid Glass tokens - Light */
   --glass-bg: oklch(1 0 0 / 0.55);
